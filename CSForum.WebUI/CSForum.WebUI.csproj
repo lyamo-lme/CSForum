@@ -4,6 +4,10 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-    </PropertyGroup> 
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Views\Home" />
+    </ItemGroup> 
 
 </Project>
