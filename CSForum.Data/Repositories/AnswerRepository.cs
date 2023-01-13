@@ -12,7 +12,7 @@ public class AnswerRepository : IAnswerRepository
     public AnswerRepository(ForumContext context)
     {
         Context = context;
-    } 
+    }
 
     public async Task<List<Answer>> GetAsync() => await Context.Answers.ToListAsync();
 
@@ -24,6 +24,7 @@ public class AnswerRepository : IAnswerRepository
         try
         {
             await Context.Answers.AddAsync(model);
+            await Context.SaveChangesAsync();
             return model;
         }
         catch (Exception e)
@@ -40,6 +41,7 @@ public class AnswerRepository : IAnswerRepository
             {
                 Id = id
             });
+            await Context.SaveChangesAsync();
             return await Task.FromResult(true);
         }
         catch (Exception e)

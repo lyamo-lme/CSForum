@@ -7,4 +7,5 @@ public class Post
     public int Title { get; set; }
     public DateTime DateCreate { get; set; }  
     public string Content { get; set; }
+    public List<Tag> Tags { get; set; }
 }

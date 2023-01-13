@@ -8,5 +8,4 @@ public class Answer
     public int UserId { get; set; }
     public DateTime DateCreate { get; set; }  
     public string Content { get; set; }
-    public List<Tag> Tags { get; set; }
 }

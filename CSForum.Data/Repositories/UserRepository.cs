@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSForum.Data.Repositories;
 
-public class UserRepository:IUserRepository
+public class UserRepository : IUserRepository
 {
     private ForumContext Context { get; set; }
 
@@ -13,6 +13,7 @@ public class UserRepository:IUserRepository
     {
         Context = context;
     }
+
     public async Task<List<User>> GetAsync()
     {
         try
@@ -25,17 +26,19 @@ public class UserRepository:IUserRepository
         }
     }
 
-    public async Task<User> GetByIdAsync(int id) => await Context.Users.FirstOrDefaultAsync(x=>x.Id==id);
+    public async Task<User> GetByIdAsync(int id) => await Context.Users.FirstOrDefaultAsync(x => x.Id == id);
+
     public async Task<User> CreateAsync(User model)
     {
         try
         {
             await Context.Users.AddAsync(model);
+            await Context.SaveChangesAsync();
             return model;
         }
         catch (Exception e)
         {
-            throw new Exception(e.Message) ;
+            throw new Exception(e.Message);
         }
     }
 
@@ -47,11 +50,12 @@ public class UserRepository:IUserRepository
             {
                 Id = id
             });
+            await Context.SaveChangesAsync();
             return await Task.FromResult(true);
         }
         catch (Exception e)
         {
-            throw new Exception(e.Message) ;
+            throw new Exception(e.Message);
         }
     }
 }

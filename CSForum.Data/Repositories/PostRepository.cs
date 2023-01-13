@@ -34,6 +34,7 @@ public class PostRepository : IPostRepository
         try
         {
              await Context.Posts.AddAsync(model);
+             await Context.SaveChangesAsync();
              return model;
         }
         catch (Exception e)
@@ -50,6 +51,7 @@ public class PostRepository : IPostRepository
             {
                 Id = id
             });
+            await Context.SaveChangesAsync();
             return await Task.FromResult(true);
         }
         catch (Exception e)
