@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSForum.Data.Context;
 
-public class ForumContext:DbContext
+public class ForumContext : DbContext
 {
-    public ForumContext(DbContextOptions<ForumContext> options):base(options)
+    public ForumContext(DbContextOptions<ForumContext> options) : base(options)
     {
     }
 

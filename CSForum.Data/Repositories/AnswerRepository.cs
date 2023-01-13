@@ -5,19 +5,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSForum.Data.Repositories;
 
-public class AnswerRepository:IAnswerRepository
+public class AnswerRepository : IAnswerRepository
 {
     private ForumContext Context { get; set; }
 
     public AnswerRepository(ForumContext context)
     {
         Context = context;
-    }
+    } 
 
     public async Task<List<Answer>> GetAsync() => await Context.Answers.ToListAsync();
 
-    public async Task<Answer> GetByIdAsync(int id) => await Context.Answers.FirstOrDefaultAsync(x=>x.Id==id);
-   
+    public async Task<Answer> GetByIdAsync(int id) => await Context.Answers.FirstOrDefaultAsync(x => x.Id == id);
+
 
     public async Task<Answer> CreateAsync(Answer model)
     {
@@ -28,7 +28,7 @@ public class AnswerRepository:IAnswerRepository
         }
         catch (Exception e)
         {
-            throw new Exception(e.Message) ;
+            throw new Exception(e.Message);
         }
     }
 
@@ -44,7 +44,7 @@ public class AnswerRepository:IAnswerRepository
         }
         catch (Exception e)
         {
-            throw new Exception(e.Message) ;
+            throw new Exception(e.Message);
         }
     }
 }
