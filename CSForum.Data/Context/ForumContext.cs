@@ -20,7 +20,11 @@ public class ForumContext : DbContext
             pt.TagId
         });
         
-        modelBuilder.ApplyConfiguration( new AnswerConfiguration());
+        modelBuilder.ApplyConfiguration(new AnswerConfiguration());
+        modelBuilder.ApplyConfiguration(new PostConfiguration());
+        modelBuilder.ApplyConfiguration(new PostTagsConfiguration());
+        modelBuilder.ApplyConfiguration(new TagConfiguration());
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
         
         base.OnModelCreating(modelBuilder);
     }

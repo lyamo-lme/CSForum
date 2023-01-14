@@ -15,9 +15,6 @@ public class UserConfiguration:IEntityTypeConfiguration<User>
         builder.Property(prop => prop.Gender);
         builder.Property(prop => prop.Login).HasMaxLength(50).IsRequired();
         builder.Property(prop => prop.Password).IsRequired();
-
-        builder.HasMany<Answer>(p => p.Answers)
-            .WithOne(p => p.AnswerCreator)
-            .OnDelete(DeleteBehavior.ClientNoAction);
+        
     }
 }
