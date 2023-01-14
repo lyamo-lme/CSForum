@@ -26,7 +26,7 @@ public class UserRepository : IUserRepository
         }
     }
 
-    public async Task<User> GetByIdAsync(int id) => await Context.Users.FirstOrDefaultAsync(x => x.Id == id);
+    public async Task<User> GetByIdAsync(int id) => await Context.Users.FirstOrDefaultAsync(x => x.UserId == id);
 
     public async Task<User> CreateAsync(User model)
     {
@@ -48,7 +48,7 @@ public class UserRepository : IUserRepository
         {
             Context.Users.Remove(new User()
             {
-                Id = id
+                UserId = id
             });
             await Context.SaveChangesAsync();
             return await Task.FromResult(true);
