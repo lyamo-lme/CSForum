@@ -1,10 +1,11 @@
 using CSForum.Core.Models;
 using CSForum.Data.Config;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSForum.Data.Context;
 
-public class ForumContext : DbContext
+public class ForumContext : IdentityDbContext
 {
     public ForumContext(DbContextOptions<ForumContext> options) : base(options)
     {
