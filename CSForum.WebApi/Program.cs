@@ -12,8 +12,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+
 builder.Services.AddDbForumContext(
     builder.Configuration.GetConnectionString("MsSqlConnection"));
+
+
+builder.Services.AddRepositories();
 
 var app = builder.Build();
 

@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Data.Context;
@@ -7,6 +8,7 @@ namespace CSForum.Data.Repositories;
 
 public class AnswerRepository : IAnswerRepository
 {
+    private IAnswerRepository _answerRepositoryImplementation;
     private ForumContext Context { get; set; }
 
     public AnswerRepository(ForumContext context)
@@ -15,8 +17,18 @@ public class AnswerRepository : IAnswerRepository
     }
 
     public async Task<List<Answer>> GetAsync() => await Context.Answers.ToListAsync();
-
-    public async Task<Answer> GetByIdAsync(int id) => await Context.Answers.FirstOrDefaultAsync(x => x.Id == id);
+    
+    public async Task<Answer> GetFirstByFunc(Expression<Func<Answer, bool>> func)
+    {
+        try
+        {
+            return await Context.Answers.FirstAsync(func);
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
 
 
     public async Task<Answer> CreateAsync(Answer model)

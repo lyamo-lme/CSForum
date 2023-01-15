@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Data.Context;
@@ -26,8 +27,18 @@ public class PostRepository : IPostRepository
         }
     }
 
-    public async Task<Post?> GetByIdAsync(int id) => await Context.Posts.FirstOrDefaultAsync(x=>x.Id==id);
-    
+    public  async Task<Post> GetFirstByFunc(Expression<Func<Post, bool>> func)
+    {
+        try
+        {
+            return await Context.Posts.FirstAsync(func);
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+
 
     public async Task<Post> CreateAsync(Post model)
     {
