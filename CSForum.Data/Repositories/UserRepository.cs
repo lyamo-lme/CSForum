@@ -2,6 +2,7 @@ using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Data.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace CSForum.Data.Repositories;
 
@@ -26,7 +27,17 @@ public class UserRepository : IUserRepository
         }
     }
 
-    public async Task<User> GetByIdAsync(int id) => await Context.Users.FirstOrDefaultAsync(x => x.UserId == id);
+    public async Task<User> GetFirstByFunc(Expression<Func<User,bool>> func)
+    {
+        try
+        {
+            return await Context.Users.FirstAsync(func);
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
 
     public async Task<User> CreateAsync(User model)
     {
