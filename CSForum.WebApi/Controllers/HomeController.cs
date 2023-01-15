@@ -1,3 +1,4 @@
+using CSForum.Data.Context;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CSForum.WebApi.Controllers;
@@ -6,7 +7,15 @@ namespace CSForum.WebApi.Controllers;
 [Route("[controller]")]
 public class HomeController : ControllerBase
 {
-    public HomeController()
+    private ForumContext f { get; set; }
+
+    public HomeController(ForumContext d)
     {
+        f = d;
+    }
+    [HttpGet]
+    public ActionResult<string> GetConnection()
+    {
+        return Ok(f.Database.ToString());
     }
 }

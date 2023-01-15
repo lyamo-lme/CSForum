@@ -1,16 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSForum.WebApi", "CSForum.WebApi\CSForum.WebApi.csproj", "{989783F8-02C6-4157-AE7C-CE9360346054}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSForum.WebApi", "CSForum.WebApi\CSForum.WebApi.csproj", "{989783F8-02C6-4157-AE7C-CE9360346054}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSForum.WebUI", "CSForum.WebUI\CSForum.WebUI.csproj", "{F97E9269-4FD7-476C-A898-8D8203E927F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSForum.WebUI", "CSForum.WebUI\CSForum.WebUI.csproj", "{F97E9269-4FD7-476C-A898-8D8203E927F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSForum.Data", "CSForum.Data\CSForum.Data.csproj", "{CB062E13-7D49-4534-ADE1-0B5F18CD5ABB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSForum.Data", "CSForum.Data\CSForum.Data.csproj", "{CB062E13-7D49-4534-ADE1-0B5F18CD5ABB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSForum.Core", "CSForum.Core\CSForum.Core.csproj", "{B17AB8B6-4530-43AA-9590-79E79D1C7A6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSForum.Core", "CSForum.Core\CSForum.Core.csproj", "{B17AB8B6-4530-43AA-9590-79E79D1C7A6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSForum.Services", "CSForum.Services\CSForum.Services.csproj", "{E0F4B13A-D3A1-4040-B00B-A5C83470496D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSForum.Services", "CSForum.Services\CSForum.Services.csproj", "{E0F4B13A-D3A1-4040-B00B-A5C83470496D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSForum.Test", "tests\CSForum.Test\CSForum.Test.csproj", "{AFCF251C-9B72-47E1-9B8A-FFF851406FC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSForum.Test", "tests\CSForum.Test\CSForum.Test.csproj", "{AFCF251C-9B72-47E1-9B8A-FFF851406FC7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{00B4B2E5-763B-4F13-8200-47E47361732A}"
 EndProject
@@ -45,7 +48,13 @@ Global
 		{AFCF251C-9B72-47E1-9B8A-FFF851406FC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFCF251C-9B72-47E1-9B8A-FFF851406FC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AFCF251C-9B72-47E1-9B8A-FFF851406FC7} = {00B4B2E5-763B-4F13-8200-47E47361732A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {19C902AE-0E24-463E-9485-DA7A0C370E05}
 	EndGlobalSection
 EndGlobal

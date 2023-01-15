@@ -8,4 +8,6 @@ public class Answer
     public int UserId { get; set; }
     public DateTime DateCreate { get; set; }  
     public string Content { get; set; }
+    public User AnswerCreator { get; set; }
+    public Post Post { get; set; }
 }
