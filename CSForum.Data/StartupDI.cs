@@ -12,6 +12,7 @@ public static class StartupDI
         {
             option.UseSqlServer(connectionString);
         });
+        
         return serviceCollection;
     }
 }

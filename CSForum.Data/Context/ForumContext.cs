@@ -15,18 +15,7 @@ public class ForumContext : IdentityDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<PostTag>().HasKey(pt => new 
-        {
-            pt.PostId,
-            pt.TagId
-        });
-        
-        modelBuilder.ApplyConfiguration(new AnswerConfiguration());
-        modelBuilder.ApplyConfiguration(new PostConfiguration());
-        modelBuilder.ApplyConfiguration(new PostTagsConfiguration());
-        modelBuilder.ApplyConfiguration(new TagConfiguration());
-        modelBuilder.ApplyConfiguration(new UserConfiguration());
-        
+        modelBuilder.AddForumConfig();
         base.OnModelCreating(modelBuilder);
     }
 
