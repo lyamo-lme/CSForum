@@ -17,7 +17,7 @@ public class AnswerRepository : IAnswerRepository
     }
 
     public async Task<List<Answer>> GetAsync() => await Context.Answers.ToListAsync();
-    
+
     public async Task<Answer> GetFirstByFunc(Expression<Func<Answer, bool>> func)
     {
         try
@@ -55,6 +55,20 @@ public class AnswerRepository : IAnswerRepository
             });
             await Context.SaveChangesAsync();
             return await Task.FromResult(true);
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+
+    public async Task<Answer> UpdateAsync(Answer model)
+    {
+        try
+        {
+            var updModel = Context.Answers.Update(model);
+            await Context.SaveChangesAsync();
+            return updModel.Entity;
         }
         catch (Exception e)
         {

@@ -9,4 +9,5 @@ public interface IPostRepository
     public Task<Post?> GetFirstByFunc(Expression<Func<Post, bool>> func);
     public Task<Post> CreateAsync(Post model);
     public Task<bool> DeleteAsync(int id);
+    public Task<Post> UpdateAsync(Post model);
 }

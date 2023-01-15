@@ -9,4 +9,5 @@ public interface IUserRepository
     public Task<User> GetFirstByFunc(Expression<Func<User, bool>> func);
     public Task<User> CreateAsync(User model);
     public Task<bool> DeleteAsync(int id);
+    public Task<User> UpdateAsync(User model);
 }

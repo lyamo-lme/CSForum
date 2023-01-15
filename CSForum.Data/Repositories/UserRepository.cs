@@ -69,4 +69,18 @@ public class UserRepository : IUserRepository
             throw new Exception(e.Message);
         }
     }
+
+    public async Task<User> UpdateAsync(User model)
+    {
+        try
+        {
+            var updModel = Context.Users.Update(model);
+            await Context.SaveChangesAsync();
+            return updModel.Entity;
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
 }

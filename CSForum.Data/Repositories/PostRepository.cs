@@ -70,4 +70,18 @@ public class PostRepository : IPostRepository
             throw new Exception(e.Message) ;
         }
     }
+
+    public async Task<Post> UpdateAsync(Post model)
+    {
+        try
+        {
+            var updModel = Context.Posts.Update(model);
+            await Context.SaveChangesAsync();
+            return updModel.Entity;
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
 }

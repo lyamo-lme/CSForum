@@ -9,4 +9,5 @@ public interface IAnswerRepository
     public Task<Answer>  GetFirstByFunc(Expression<Func<Answer, bool>> func);
     public Task<Answer> CreateAsync(Answer model);
     public Task<bool> DeleteAsync(int id);
+    public Task<Answer> UpdateAsync(Answer model);
 }

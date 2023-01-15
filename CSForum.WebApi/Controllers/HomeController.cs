@@ -9,18 +9,15 @@ namespace CSForum.WebApi.Controllers;
 [Route("[controller]")]
 public class HomeController : ControllerBase
 {
-    private ForumContext f { get; set; }
     private IUserRepository u { get; set; }
-
-    public HomeController(ForumContext d, IUserRepository u)
+    public HomeController(IUserRepository u)
     {
-        f = d;
         this.u = u;
     }
     [HttpGet]
     public async Task<ActionResult<string>> GetConnection()
     {
         var model = await u.GetFirstByFunc(x => x.UserId==1);
-        return Ok(f.Database.ToString());
+        return Ok("Ok");
     }
 }
