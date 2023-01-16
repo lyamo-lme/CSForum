@@ -1,21 +1,22 @@
+using CSForum.Core.Models;
 using CSForum.Data;
 using CSForum.Data.Context;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
+var connectionString = builder.Configuration.GetConnectionString("MsSqlConnection");
 
+// Add services to the container.
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen ();
 
+builder.Services.AddDbForumContext(connectionString, migrationsAssembly);
 
-
-builder.Services.AddDbForumContext(
-    builder.Configuration.GetConnectionString("MsSqlConnection"));
 
 
 builder.Services.AddRepositories();
@@ -30,6 +31,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 
 app.UseAuthorization();
 

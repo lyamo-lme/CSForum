@@ -17,7 +17,6 @@ public class HomeController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<string>> GetConnection()
     {
-        var model = await u.GetFirstByFunc(x => x.UserId==1);
         return Ok("Ok");
     }
 }

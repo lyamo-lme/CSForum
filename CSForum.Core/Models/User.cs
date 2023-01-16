@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace CSForum.Core.Models;
 
 public class User
