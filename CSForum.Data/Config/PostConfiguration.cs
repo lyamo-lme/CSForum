@@ -15,7 +15,7 @@ public class PostConfiguration:IEntityTypeConfiguration<Post>
         builder.Property(prop => prop.UserId).IsRequired();
         builder.Property(prop => prop.DateCreate).IsRequired();
         builder.Property(prop => prop.Title).IsRequired();
-        
+
         builder.HasOne<User>(prop => prop.PostCreator)
             .WithMany(prop=>prop.Posts)
             .HasForeignKey(prop=>prop.UserId)

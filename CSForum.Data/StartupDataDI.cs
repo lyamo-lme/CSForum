@@ -13,8 +13,7 @@ public static class StartupDataDI
     {
         serviceCollection.AddDbContext<ForumDbContext>(option =>
         {
-            option.UseSqlServer(connectionString,
-            o=>o.MigrationsAssembly(assembly));
+            option.UseSqlServer(connectionString);
         });
         
         return serviceCollection;

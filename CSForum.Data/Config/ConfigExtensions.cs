@@ -4,7 +4,7 @@ namespace CSForum.Data.Config;
 
 public static class ConfigExtensions
 {
-    public static void AddForumConfig(this ModelBuilder modelBuilder)
+    public static void AddDbForumConfig(this ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new AnswerConfiguration());
         modelBuilder.ApplyConfiguration(new PostConfiguration());

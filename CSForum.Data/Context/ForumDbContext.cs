@@ -8,14 +8,18 @@ namespace CSForum.Data.Context;
 public class ForumDbContext : IdentityDbContext<User>
 {
     public ForumDbContext(DbContextOptions<ForumDbContext> options) : base(options)
-    {}
-    
+    {
+        Database.EnsureDeleted();
+        Database.EnsureCreated();
+    }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.AddForumConfig();
+        modelBuilder.AddDbForumConfig();
         base.OnModelCreating(modelBuilder);
     }
+
     public DbSet<Post> Posts { get; set; }
     public DbSet<Answer> Answers { get; set; }
     public DbSet<Tag> Tags { get; set; }

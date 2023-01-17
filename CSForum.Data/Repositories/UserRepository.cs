@@ -59,7 +59,7 @@ public class UserRepository : IUserRepository
         {
             Context.Users.Remove(new User()
             {
-                Id = $"{id}"
+                Id =$"id"
             });
             await Context.SaveChangesAsync();
             return await Task.FromResult(true);
