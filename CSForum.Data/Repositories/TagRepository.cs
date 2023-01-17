@@ -8,9 +8,9 @@ namespace CSForum.Data.Repositories;
 
 public class TagRepository : IRepository<Tag>
 {
-    private ForumContext Context { get; set; }
+    private ForumDbContext Context { get; set; }
 
-    public TagRepository(ForumContext context)
+    public TagRepository(ForumDbContext context)
     {
         Context = context;
     }
@@ -27,14 +27,27 @@ public class TagRepository : IRepository<Tag>
         }
     }
 
-    public Task<Tag> GetFirstByFunc(Expression<Func<Tag, bool>> func)
+    public async Task<Tag> FindAsync(Expression<Func<Tag, bool>> func)
     {
-        throw new NotImplementedException();
+        try {
+            return await Context.Tags.FirstAsync(func);
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message, e);
+        }
     }
 
-    public Task<Tag> CreateAsync(Tag model)
+    public async Task<Tag> CreateAsync(Tag model)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await Context.Tags.AddAsync(model);
+            return model;
+        }
+        catch (Exception e) { 
+            throw new Exception(e.Message, e);
+        }
     }
 
     public Task<bool> DeleteAsync(int id)
@@ -45,5 +58,9 @@ public class TagRepository : IRepository<Tag>
     public Task<Tag> UpdateAsync(Tag model)
     {
         throw new NotImplementedException();
+    }
+    public async Task SaveChanges()
+    {
+        await Context.SaveChangesAsync();
     }
 }

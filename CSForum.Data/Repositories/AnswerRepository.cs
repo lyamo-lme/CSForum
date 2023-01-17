@@ -9,16 +9,26 @@ namespace CSForum.Data.Repositories;
 public class AnswerRepository : IAnswerRepository
 {
     private IAnswerRepository _answerRepositoryImplementation;
-    private ForumContext Context { get; set; }
+    private ForumDbContext Context { get; set; }
 
-    public AnswerRepository(ForumContext context)
+    public AnswerRepository(ForumDbContext context)
     {
         Context = context;
     }
 
-    public async Task<List<Answer>> GetAsync() => await Context.Answers.ToListAsync();
+    public async Task<List<Answer>> GetAsync()
+    {
+        try
+        {
+          return  await Context.Answers.ToListAsync();
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
 
-    public async Task<Answer> GetFirstByFunc(Expression<Func<Answer, bool>> func)
+    public async Task<Answer> FindAsync(Expression<Func<Answer, bool>> func)
     {
         try
         {
@@ -36,7 +46,6 @@ public class AnswerRepository : IAnswerRepository
         try
         {
             await Context.Answers.AddAsync(model);
-            await Context.SaveChangesAsync();
             return model;
         }
         catch (Exception e)
@@ -53,7 +62,6 @@ public class AnswerRepository : IAnswerRepository
             {
                 Id = id
             });
-            await Context.SaveChangesAsync();
             return await Task.FromResult(true);
         }
         catch (Exception e)
@@ -67,12 +75,16 @@ public class AnswerRepository : IAnswerRepository
         try
         {
             var updModel = Context.Answers.Update(model);
-            await Context.SaveChangesAsync();
             return updModel.Entity;
         }
         catch (Exception e)
         {
             throw new Exception(e.Message);
         }
+    }
+
+    public async Task SaveChanges()
+    {
+            await Context.SaveChangesAsync();
     }
 }

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSForum.Data.Migrations
 {
-    [DbContext(typeof(ForumContext))]
+    [DbContext(typeof(ForumDbContext))]
     [Migration("20230115225254_NAME")]
     partial class NAME
     {

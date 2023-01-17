@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSForum.Data.Context;
 
-public class ForumContext : IdentityDbContext
+public class ForumDbContext : IdentityDbContext<User>
 {
-    public ForumContext(DbContextOptions<ForumContext> options) : base(options)
+    public ForumDbContext(DbContextOptions<ForumDbContext> options) : base(options)
     {}
     
 

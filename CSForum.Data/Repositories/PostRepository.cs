@@ -8,9 +8,9 @@ namespace CSForum.Data.Repositories;
 
 public class PostRepository : IPostRepository
 {
-    private ForumContext Context { get; set; }
+    private ForumDbContext Context { get; set; }
 
-    public PostRepository(ForumContext forumContext)
+    public PostRepository(ForumDbContext forumContext)
     {
         Context = forumContext;
     }
@@ -27,7 +27,7 @@ public class PostRepository : IPostRepository
         }
     }
 
-    public  async Task<Post> GetFirstByFunc(Expression<Func<Post, bool>> func)
+    public  async Task<Post> FindAsync(Expression<Func<Post, bool>> func)
     {
         try
         {
@@ -45,7 +45,6 @@ public class PostRepository : IPostRepository
         try
         {
              await Context.Posts.AddAsync(model);
-             await Context.SaveChangesAsync();
              return model;
         }
         catch (Exception e)
@@ -62,7 +61,6 @@ public class PostRepository : IPostRepository
             {
                 Id = id
             });
-            await Context.SaveChangesAsync();
             return await Task.FromResult(true);
         }
         catch (Exception e)
@@ -76,12 +74,15 @@ public class PostRepository : IPostRepository
         try
         {
             var updModel = Context.Posts.Update(model);
-            await Context.SaveChangesAsync();
             return updModel.Entity;
         }
         catch (Exception e)
         {
             throw new Exception(e.Message);
         }
+    }
+    public async Task SaveChanges()
+    {
+        await Context.SaveChangesAsync();
     }
 }

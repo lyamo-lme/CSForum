@@ -1,12 +1,14 @@
 using CSForum.Core.IRepositories;
 using CSForum.Data.Context;
 using CSForum.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CSForum.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class HomeController : ControllerBase
 {
     private IUserRepository u { get; set; }

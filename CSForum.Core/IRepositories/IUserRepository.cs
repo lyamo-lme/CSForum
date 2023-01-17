@@ -6,8 +6,10 @@ namespace CSForum.Core.IRepositories;
 public interface IUserRepository
 {
     public Task<List<User>> GetAsync();
-    public Task<User> GetFirstByFunc(Expression<Func<User, bool>> func);
+    public Task<User> FindAsync(Expression<Func<User, bool>> func);
     public Task<User> CreateAsync(User model);
     public Task<bool> DeleteAsync(int id);
     public Task<User> UpdateAsync(User model);
+    public Task SaveChanges();
+
 }

@@ -1,13 +1,13 @@
 # Code solution forum
-Проект форум (з референсом на stack overflow).
+Forum with reference on stackoverflow
  
-Мінімум функцій, які плануються: 
- - Відкривати питання та рішення їх від інших юзерів
- - В кожного питання буде тег з тематикою
- - Чат між юзерами
- - Сервіс для електроної пошти
- - Повідомлення на сайті
- - Пошук по сайту
+Features what planned: 
+ - Open questions and reponses by users 
+ - Questions with themes tags
+ - Chating between users
+ - Email service 
+ - Messages on the site
+ - Search the site
 
-Для контенту буде використовуватись 
+For content will use
 [CK Editor](https://ckeditor.com/docs/ckbox/latest/guides/quick-start.html)

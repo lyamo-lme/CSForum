@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CSForum.Data.Migrations
 {
-    [DbContext(typeof(ForumContext))]
+    [DbContext(typeof(ForumDbContext))]
     partial class ForumContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
