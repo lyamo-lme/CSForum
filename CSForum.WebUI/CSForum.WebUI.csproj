@@ -17,6 +17,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CSForum.Data\CSForum.Data.csproj" />
+      <ProjectReference Include="..\CSForum.Shared\CSForum.Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\skeditorscript" />
     </ItemGroup>
 
 </Project>

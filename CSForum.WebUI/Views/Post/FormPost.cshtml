@@ -1,0 +1,39 @@
+@model CSForum.Shared.dtoModels.CreatePost
+
+@{
+    ViewBag.Title = "Create Post";
+    // Layout = "_Layout";
+}
+
+<form asp-action="CreatePost" method="post">
+    <script src="~/skeditorscript/ckeditor5/ckeditor.js"></script>
+    <div>
+        <label >Title</label>
+        <input asp-for="Title"/>
+    </div>
+    <div>
+        <label>Content</label>
+        <textarea asp-for="Content"  id="Content"></textarea>
+    </div>
+    <button type="submit">Post</button>
+    <script>    
+     let editor = ClassicEditor.create(Content);
+//      editor.then(()=>{
+//       let ck = document.querySelector("div.ck");
+//       let text = ck.querySelector("p");
+//           // console.log(text)
+//           // text.addEventListener("keydown", (e)=>{
+//           // console.log(e)
+//           // });
+//       
+//         let  config = { attributes: true, childList: true, subtree: true };
+//
+//             let observer = new MutationObserver((list) => {
+//   Content.textContent = list[0].target.textContent;
+// });
+//
+// observer.observe(text, config);   
+//      })
+    
+    </script>
+</form>
