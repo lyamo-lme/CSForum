@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSForum.Shared", "CSForum.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSForum.WebUI", "CSForum.WebUI\CSForum.WebUI.csproj", "{3793BAFD-4FB2-4AF2-B73B-619099F75BA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSForum.WebApi", "CSForum.WebApi\CSForum.WebApi.csproj", "{622038D1-89C8-4D35-B286-FE441DF14AE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSForum.WebApi", "CSForum.WebApi\CSForum.WebApi.csproj", "{622038D1-89C8-4D35-B286-FE441DF14AE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSForum.IdentityServer", "CSForum.IdentityServer\CSForum.IdentityServer.csproj", "{C7F47019-79A8-4A4C-BDAD-CA4335165206}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{622038D1-89C8-4D35-B286-FE441DF14AE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{622038D1-89C8-4D35-B286-FE441DF14AE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{622038D1-89C8-4D35-B286-FE441DF14AE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7F47019-79A8-4A4C-BDAD-CA4335165206}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7F47019-79A8-4A4C-BDAD-CA4335165206}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7F47019-79A8-4A4C-BDAD-CA4335165206}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7F47019-79A8-4A4C-BDAD-CA4335165206}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

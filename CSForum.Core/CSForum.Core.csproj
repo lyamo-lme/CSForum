@@ -10,8 +10,4 @@
       <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="7.0.1" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Mapper" />
-    </ItemGroup>
-
 </Project>

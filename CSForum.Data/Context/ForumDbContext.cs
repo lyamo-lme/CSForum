@@ -9,8 +9,8 @@ public class ForumDbContext : IdentityDbContext<User>
 {
     public ForumDbContext(DbContextOptions<ForumDbContext> options) : base(options)
     {
-        Database.EnsureDeleted();
-        Database.EnsureCreated();
+        //Database.EnsureDeleted();
+        //Database.EnsureCreated();
     }
 
 
