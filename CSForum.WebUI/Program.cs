@@ -1,16 +1,16 @@
 using CSForum.Core.Models;
+using CSForum.Data;
 using CSForum.Data.Context;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using CSForum.WebUI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var assembly = typeof(Program).Assembly.GetName().Name;
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("MsSqlConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("MsSqlConnection");
 
-builder.Services.AddDbContext<ForumDbContext>(options =>
-    options.UseSqlServer(connectionString));
-
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddDbForumContext(connectionString, assembly);
 
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ForumDbContext>();

@@ -4,14 +4,10 @@ using CSForum.IdentityServer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 var assembly = typeof(Program).Assembly.GetName().Name;
 var defaultConnString = builder.Configuration.GetConnectionString("MsSqlConnection");
-
-SeedData.EnsureSeedData(defaultConnString);
 
 builder.Services.AddDbContext<ForumDbContext>(options =>
     options.UseSqlServer(defaultConnString,

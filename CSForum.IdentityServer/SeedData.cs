@@ -7,6 +7,8 @@ using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using AutoMapper;
+using IdentityServer4.EntityFramework.Entities;
 
 namespace CSForum.IdentityServer
 {
@@ -97,12 +99,12 @@ namespace CSForum.IdentityServer
 
         private static void EnsureSeedData(ConfigurationDbContext context)
         {
-            if (!context.Clients.Any())
+       
+             if (!context.Clients.Any())
             {
                 foreach (var client in Config.Clients.ToList())
-                {
-                    var model = client.ToEntity();
-                    context.Clients.Add(model);
+                { 
+                    context.Clients.Add(client.ToEntity());
                 }
 
                 context.SaveChanges();
@@ -114,7 +116,6 @@ namespace CSForum.IdentityServer
                 {
                     context.IdentityResources.Add(resource.ToEntity());
                 }
-
                 context.SaveChanges();
             }
 

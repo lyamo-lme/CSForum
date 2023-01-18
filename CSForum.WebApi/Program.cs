@@ -1,7 +1,5 @@
-using AutoMapper;
-using CSForum.Data;
-using CSForum.Services.Mapper;
 
+using CSForum.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 var assembly = typeof(Program).Assembly.GetName().Name;
@@ -13,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+// builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddDbForumContext(
     builder.Configuration.GetConnectionString("MsSqlConnection"), assembly);

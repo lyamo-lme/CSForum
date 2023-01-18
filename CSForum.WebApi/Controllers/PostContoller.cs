@@ -1,4 +1,4 @@
-using AutoMapper;
+
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Shared.dtoModels;
@@ -11,7 +11,7 @@ namespace CSForum.WebApi.Controllers
     public class PostContoller : Controller
     {
         private readonly IPostRepository PostRepository;
-        private readonly IMapper mapper;
+        // private readonly IMapper mapper;
         public PostContoller(IPostRepository postRepository)
         {
             PostRepository = postRepository;
