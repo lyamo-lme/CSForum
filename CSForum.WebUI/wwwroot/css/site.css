@@ -21,12 +21,7 @@ body {
   margin-bottom: 60px;
 }
 
-body header nav *{
+body header > nav.navbar.bg-blue {
   color: white;
-}
-body header nav {
-  color: white;
-}
-ul li a.nav-link.text-white{
-  color: white;
+  background-color: #0d59cb;
 }

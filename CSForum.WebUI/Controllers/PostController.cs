@@ -1,6 +1,6 @@
 using AutoMapper;
 using CSForum.Services.MapperConfigurations;
-using CSForum.Shared.dtoModels;
+using CSForum.Shared.Models.dtoModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CSForum.WebUI.Controllers;
@@ -12,7 +12,6 @@ public class PostController:Controller
     {
         mapper = MapperFactory.CreateMapper<DtoMapper>();
     }
-
     [HttpGet]
     public IActionResult CreatePost()
     {
@@ -22,6 +21,12 @@ public class PostController:Controller
     [HttpPost]
     public IActionResult CreatePost(CreatePost model)
     {     
+        return View();
+    }
+
+    [HttpGet]
+    IActionResult Post(int postId)
+    {
         return View();
     }
 }

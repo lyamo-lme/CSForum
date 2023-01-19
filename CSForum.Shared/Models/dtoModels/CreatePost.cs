@@ -1,4 +1,4 @@
-namespace CSForum.Shared.dtoModels;
+namespace CSForum.Shared.Models.dtoModels;
 
 public class CreatePost
 {

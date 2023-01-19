@@ -1,6 +1,6 @@
 using AutoMapper;
 using CSForum.Core.Models;
-using CSForum.Shared.dtoModels;
+using CSForum.Shared.Models.dtoModels;
 
 namespace CSForum.Services.MapperConfigurations;
 
