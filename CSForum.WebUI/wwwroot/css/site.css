@@ -20,6 +20,13 @@ html {
 body {
   margin-bottom: 60px;
 }
-a.navbar-brand{
-  color:  blue;
+
+body header nav *{
+  color: white;
+}
+body header nav {
+  color: white;
+}
+ul li a.nav-link.text-white{
+  color: white;
 }

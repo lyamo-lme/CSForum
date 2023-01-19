@@ -10,6 +10,8 @@ var assembly = typeof(Program).Assembly.GetName().Name;
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("MsSqlConnection");
 
+builder.Services.AddDbContext<ForumDbContext>(options => options.UseSqlServer(connectionString));
+
 builder.Services.AddDbForumContext(connectionString, assembly);
 
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
