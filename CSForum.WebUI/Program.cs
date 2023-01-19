@@ -1,3 +1,4 @@
+using System.Reflection;
 using CSForum.Core.Models;
 using CSForum.Data;
 using CSForum.Data.Context;
@@ -16,6 +17,8 @@ builder.Services.AddDbForumContext(connectionString, assembly);
 
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ForumDbContext>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllersWithViews();
 
