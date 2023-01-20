@@ -10,5 +10,5 @@ public interface IPostRepository
     public Task<Post> CreateAsync(Post model);
     public Task<bool> DeleteAsync(int id);
     public Task<Post> UpdateAsync(Post model);
-    public Task SaveChanges();
+    public Task SaveChangesAsync();
 }

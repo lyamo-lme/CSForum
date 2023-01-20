@@ -6,6 +6,7 @@ using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,9 +39,17 @@ namespace CSForum.Services.EmailService
 
             using (var smtpClient = new SmtpClient())
             {
-                smtpClient.Connect("smtp.gmail.com", 587, true);
-                await smtpClient.AuthenticateAsync(emailAddress, password);
-                await smtpClient.SendAsync(message);
+               
+                smtpClient.Connect("smtp.gmail.com", 465, true);
+                try
+                {
+                    await smtpClient.AuthenticateAsync(emailAddress, password);
+                    await smtpClient.SendAsync(message);
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
         }
     }

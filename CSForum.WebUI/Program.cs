@@ -1,17 +1,22 @@
 using System.Reflection;
 using CSForum.Core.Models;
+using CSForum.Core.Service;
 using CSForum.Data;
 using CSForum.Data.Context;
+using CSForum.Services.EmailService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CSForum.WebUI.Data;
+using CSForum.Shared.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly.GetName().Name;
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("MsSqlConnection");
 
-builder.Services.AddDbContext<ForumDbContext>(options => options.UseSqlServer(connectionString));
+builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("Secrets.json", optional: true);
+
 
 builder.Services.AddDbForumContext(connectionString, assembly);
 
@@ -19,6 +24,11 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
     .AddEntityFrameworkStores<ForumDbContext>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
+var password = builder.Configuration["emailpassword"];
+var email = builder.Configuration["email"];
+builder.Services.AddSingleton<IEmailService>(new EmailService(password, email));
 
 builder.Services.AddControllersWithViews();
 

@@ -1,4 +1,5 @@
 using AutoMapper;
+using CSForum.Core.Models;
 using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models.dtoModels;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ public class PostController:Controller
     [HttpPost]
     public IActionResult CreatePost(CreatePost model)
     {     
-        return View();
+        return View("Post", mapper.Map<Post>(model));
     }
 
     [HttpGet]

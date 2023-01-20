@@ -81,7 +81,7 @@ public class PostRepository : IPostRepository
             throw new Exception(e.Message);
         }
     }
-    public async Task SaveChanges()
+    public async Task SaveChangesAsync()
     {
         await Context.SaveChangesAsync();
     }

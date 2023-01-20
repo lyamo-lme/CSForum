@@ -5,4 +5,19 @@
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+<h2>@Model.Title</h2>
+<div>
+    @Html.Raw(@Model.Content);
+</div>
+<div>
+    @if (@Model.Answers != null)
+    {
+        @foreach (var answers in @Model.Answers)
+        {
+            <div>
+                <p>@answers.AnswerCreator.UserName</p>
+                <p>@answers.Content</p>
+            </div>
+        }
+    }
+</div>
