@@ -50,7 +50,7 @@ public class TagRepository : ITagRepository
         }
     }
 
-    public Task<bool> DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
         try
         {
