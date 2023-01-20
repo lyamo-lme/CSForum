@@ -1,4 +1,4 @@
-@model CreatePost
+@model CSForum.Shared.Models.dtoModels.CreatePost
 
 @{
     ViewBag.Title = "Create Post";
@@ -6,34 +6,29 @@
 }
 
 <form asp-action="CreatePost" method="post">
-    <script src="~/skeditorscript/ckeditor5/ckeditor.js"></script>
+    <link rel="stylesheet" href="~/skeditorscript/ckeditor4/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css">
+   
+    <script src="~/skeditorscript/ckeditor4/ckeditor.js"></script>
+    <script src="~/skeditorscript/ckeditor4/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
     <div>
         <label >Title</label>
         <input asp-for="Title"/>
     </div>
     <div>
         <label>Content</label>
-        <textarea asp-for="Content"  id="Content"></textarea>
+        <textarea asp-for="Content"  id="content"></textarea>
     </div>
     <button type="submit">Post</button>
-    <script>    
-     let editor = ClassicEditor.create(Content);
-//      editor.then(()=>{
-//       let ck = document.querySelector("div.ck");
-//       let text = ck.querySelector("p");
-//           // console.log(text)
-//           // text.addEventListener("keydown", (e)=>{
-//           // console.log(e)
-//           // });
-//       
-//         let  config = { attributes: true, childList: true, subtree: true };
-//
-//             let observer = new MutationObserver((list) => {
-//   Content.textContent = list[0].target.textContent;
-// });
-//
-// observer.observe(text, config);   
-//      })
-    
+    <script>  
+    document.addEventListener("DOMContentLoaded", ()=>{
+        let config = {
+            extraPlugins: "codesnippet",
+            codeSnippet_theme: 'monokai_sublime',
+            height: 365
+        }
+    let editor = CKEDITOR.replace("content",config);
+        
+    })
+  
     </script>
 </form>

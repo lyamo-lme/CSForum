@@ -1,7 +1,6 @@
 
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
-using CSForum.Shared.dtoModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CSForum.WebApi.Controllers
