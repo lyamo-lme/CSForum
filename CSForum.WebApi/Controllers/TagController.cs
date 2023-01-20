@@ -16,7 +16,7 @@ namespace CSForum.WebApi.Controllers
             TagRepository = postRepository;
         }
         [HttpPost]
-        public async Task<ActionResult<Tag>> CreatePost([FromBody] Tag model)
+        public async Task<ActionResult<Tag>> CreateTag([FromBody] Tag model)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace CSForum.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Tag>> EditPost([FromBody] Tag model)
+        public async Task<ActionResult<Tag>> EditTag([FromBody] Tag model)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace CSForum.WebApi.Controllers
             }
         }
         [HttpGet]
-        public async Task<ActionResult<Tag>> GetPost(int postId)
+        public async Task<ActionResult<Tag>> GetTag(int postId)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace CSForum.WebApi.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult<bool>> DeletePost(int postId)
+        public async Task<ActionResult<bool>> DeleteTag(int postId)
         {
             try
             {

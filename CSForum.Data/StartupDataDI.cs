@@ -23,7 +23,7 @@ public static class StartupDataDI
         serviceCollection.AddTransient<IUserRepository, UserRepository>();
         serviceCollection.AddTransient<IPostRepository, PostRepository>();
         serviceCollection.AddTransient<IAnswerRepository, AnswerRepository>();
-        serviceCollection.AddTransient<IRepository<Tag>, TagRepository>();
+        serviceCollection.AddTransient<ITagRepository, TagRepository>();
         return serviceCollection;
     }
 }
