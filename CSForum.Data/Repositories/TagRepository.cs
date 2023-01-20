@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSForum.Data.Repositories;
 
-public class TagRepository : IRepository<Tag>
+public class TagRepository : ITagRepository
 {
     private ForumDbContext Context { get; set; }
 
@@ -52,14 +52,33 @@ public class TagRepository : IRepository<Tag>
 
     public Task<bool> DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            Context.Posts.Remove(new Post()
+            {
+                Id = id
+            });
+            return await Task.FromResult(true);
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
     }
 
-    public Task<Tag> UpdateAsync(Tag model)
+    public async Task<Tag> UpdateAsync(Tag model)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var updModel = Context.Tags.Update(model);
+            return updModel.Entity;
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
     }
-    public async Task SaveChanges()
+    public async Task SaveChangesAsync()
     {
         await Context.SaveChangesAsync();
     }

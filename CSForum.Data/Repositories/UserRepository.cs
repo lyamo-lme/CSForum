@@ -44,7 +44,6 @@ public class UserRepository : IUserRepository
         try
         {
             await Context.Users.AddAsync(model);
-            await Context.SaveChangesAsync();
             return model;
         }
         catch (Exception e)
@@ -61,7 +60,6 @@ public class UserRepository : IUserRepository
             {
                 Id =$"id"
             });
-            await Context.SaveChangesAsync();
             return await Task.FromResult(true);
         }
         catch (Exception e)
@@ -75,7 +73,6 @@ public class UserRepository : IUserRepository
         try
         {
             var updModel = Context.Users.Update(model);
-            await Context.SaveChangesAsync();
             return updModel.Entity;
         }
         catch (Exception e)
