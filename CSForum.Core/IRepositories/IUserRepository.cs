@@ -10,6 +10,6 @@ public interface IUserRepository
     public Task<User> CreateAsync(User model);
     public Task<bool> DeleteAsync(int id);
     public Task<User> UpdateAsync(User model);
-    public Task SaveChanges();
+    public Task SaveChangesAsync();
 
 }

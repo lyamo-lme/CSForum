@@ -16,7 +16,7 @@ namespace CSForum.WebApi.Controllers
             PostRepository = postRepository;
         }
 
-        [HttpPost]
+        [HttpPost, Route("create")]
         public async Task<ActionResult<Post>> CreatePost([FromBody]Post model)
         {
             try
@@ -31,7 +31,7 @@ namespace CSForum.WebApi.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost, Route("edit")]
         public async Task<ActionResult<Post>> EditPost([FromBody]Post model)
         {
             try
@@ -58,7 +58,7 @@ namespace CSForum.WebApi.Controllers
             }
         }
         
-        [HttpDelete]
+        [HttpDelete, Route("delete")]
         public async Task<ActionResult<bool>> DeletePost(int postId)
         {
             try

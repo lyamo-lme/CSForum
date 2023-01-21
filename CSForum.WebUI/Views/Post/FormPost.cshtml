@@ -7,7 +7,6 @@
 
 <form asp-action="CreatePost" method="post">
     <link rel="stylesheet" href="~/skeditorscript/ckeditor4/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css">
-   
     <script src="~/skeditorscript/ckeditor4/ckeditor.js"></script>
     <script src="~/skeditorscript/ckeditor4/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
     <div>
@@ -16,7 +15,7 @@
     </div>
     <div>
         <label>Content</label>
-        <textarea asp-for="Content"  id="content"></textarea>
+        <textarea asp-for="Content"  id="content" ></textarea>
     </div>
     <button type="submit">Post</button>
     <script>  
@@ -27,6 +26,6 @@
             height: 365
         }
     let editor = CKEDITOR.replace("content",config); 
-    })
+    });
     </script>
 </form>

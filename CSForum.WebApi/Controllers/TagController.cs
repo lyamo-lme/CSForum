@@ -15,7 +15,7 @@ namespace CSForum.WebApi.Controllers
         {
             TagRepository = postRepository;
         }
-        [HttpPost]
+        [HttpPost, Route("create")]
         public async Task<ActionResult<Tag>> CreateTag([FromBody] Tag model)
         {
             try
@@ -30,7 +30,7 @@ namespace CSForum.WebApi.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost, Route("edit")]
         public async Task<ActionResult<Tag>> EditTag([FromBody] Tag model)
         {
             try
@@ -57,7 +57,7 @@ namespace CSForum.WebApi.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Route("delete")]
         public async Task<ActionResult<bool>> DeleteTag(int postId)
         {
             try
