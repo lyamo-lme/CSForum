@@ -7,22 +7,21 @@ using Newtonsoft.Json;
 
 namespace CSForum.Services.HttpClients;
 
-public class UserClient :TypedApiClient, IUserClient
+public class PostClient:TypedApiClient,IPostClient
 {
     
-    public UserClient(HttpClient client, IOptions<ApiSettingConfig> apiSettings):base(client, apiSettings)
+    public PostClient(HttpClient client, IOptions<ApiSettingConfig> apiSettings):base(client, apiSettings)
     {
     }
-
-    public async Task<User> CreateUser(User model)
+    public async Task<Post> CreatePost(Post model)
     {
         try
         {
-            var uri = new Uri(client.BaseAddress + "api/users/create");
+            var uri = new Uri(client.BaseAddress + "api/posts/create");
             var json = JsonConvert.SerializeObject(model);
             var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
             var response = await client.PostAsync(uri, stringContent);
-            return JsonConvert.DeserializeObject<User>(response.Content.ToString());
+            return JsonConvert.DeserializeObject<Post>(response.Content.ToString());
         }
         catch (Exception e)
         {
@@ -30,15 +29,15 @@ public class UserClient :TypedApiClient, IUserClient
         }
     }
 
-    public async Task<User> EditUser(User model)
+    public async Task<Post> EditPost(Post model)
     {
         try
         {
-            var uri = new Uri(client.BaseAddress + "api/users/edit");
+            var uri = new Uri(client.BaseAddress +"api/posts/edit");
             var json = JsonConvert.SerializeObject(model);
             var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
             var response = await client.PostAsync(uri, stringContent);
-            return JsonConvert.DeserializeObject<User>(response.Content.ToString());
+            return JsonConvert.DeserializeObject<Post>(response.Content.ToString());
         }
         catch (Exception e)
         {
@@ -46,11 +45,11 @@ public class UserClient :TypedApiClient, IUserClient
         }
     }
 
-    public async Task<bool> DeleteUser(string userId)
+    public async Task<bool> DeletePost(string postId)
     {
         try
         {
-            var uri = new Uri(client.BaseAddress + $"api/users/delete?userId={userId}");
+            var uri = new Uri(client.BaseAddress + $"api/posts/delete?postId={postId}");
             var response = await client.DeleteAsync(uri);
             return response.IsSuccessStatusCode;
         }
@@ -60,13 +59,13 @@ public class UserClient :TypedApiClient, IUserClient
         }
     }
 
-    public async Task<List<User>> GetUsers()
+    public async Task<List<Post>> GetPosts()
     {
         try
         {
-            var uri = new Uri(client.BaseAddress + "api/users");
+            var uri = new Uri(client.BaseAddress + "api/posts");
             var response = await client.GetAsync(uri);
-            return JsonConvert.DeserializeObject<List<User>>(response.Content.ToString());
+            return JsonConvert.DeserializeObject<List<Post>>(response.Content.ToString());
         }
         catch(Exception e)
         {

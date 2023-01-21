@@ -45,12 +45,24 @@ namespace CSForum.WebApi.Controllers
                 throw new Exception(e.Message, e);
             }
         }
-        [HttpGet]
-        public async Task<ActionResult<Post>> GetPost(int postId)
+        [HttpGet,Route("id")]
+        public async Task<ActionResult<Post>> FindPost(int postId)
         {
             try
             {
                 return Ok(await PostRepository.FindAsync(x => x.Id == postId));
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message, e);
+            }
+        }
+        [HttpGet]
+        public async Task<ActionResult<Post>> GetPosts()
+        {
+            try
+            {
+                return Ok(await PostRepository.GetAsync());
             }
             catch (Exception e)
             {
