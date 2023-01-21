@@ -8,8 +8,8 @@ var assembly = typeof(Program).Assembly.GetName().Name;
 builder.Services.AddControllers();
 
 
-builder.Configuration
-    .SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json");
+builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("Secrets.json", optional: true);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

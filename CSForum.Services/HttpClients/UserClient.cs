@@ -9,14 +9,14 @@ namespace CSForum.Services.HttpClients;
 
 public class UserClient : IUserClient
 {
-    private HttpClient client;
-    private ApiSettingConfig apiSettings;
+    private readonly HttpClient client;
+    private readonly ApiSettingConfig apiSettings;
 
-    public UserClient(HttpClient client, IOptions<ApiSettingConfig> options)
+    public UserClient(HttpClient client, IOptions<ApiSettingConfig> apiSettings)
     {
         this.client = client;
-        apiSettings = options.Value;
-        this.client.BaseAddress = new Uri(apiSettings.webApiUrl);
+        this.apiSettings = apiSettings.Value;
+        this.client.BaseAddress = new Uri(this.apiSettings.webApiUrl);
     }
 
     public async Task<User> CreateUser(User model)
@@ -35,18 +35,47 @@ public class UserClient : IUserClient
         }
     }
 
-    public Task<User> EditUser(User model)
+    public async Task<User> EditUser(User model)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var uri = new Uri(client.BaseAddress + "api/users/edit");
+            var json = JsonConvert.SerializeObject(model);
+            var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+            var response = await client.PostAsync(uri, stringContent);
+            return JsonConvert.DeserializeObject<User>(response.Content.ToString());
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message, e);
+        }
     }
 
-    public Task<User> DeleteUser(string userId)
+    public async Task<bool> DeleteUser(string userId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var uri = new Uri(client.BaseAddress + $"api/users/delete?userId={userId}");
+            var response = await client.DeleteAsync(uri);
+            return response.IsSuccessStatusCode;
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message, e);
+        }
     }
 
-    public Task<User> GetUsers()
+    public async Task<List<User>> GetUsers()
     {
-        throw new NotImplementedException();
+        try
+        {
+            var uri = new Uri(client.BaseAddress + "api/users");
+            var response = await client.GetAsync(uri);
+            return JsonConvert.DeserializeObject<List<User>>(response.Content.ToString());
+        }
+        catch(Exception e)
+        {
+            throw new Exception(e.Message, e);
+        }
     }
 }

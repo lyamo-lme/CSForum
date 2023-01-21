@@ -1,12 +1,10 @@
-using System.Reflection;
+using CSForum.Core.IHttpClients;
 using CSForum.Core.Models;
 using CSForum.Core.Service;
 using CSForum.Data;
 using CSForum.Data.Context;
 using CSForum.Services.EmailService;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using CSForum.WebUI.Data;
+using CSForum.Services.HttpClients;
 using CSForum.Shared.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,10 +24,13 @@ builder.Services.AddDbForumContext(connectionString, assembly);
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ForumDbContext>();
 
+//http client
+builder.Services.AddHttpClient<IUserClient, UserClient>();
+
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-//Ioptions for api
+//Ioptions for api settings
 builder.Services.Configure<ApiSettingConfig>(options 
     => builder.Configuration.GetSection("DevelopmentApiSettings").Bind(options));
 

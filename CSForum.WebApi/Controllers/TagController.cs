@@ -63,6 +63,8 @@ namespace CSForum.WebApi.Controllers
             try
             {
                 var state = await TagRepository.DeleteAsync(postId);
+                await TagRepository.SaveChangesAsync();
+
                 return Ok(state);
             }
             catch (Exception e)

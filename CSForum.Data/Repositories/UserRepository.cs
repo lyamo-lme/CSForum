@@ -52,13 +52,13 @@ public class UserRepository : IUserRepository
         }
     }
 
-    public async Task<bool> DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(string id)
     {
         try
         {
             Context.Users.Remove(new User()
-            {
-                Id =$"id"
+            {   
+                Id = id
             });
             return await Task.FromResult(true);
         }
