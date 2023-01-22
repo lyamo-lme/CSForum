@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using AutoMapper;
 using IdentityServer4.EntityFramework.Entities;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CSForum.IdentityServer
 {
