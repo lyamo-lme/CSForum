@@ -11,7 +11,7 @@ public class UserClient :TypedApiClient, IUserClient
 {
 
 
-    public UserClient(HttpClient client, IOptions<ApiSettingConfig> apiSettings):base(client,apiSettings)
+    public UserClient(HttpClient client, IOptions<ApiSettingConfig> apiSettings):base(client,apiSettings.Value)
     {
     }
 

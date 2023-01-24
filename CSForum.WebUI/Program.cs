@@ -10,8 +10,12 @@ using CSForum.Shared.Models;
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly.GetName().Name;
 
+
+var confi = builder.Configuration.GetSection("DevelopmentApiSettings");
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("MsSqlConnection");
+
+
 
 //add users secrets json
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
@@ -24,15 +28,20 @@ builder.Services.AddDbForumContext(connectionString, assembly);
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ForumDbContext>();
 
+
+//Ioptions for api settings
+builder.Services.Configure<ApiSettingConfig>(
+    builder.Configuration.GetSection("DevelopmentApiSettings")
+    );
+
 //http client
 builder.Services.AddHttpClient<IUserClient, UserClient>();
+builder.Services.AddHttpClient<IPostClient, PostClient>();
 
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-//Ioptions for api settings
-builder.Services.Configure<ApiSettingConfig>(options 
-    => builder.Configuration.GetSection("DevelopmentApiSettings").Bind(options));
+
 
 //email service di
 var password = builder.Configuration["emailPassword"];

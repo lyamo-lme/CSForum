@@ -7,10 +7,10 @@ public abstract class  TypedApiClient
 {
     public readonly HttpClient client;
     private readonly ApiSettingConfig apiSettings;
-    public TypedApiClient(HttpClient client, IOptions<ApiSettingConfig> apiSettings)
+    public TypedApiClient(HttpClient client, ApiSettingConfig apiSettings)
     {
         this.client = client;
-        this.apiSettings = apiSettings.Value;
-        this.client.BaseAddress = new Uri(this.apiSettings.webApiUrl);
+        this.apiSettings = apiSettings;
+        this.client.BaseAddress = new Uri(this.apiSettings.WebApiUrl);
     }
 }

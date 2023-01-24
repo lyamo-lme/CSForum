@@ -1,16 +1,22 @@
 using AutoMapper;
+using CSForum.Core.IHttpClients;
 using CSForum.Core.Models;
 using CSForum.Services.MapperConfigurations;
+using CSForum.Shared.Models;
 using CSForum.Shared.Models.dtoModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace CSForum.WebUI.Controllers;
 
 public class PostController:Controller
 {
     private IMapper mapper;
-    public PostController()
+    private IPostClient _postClient;
+    public PostController(IOptions<ApiSettingConfig> options ,IPostClient client)
     {
+        _postClient = client;
         mapper = MapperFactory.CreateMapper<DtoMapper>();
     }
     [HttpGet]
@@ -20,8 +26,9 @@ public class PostController:Controller
     }
     
     [HttpPost]
-    public IActionResult CreatePost(CreatePost model)
-    {     
+    public async Task<ViewResult> CreatePost(CreatePost model)
+    {
+       await  _postClient.CreatePost(mapper.Map<Post>(model));
         return View("Post", mapper.Map<Post>(model));
     }
 

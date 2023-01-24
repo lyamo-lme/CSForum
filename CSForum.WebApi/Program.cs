@@ -22,6 +22,14 @@ builder.Services.AddDbForumContext(
 
 builder.Services.AddRepositories();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("api",
+        policyBuilder =>
+            policyBuilder
+                .AllowAnyOrigin()
+                .AllowAnyMethod());
+});
 
 var app = builder.Build();
 
@@ -33,6 +41,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("api");
 
 app.UseAuthorization();
 

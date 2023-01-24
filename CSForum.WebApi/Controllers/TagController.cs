@@ -9,9 +9,9 @@ namespace CSForum.WebApi.Controllers
     public class TagController : Controller
     {
         
-        private readonly ITagRepository TagRepository;
+        private readonly IRepository<Tag> TagRepository;
 
-        public TagController(ITagRepository postRepository)
+        public TagController(IRepository<Tag> postRepository)
         {
             TagRepository = postRepository;
         }
@@ -44,12 +44,24 @@ namespace CSForum.WebApi.Controllers
                 throw new Exception(e.Message, e);
             }
         }
-        [HttpGet]
-        public async Task<ActionResult<Tag>> GetTag(int postId)
+        [HttpGet, Route("id")]
+        public async Task<ActionResult<Tag>> FindTag(int tagId)
         {
             try
             {
-                return Ok(await TagRepository.FindAsync(x => x.Id == postId));
+                return Ok(await TagRepository.FindAsync(x => x.Id == tagId));
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message, e);
+            }
+        }
+        [HttpGet, Route("{name}")]
+        public async Task<ActionResult<Tag>> FindByName(string name)
+        {
+            try
+            {
+                return Ok(await TagRepository.GetByFuncExpAsync(x=>x.Name.Contains(name)));
             }
             catch (Exception e)
             {
@@ -66,6 +78,18 @@ namespace CSForum.WebApi.Controllers
                 await TagRepository.SaveChangesAsync();
 
                 return Ok(state);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+        [HttpGet]
+        public async Task<ActionResult<Post>> GetPosts()
+        {
+            try
+            {
+                return Ok(await TagRepository.GetAsync());
             }
             catch (Exception e)
             {

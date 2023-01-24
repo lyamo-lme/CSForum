@@ -8,16 +8,16 @@ namespace CSForum.WebApi.Controllers
     [Route("api/posts")]
     public class PostContoller : Controller
     {
-        private readonly IPostRepository PostRepository;
+        private readonly IRepository<Post> PostRepository;
 
         // private readonly IMapper mapper;
-        public PostContoller(IPostRepository postRepository)
+        public PostContoller(IRepository<Post> postRepository)
         {
             PostRepository = postRepository;
         }
 
         [HttpPost, Route("create")]
-        public async Task<ActionResult<Post>> CreatePost([FromBody]Post model)
+        public async Task<ActionResult<Post>> CreatePost([FromBody] Post model)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace CSForum.WebApi.Controllers
         }
 
         [HttpPost, Route("edit")]
-        public async Task<ActionResult<Post>> EditPost([FromBody]Post model)
+        public async Task<ActionResult<Post>> EditPost([FromBody] Post model)
         {
             try
             {
@@ -45,7 +45,8 @@ namespace CSForum.WebApi.Controllers
                 throw new Exception(e.Message, e);
             }
         }
-        [HttpGet,Route("id")]
+
+        [HttpGet, Route("id")]
         public async Task<ActionResult<Post>> FindPost(int postId)
         {
             try
@@ -57,6 +58,7 @@ namespace CSForum.WebApi.Controllers
                 throw new Exception(e.Message, e);
             }
         }
+
         [HttpGet]
         public async Task<ActionResult<Post>> GetPosts()
         {
@@ -69,7 +71,7 @@ namespace CSForum.WebApi.Controllers
                 throw new Exception(e.Message, e);
             }
         }
-        
+
         [HttpDelete, Route("delete")]
         public async Task<ActionResult<bool>> DeletePost(int postId)
         {

@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSForum.Data.Repositories;
 
-public class AnswerRepository : IAnswerRepository
+public class AnswerRepository : IRepository<Answer>  
 {
-    private IAnswerRepository _answerRepositoryImplementation;
+    private IRepository<Answer> _repositoryImplementation;
     private ForumDbContext Context { get; set; }
 
     public AnswerRepository(ForumDbContext context)
@@ -16,7 +16,7 @@ public class AnswerRepository : IAnswerRepository
         Context = context;
     }
 
-    public async Task<List<Answer>> GetAsync()
+    public async Task<IEnumerable<Answer>> GetAsync()
     {
         try
         {
@@ -25,6 +25,20 @@ public class AnswerRepository : IAnswerRepository
         catch (Exception e)
         {
             throw new Exception(e.Message);
+        }
+    }
+
+    public async Task<IEnumerable<Answer>> GetByFuncExpAsync(Func<Answer, bool> func)
+    {
+        try
+        {
+            var queryableAnswers = Context.Answers.AsQueryable();
+            var  answers =  queryableAnswers.Where(func);
+            return answers;
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message, e);
         }
     }
 
@@ -83,8 +97,9 @@ public class AnswerRepository : IAnswerRepository
         }
     }
 
-    public async Task SaveChanges()
+    public async Task SaveChangesAsync()
     {
             await Context.SaveChangesAsync();
     }
+
 }

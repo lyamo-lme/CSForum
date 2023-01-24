@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace CSForum.Data.Repositories;
 
-public class UserRepository : IUserRepository
+public class UserRepository : IRepository<User>
 {
     private ForumDbContext Context { get; set; }
 
@@ -15,7 +15,7 @@ public class UserRepository : IUserRepository
         Context = context;
     }
 
-    public async Task<List<User>> GetAsync()
+    public async Task<IEnumerable<User>> GetAsync()
     {
         try
         {
@@ -24,6 +24,19 @@ public class UserRepository : IUserRepository
         catch (Exception e)
         {
             throw new Exception(e.Message);
+        }
+    }
+    public async Task<IEnumerable<User>> GetByFuncExpAsync(Func<User, bool> func)
+    {
+        try
+        {
+            var queryable = Context.Users.AsQueryable();
+            var  users =  queryable.Where(func);
+            return users;
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message, e);
         }
     }
 
@@ -52,7 +65,7 @@ public class UserRepository : IUserRepository
         }
     }
 
-    public async Task<bool> DeleteAsync(string id)
+    public async Task<bool> DeleteAsync(int id)
     {
         try
         {
@@ -85,4 +98,5 @@ public class UserRepository : IUserRepository
     {
         await Context.SaveChangesAsync();
     }
+
 }

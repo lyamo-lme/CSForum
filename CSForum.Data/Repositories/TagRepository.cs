@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSForum.Data.Repositories;
 
-public class TagRepository : ITagRepository
+public class TagRepository : IRepository<Tag>
 {
     private ForumDbContext Context { get; set; }
 
@@ -15,7 +15,7 @@ public class TagRepository : ITagRepository
         Context = context;
     }
 
-    public async Task<List<Tag>> GetAsync()
+    public async Task<IEnumerable<Tag>> GetAsync()
     {
         try
         {
@@ -24,6 +24,19 @@ public class TagRepository : ITagRepository
         catch (Exception e)
         {
             throw new Exception(e.Message);
+        }
+    }
+    public async Task<IEnumerable<Tag>> GetByFuncExpAsync(Func<Tag, bool> func)
+    {
+        try
+        {
+            var queryable = Context.Tags.AsQueryable();
+            var  tags =  queryable.Where(func);
+            return tags;
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message, e);
         }
     }
 
@@ -82,4 +95,5 @@ public class TagRepository : ITagRepository
     {
         await Context.SaveChangesAsync();
     }
+
 }

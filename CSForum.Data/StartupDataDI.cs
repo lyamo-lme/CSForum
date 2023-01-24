@@ -13,17 +13,18 @@ public static class StartupDataDI
     {
         serviceCollection.AddDbContext<ForumDbContext>(option =>
         {
-            option.UseSqlServer(connectionString);
+            option.UseSqlServer(connectionString, b=>
+                b.MigrationsAssembly(assembly));
         });
         
         return serviceCollection;
     }
     public static IServiceCollection AddRepositories(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddTransient<IUserRepository, UserRepository>();
-        serviceCollection.AddTransient<IPostRepository, PostRepository>();
-        serviceCollection.AddTransient<IAnswerRepository, AnswerRepository>();
-        serviceCollection.AddTransient<ITagRepository, TagRepository>();
+        serviceCollection.AddTransient<IRepository<User>, UserRepository>();
+        serviceCollection.AddTransient<IRepository<Post>, PostRepository>();
+        serviceCollection.AddTransient<IRepository<Answer>, AnswerRepository>();
+        serviceCollection.AddTransient<IRepository<Tag>, TagRepository>();
         return serviceCollection;
     }
 }

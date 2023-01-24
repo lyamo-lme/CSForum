@@ -1,16 +1,17 @@
 using CSForum.Core.Models;
 using CSForum.Data.Config;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSForum.Data.Context;
 
-public class ForumDbContext : IdentityDbContext<User>
+public class ForumDbContext : IdentityDbContext<User,IdentityRole<int>, int>
 {
     public ForumDbContext(DbContextOptions<ForumDbContext> options) : base(options)
     {
-        //Database.EnsureDeleted();
-        //Database.EnsureCreated();
+        // Database.EnsureDeleted();
+        // Database.EnsureCreated();
     }
 
 

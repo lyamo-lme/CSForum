@@ -8,13 +8,13 @@ namespace CSForum.WebApi.Controllers;
 [Route("api/users")]
 public class UserController : Controller
 {
-    private readonly IUserRepository userRepository;
-    public UserController(IUserRepository userRepository)
+    private readonly IRepository<User> userRepository;
+    public UserController(IRepository<User>  userRepository)
     {
         this.userRepository = userRepository;
     }
     [HttpGet]
-    public async Task<List<User>> GetUsers()
+    public async Task<IEnumerable<User>> GetUsers()
     {
         try
         {
@@ -54,7 +54,7 @@ public class UserController : Controller
         }
     }
     [HttpDelete, Route("delete")]
-    public async Task<bool> DeleteUser(string userId)
+    public async Task<bool> DeleteUser(int userId)
     {
         try
         {

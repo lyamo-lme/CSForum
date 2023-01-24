@@ -24,4 +24,11 @@ body {
 body header > nav.navbar.bg-blue {
   color: white;
   background-color: #0d59cb;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px ;
+}
+body header > nav.navbar.bg-blue ul.identity li.nav-item{
+  background-color: #6d9619;
+  margin: 2px;
+  border-radius: 10px;
 }

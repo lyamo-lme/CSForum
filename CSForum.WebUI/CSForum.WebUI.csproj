@@ -7,7 +7,9 @@
         <UserSecretsId>aspnet-CSForum.WebUI-6047EF1D-4AA1-4DD4-9362-6FE21CD75697</UserSecretsId>
     </PropertyGroup>
 
-    <ItemGroup><!--        <PackageReference Include="AutoMapper" Version="12.0.1" />-->
+    <ItemGroup>
+		
+		<!--        <PackageReference Include="AutoMapper" Version="12.0.1" />-->
 <!--        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />-->
 <!--        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.1" />-->
 <!--        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.1" />-->

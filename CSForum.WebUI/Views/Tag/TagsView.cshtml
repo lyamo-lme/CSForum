@@ -1,0 +1,17 @@
+@model List<CSForum.Core.Models.Tag>?
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<input pattern="find tags"/>
+
+@if (@Model != null)
+{
+    @foreach (var tag in @Model)
+    {
+        <div>
+            <a>@tag.Name</a>
+        </div>
+    }
+}

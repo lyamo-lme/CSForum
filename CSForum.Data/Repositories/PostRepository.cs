@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSForum.Data.Repositories;
 
-public class PostRepository : IPostRepository
+public class PostRepository : IRepository<Post>
 {
     private ForumDbContext Context { get; set; }
 
@@ -14,8 +14,21 @@ public class PostRepository : IPostRepository
     {
         Context = forumContext;
     }
+    public async Task<IEnumerable<Post>> GetByFuncExpAsync(Func<Post, bool> func)
+    {
+        try
+        {
+            var queryable = Context.Posts.AsQueryable();
+            var  posts =  queryable.Where(func);
+            return posts;
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message, e);
+        }
+    }
 
-    public async Task<List<Post?>> GetAsync()
+    public async Task<IEnumerable<Post>> GetAsync()
     {
         try
         {

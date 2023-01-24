@@ -4,13 +4,14 @@ using CSForum.Core.Models;
 using CSForum.Shared.Models;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace CSForum.Services.HttpClients;
 
 public class PostClient:TypedApiClient,IPostClient
 {
     
-    public PostClient(HttpClient client, IOptions<ApiSettingConfig> apiSettings):base(client, apiSettings)
+    public PostClient(HttpClient client, IOptions<ApiSettingConfig> apiSettings):base(client, apiSettings.Value)
     {
     }
     public async Task<Post> CreatePost(Post model)
@@ -45,7 +46,7 @@ public class PostClient:TypedApiClient,IPostClient
         }
     }
 
-    public async Task<bool> DeletePost(string postId)
+    public async Task<bool> DeletePost(int postId)
     {
         try
         {

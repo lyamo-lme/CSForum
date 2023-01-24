@@ -1,4 +1,4 @@
-@model CSForum.Shared.Models.dtoModels.CreatePost
+@model CreatePostViewModel
 
 @{
     ViewBag.Title = "Create Post";
@@ -10,22 +10,48 @@
     <script src="~/skeditorscript/ckeditor4/ckeditor.js"></script>
     <script src="~/skeditorscript/ckeditor4/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
     <div>
-        <label >Title</label>
-        <input asp-for="Title"/>
+        <label>Title</label>
+        <input asp-for="Post.Title" />
     </div>
     <div>
         <label>Content</label>
-        <textarea asp-for="Content"  id="content" ></textarea>
+        <textarea asp-for="Post.Content" id="content"></textarea>
+    </div>
+    <div>
+        <label>Tags</label>
+        <select>
+            @try
+            {
+
+                @foreach (var tag in @Model.Tags)
+                {
+                    <option value="@tag.Id">@tag.Name</option>
+                }
+
+            }
+            catch { }
+        </select>
     </div>
     <button type="submit">Post</button>
-    <script>  
-    document.addEventListener("DOMContentLoaded", ()=>{
-        let config = {
-            extraPlugins: "codesnippet",
-            codeSnippet_theme: 'monokai_sublime',
-            height: 365
-        }
-    let editor = CKEDITOR.replace("content",config); 
-    });
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let config = {
+                extraPlugins: "codesnippet",
+                codeSnippet_theme: 'monokai_sublime',
+                height: 365
+            }
+            let editor = CKEDITOR.replace("content", config);
+        });
     </script>
+    <script>
+        let tag = [];
+        const urlOrigin = "http://localhost:5000";
+        const getTagsByName = async (name) => {
+            const response = await fetch(urlOrigin + `/api/tags/${name}`);
+            var tags = JSON.stringify(response.json);
+            console.log(tags);
+           }
+           getTagsByName("na");
+    </script>
+
 </form>
