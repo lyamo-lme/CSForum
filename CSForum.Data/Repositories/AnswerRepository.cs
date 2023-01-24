@@ -8,7 +8,6 @@ namespace CSForum.Data.Repositories;
 
 public class AnswerRepository : IRepository<Answer>  
 {
-    private IRepository<Answer> _repositoryImplementation;
     private ForumDbContext Context { get; set; }
 
     public AnswerRepository(ForumDbContext context)
