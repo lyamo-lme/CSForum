@@ -11,8 +11,8 @@ public class ForumDbContext :
 {
     public ForumDbContext(DbContextOptions<ForumDbContext> options) : base(options)
     {
-        Database.EnsureDeleted();
-        Database.EnsureCreated();  
+        // Database.EnsureDeleted();
+        // Database.EnsureCreated();  
     }
 
 

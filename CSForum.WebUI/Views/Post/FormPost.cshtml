@@ -19,18 +19,17 @@
     </div>
     <div>
         <label>Tags</label>
-        <input  id="tagFind" />
-        <select>
+        <input id="tagFind" onchange="getTagsByName(tagFind.value)" />
+        <div id="selectedTag"></div>
+        <select id="selectTag">
             @try
             {
-
                 @foreach (var tag in @Model.Tags)
                 {
                     <option value="@tag.Id">@tag.Name</option>
-                }
-
+                }  
             }
-            catch { }
+            catch {}
         </select>
     </div>
     <button type="submit">Post</button>
@@ -40,18 +39,38 @@
                 extraPlugins: "codesnippet",
                 codeSnippet_theme: 'monokai_sublime',
                 height: 365
-            }
+            };
             let editor = CKEDITOR.replace("content", config);
         });
     </script>
     <script>
-        let tag = [];
-        const urlOrigin = "http://localhost:5000";
+        const urlOrigin = "https://localhost:5000";
         const getTagsByName = async (name) => {
-            const response = await fetch(urlOrigin + `/api/tags/${name}`);
-            var tags = JSON.stringify(response.json);
-            console.log(tags);
-           }
-    </script>
+            try {
+                const response = await fetch(urlOrigin + `/api/tags/${name}`, {
+                    method: "GET"
+                });
 
+                let data = await response.json();
+
+                selectTag.innerHtml = "";
+
+                //need to set onchange on select tag
+                data.map((tag) => {
+                    let option = document.createElement("option");
+                    option.textContent = tag.name;
+                    option.value = tag.id;
+                    option.addEventListener("onclick", function () {
+                        console.log("click");
+                        let div = document.createElement("div");
+                        div.textContent = tag.name;
+                        selectedTag.appendChild(div);
+                    });
+                    selectTag.appendChild(option);
+                })
+            }
+            catch {
+            }
+        }
+    </script>
 </form>
