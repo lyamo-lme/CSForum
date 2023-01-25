@@ -44,7 +44,7 @@ namespace CSForum.WebApi.Controllers
                 throw new Exception(e.Message, e);
             }
         }
-        [HttpGet, Route("id")]
+        [HttpGet, Route("tagId/{tagId}")]
         public async Task<ActionResult<Tag>> FindTag(int tagId)
         {
             try
@@ -70,11 +70,11 @@ namespace CSForum.WebApi.Controllers
         }
 
         [HttpDelete, Route("delete")]
-        public async Task<ActionResult<bool>> DeleteTag(int postId)
+        public async Task<ActionResult<bool>> DeleteTag(int tagId)
         {
             try
             {
-                var state = await TagRepository.DeleteAsync(postId);
+                var state = await TagRepository.DeleteAsync(tagId);
                 await TagRepository.SaveChangesAsync();
 
                 return Ok(state);

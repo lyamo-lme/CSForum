@@ -10,12 +10,11 @@ namespace CSForum.Services.HttpClients;
 public class UserClient :TypedApiClient, IUserClient
 {
 
-
     public UserClient(HttpClient client, IOptions<ApiSettingConfig> apiSettings):base(client,apiSettings.Value)
     {
     }
 
-    public async Task<User> CreateUser(User model)
+    public async Task<User> CreateAsync<T>(T model)
     {
         try
         {
@@ -31,7 +30,7 @@ public class UserClient :TypedApiClient, IUserClient
         }
     }
 
-    public async Task<User> EditUser(User model)
+    public async Task<User> EditAsync<T>(T model)
     {
         try
         {
@@ -46,8 +45,8 @@ public class UserClient :TypedApiClient, IUserClient
             throw new Exception(e.Message, e);
         }
     }
-
-    public async Task<bool> DeleteUser(string userId)
+    
+    public async Task<bool> DeleteAsync(int userId)
     {
         try
         {
@@ -61,13 +60,27 @@ public class UserClient :TypedApiClient, IUserClient
         }
     }
 
-    public async Task<List<User>> GetUsers()
+    public async Task<List<User>> GetAsync()
     {
         try
         {
             var uri = new Uri(client.BaseAddress + "api/users");
             var response = await client.GetAsync(uri);
             return JsonConvert.DeserializeObject<List<User>>(response.Content.ToString());
+        }
+        catch(Exception e)
+        {
+            throw new Exception(e.Message, e);
+        }
+    }
+
+    public async Task<User> FindAsync(int id)
+    {
+        try
+        {
+            var uri = new Uri(client.BaseAddress + $"api/users/api/users/id/{id}");
+            var response = await client.GetAsync(uri);
+            return JsonConvert.DeserializeObject<User>(response.Content.ToString());
         }
         catch(Exception e)
         {

@@ -1,3 +1,5 @@
+
+
 <form style="display: none" id="answerForm">
     <link rel="stylesheet" href="~/skeditorscript/ckeditor4/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css">
     <script src="~/skeditorscript/ckeditor4/ckeditor.js"></script>
@@ -10,9 +12,9 @@
               extraPlugins: "codesnippet",
               codeSnippet_theme: 'monokai_sublime',
               height: 100
-          }
-      let editor = CKEDITOR.replace("Content",config); 
+          };
+      
+          let editor = CKEDITOR.replace("Content",config); 
       });
-
       </script>
 </form>

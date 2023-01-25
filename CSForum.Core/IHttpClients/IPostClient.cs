@@ -2,10 +2,6 @@ using CSForum.Core.Models;
 
 namespace CSForum.Core.IHttpClients;
 
-public interface IPostClient
+public interface IPostClient:IHttpClient<Post>
 {
-    public Task<Post> CreatePost(Post model);
-    public Task<Post> EditPost(Post model);
-    public Task<bool> DeletePost(int postId);
-    public Task<List<Post>> GetPosts();
 }

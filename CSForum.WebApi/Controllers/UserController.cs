@@ -25,6 +25,18 @@ public class UserController : Controller
             throw new Exception(e.Message, e);
         }
     }
+    [HttpGet, Route("id/{id}")]
+    public async Task<IEnumerable<User>> GetUsers(int id)
+    {
+        try
+        {
+            return await userRepository.GetAsync();
+        }
+        catch (Exception e )
+        {
+            throw new Exception(e.Message, e);
+        }
+    }
     [HttpPost, Route("create")]
     public async Task<User> CreateUser([FromBody]User model)
     {

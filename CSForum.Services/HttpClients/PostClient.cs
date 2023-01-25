@@ -2,6 +2,7 @@ using System.Text;
 using CSForum.Core.IHttpClients;
 using CSForum.Core.Models;
 using CSForum.Shared.Models;
+using CSForum.Shared.Models.dtoModels;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -10,11 +11,10 @@ namespace CSForum.Services.HttpClients;
 
 public class PostClient:TypedApiClient,IPostClient
 {
-    
     public PostClient(HttpClient client, IOptions<ApiSettingConfig> apiSettings):base(client, apiSettings.Value)
     {
     }
-    public async Task<Post> CreatePost(Post model)
+    public async Task<Post> CreateAsync<T>(T model)
     {
         try
         {
@@ -30,7 +30,7 @@ public class PostClient:TypedApiClient,IPostClient
         }
     }
 
-    public async Task<Post> EditPost(Post model)
+    public async Task<Post> EditAsync<T>(T model)
     {
         try
         {
@@ -46,7 +46,7 @@ public class PostClient:TypedApiClient,IPostClient
         }
     }
 
-    public async Task<bool> DeletePost(int postId)
+    public async Task<bool> DeleteAsync(int postId)
     {
         try
         {
@@ -60,13 +60,27 @@ public class PostClient:TypedApiClient,IPostClient
         }
     }
 
-    public async Task<List<Post>> GetPosts()
+    public async Task<List<Post>> GetAsync()
     {
         try
         {
             var uri = new Uri(client.BaseAddress + "api/posts");
             var response = await client.GetAsync(uri);
             return JsonConvert.DeserializeObject<List<Post>>(response.Content.ToString());
+        }
+        catch(Exception e)
+        {
+            throw new Exception(e.Message, e);
+        }
+    }
+
+    public async Task<Post> FindAsync(int postId)
+    {
+        try
+        {
+            var uri = new Uri(client.BaseAddress +$"api/posts/id/{postId}");
+            var response = await client.GetAsync(uri);
+            return JsonConvert.DeserializeObject<Post>(response.Content.ToString());
         }
         catch(Exception e)
         {

@@ -10,25 +10,27 @@ using Newtonsoft.Json;
 
 namespace CSForum.WebUI.Controllers;
 
-public class PostController:Controller
+public class PostController : Controller
 {
     private IMapper mapper;
     private IPostClient _postClient;
-    public PostController(IOptions<ApiSettingConfig> options ,IPostClient client)
+
+    public PostController(IOptions<ApiSettingConfig> options, IPostClient client)
     {
         _postClient = client;
         mapper = MapperFactory.CreateMapper<DtoMapper>();
     }
+
     [HttpGet]
     public IActionResult CreatePost()
     {
         return View("FormPost");
     }
-    
+
     [HttpPost]
     public async Task<ViewResult> CreatePost(CreatePost model)
     {
-       await  _postClient.CreatePost(mapper.Map<Post>(model));
+        await _postClient.CreateAsync(mapper.Map<Post>(model));
         return View("Post", mapper.Map<Post>(model));
     }
 
