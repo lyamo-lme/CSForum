@@ -15,7 +15,6 @@ builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddDbForumContext(
     builder.Configuration.GetConnectionString("MsSqlConnection"), assembly);

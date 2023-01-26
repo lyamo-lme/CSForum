@@ -1,5 +1,8 @@
-﻿using CSForum.Core.IRepositories;
+﻿using AutoMapper;
+using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
+using CSForum.Services.MapperConfigurations;
+using CSForum.Shared.Models.dtoModels.Tag;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CSForum.WebApi.Controllers
@@ -9,20 +12,22 @@ namespace CSForum.WebApi.Controllers
     public class TagController : Controller
     {
         
-        private readonly IRepository<Tag> TagRepository;
-
+        private readonly IRepository<Tag> _tagRepository;
+        private readonly IMapper _dtoMapper;
         public TagController(IRepository<Tag> postRepository)
         {
-            TagRepository = postRepository;
+            _tagRepository = postRepository;
+            _dtoMapper = MapperFactory.CreateMapper<DtoMapper>();
         }
         [HttpPost, Route("create")]
-        public async Task<ActionResult<Tag>> CreateTag([FromBody] Tag model)
+        public async Task<ActionResult<Tag>> CreateTag([FromBody] CreateTagDto model)
         {
             try
             {
-                var post = await TagRepository.CreateAsync(model);
-                await TagRepository.SaveChangesAsync();
-                return Ok(post);
+                var mapperPost = _dtoMapper.Map<Tag>(model);
+                var tag= await _tagRepository.CreateAsync(mapperPost);
+                await _tagRepository.SaveChangesAsync();
+                return Ok(tag);
             }
             catch (Exception e)
             {
@@ -35,9 +40,9 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                var post = await TagRepository.UpdateAsync(model);
-                await TagRepository.SaveChangesAsync();
-                return Ok(post);
+                var tag = await _tagRepository.UpdateAsync(model);
+                await _tagRepository.SaveChangesAsync();
+                return Ok(tag);
             }
             catch (Exception e)
             {
@@ -49,7 +54,7 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                return Ok(await TagRepository.FindAsync(x => x.Id == tagId));
+                return Ok(await _tagRepository.FindAsync(x => x.Id == tagId));
             }
             catch (Exception e)
             {
@@ -61,7 +66,7 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                return Ok(await TagRepository.GetByFuncExpAsync(x=>x.Name.Contains(name)));
+                return Ok(await _tagRepository.GetByFuncExpAsync(x=>x.Name.Contains(name)));
             }
             catch (Exception e)
             {
@@ -74,8 +79,8 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                var state = await TagRepository.DeleteAsync(tagId);
-                await TagRepository.SaveChangesAsync();
+                var state = await _tagRepository.DeleteAsync(tagId);
+                await _tagRepository.SaveChangesAsync();
 
                 return Ok(state);
             }
@@ -85,11 +90,11 @@ namespace CSForum.WebApi.Controllers
             }
         }
         [HttpGet]
-        public async Task<ActionResult<Post>> GetPosts()
+        public async Task<ActionResult<Tag>> Get()
         {
             try
             {
-                return Ok(await TagRepository.GetAsync());
+                return Ok(await _tagRepository.GetAsync());
             }
             catch (Exception e)
             {

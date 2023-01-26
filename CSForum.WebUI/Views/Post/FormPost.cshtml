@@ -1,4 +1,4 @@
-@model CreatePostViewModel
+@model CSForum.Shared.Models.dtoModels.CreatePost
 
 @{
     ViewBag.Title = "Create Post";
@@ -11,25 +11,17 @@
     <script src="~/skeditorscript/ckeditor4/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
     <div>
         <label>Title</label>
-        <input asp-for="Post.Title" />
+        <input asp-for="Title" />
     </div>
     <div>
         <label>Content</label>
-        <textarea asp-for="Post.Content" id="content"></textarea>
+        <textarea asp-for="Content" id="content"></textarea>
     </div>
     <div>
         <label>Tags</label>
         <input id="tagFind" onchange="getTagsByName(tagFind.value)" />
         <div id="selectedTag"></div>
         <select id="selectTag">
-            @try
-            {
-                @foreach (var tag in @Model.Tags)
-                {
-                    <option value="@tag.Id">@tag.Name</option>
-                }  
-            }
-            catch {}
         </select>
     </div>
     <button type="submit">Post</button>

@@ -6,3 +6,13 @@
 }
 
 <h1>@Model.Name</h1>
+@if (@Model.Posts != null)
+{
+    <div>
+    @foreach (var post in @Model.Posts)
+    {
+        <div>@post.Title</div>
+        <div>@post.Content</div>
+    }
+    </div>
+}
