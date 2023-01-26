@@ -7,6 +7,13 @@ var assembly = typeof(Program).Assembly.GetName().Name;
 // Add services to the container.
 builder.Services.AddControllers();
 
+builder.Services.AddAuthentication("Bearer")
+    .AddIdentityServerAuthentication("Bearer", options =>
+    {
+        options.Authority = "https://localhost:5444";
+        options.ApiName = "api";
+    });
+
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("Secrets.json", optional: true);
 
@@ -22,7 +29,7 @@ builder.Services.AddRepositories();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("api",
+    options.AddPolicy("apiPolicy",
         policyBuilder =>
             policyBuilder
                 .AllowAnyOrigin()
@@ -40,8 +47,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("api");
+app.UseCors("apiPolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

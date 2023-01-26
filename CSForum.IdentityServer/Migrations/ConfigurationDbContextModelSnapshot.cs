@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
+namespace CSForum.IdentityServer.Migrations
 {
     [DbContext(typeof(ConfigurationDbContext))]
     partial class ConfigurationDbContextModelSnapshot : ModelSnapshot
@@ -17,10 +17,10 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.2")
+                .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResource", b =>
                 {
@@ -28,7 +28,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AllowedAccessTokenSigningAlgorithms")
                         .HasMaxLength(100)
@@ -79,7 +79,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ApiResourceId")
                         .HasColumnType("int");
@@ -102,7 +102,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ApiResourceId")
                         .HasColumnType("int");
@@ -130,7 +130,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ApiResourceId")
                         .HasColumnType("int");
@@ -153,7 +153,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ApiResourceId")
                         .HasColumnType("int");
@@ -191,7 +191,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
@@ -232,7 +232,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ScopeId")
                         .HasColumnType("int");
@@ -255,7 +255,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Key")
                         .IsRequired()
@@ -283,7 +283,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("AbsoluteRefreshTokenLifetime")
                         .HasColumnType("int");
@@ -442,7 +442,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
@@ -470,7 +470,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
@@ -493,7 +493,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
@@ -516,7 +516,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
@@ -539,7 +539,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
@@ -562,7 +562,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
@@ -590,7 +590,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
@@ -613,7 +613,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
@@ -636,7 +636,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
@@ -674,7 +674,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -724,7 +724,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("IdentityResourceId")
                         .HasColumnType("int");
@@ -747,7 +747,7 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("IdentityResourceId")
                         .HasColumnType("int");

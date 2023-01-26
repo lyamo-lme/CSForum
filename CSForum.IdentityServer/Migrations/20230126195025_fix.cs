@@ -3,12 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
+namespace CSForum.IdentityServer.Migrations
 {
-    /// <inheritdoc />
-    public partial class InitialIdentityServerConfigurationDbContext : Migration
+    public partial class fix : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -592,7 +590,6 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.Conf
                 unique: true);
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

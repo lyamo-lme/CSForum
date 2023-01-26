@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace CSForum.IdentityServer.Migrations.IdentityServer.PersistedGrantDb
+namespace CSForum.IdentityServer.Migrations.PersistedGrantDb
 {
     [DbContext(typeof(PersistedGrantDbContext))]
     partial class PersistedGrantDbContextModelSnapshot : ModelSnapshot
@@ -17,10 +17,10 @@ namespace CSForum.IdentityServer.Migrations.IdentityServer.PersistedGrantDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.2")
+                .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
                 {

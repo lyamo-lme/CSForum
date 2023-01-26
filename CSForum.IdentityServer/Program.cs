@@ -9,11 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly.GetName().Name;
 var defaultConnString = builder.Configuration.GetConnectionString("MsSqlConnection");
 
-builder.Services.AddAuthentication();
-builder.Services.AddAuthorization();
-builder.Services.AddControllers();
 
-SeedData.EnsureSeedData(defaultConnString);
+// SeedData.EnsureSeedData(defaultConnString);
+
+builder.Services.AddControllers();
 
 builder.Services.AddDbContext<ForumDbContext>(options =>
     options.UseSqlServer(defaultConnString,
@@ -36,13 +35,11 @@ builder.Services.AddIdentityServer()
     })
     .AddDeveloperSigningCredential();
 
-// SeedData.EnsureSeedData(defaultConnString);
-
-
 var app = builder.Build();
 
 app.UseStaticFiles();
 app.UseRouting();
+
 app.UseIdentityServer();
 app.UseAuthorization();
 
