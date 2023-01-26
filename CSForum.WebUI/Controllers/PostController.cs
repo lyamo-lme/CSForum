@@ -28,7 +28,7 @@ public class PostController : Controller
     }
 
     [HttpPost]
-    public async Task<ViewResult> CreatePost(CreatePost model)
+    public async Task<ViewResult> CreatePost(CreatePostDto model)
     {
         await _postClient.CreateAsync(model);
         return View("Post", mapper.Map<Post>(model));

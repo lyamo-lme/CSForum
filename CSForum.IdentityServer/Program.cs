@@ -1,12 +1,19 @@
-
 using CSForum.Core.Models;
 using CSForum.Data.Context;
+using CSForum.IdentityServer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var assembly = typeof(Program).Assembly.GetName().Name;
 var defaultConnString = builder.Configuration.GetConnectionString("MsSqlConnection");
+
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
+builder.Services.AddControllers();
+
+SeedData.EnsureSeedData(defaultConnString);
 
 builder.Services.AddDbContext<ForumDbContext>(options =>
     options.UseSqlServer(defaultConnString,
@@ -29,6 +36,7 @@ builder.Services.AddIdentityServer()
     })
     .AddDeveloperSigningCredential();
 
+// SeedData.EnsureSeedData(defaultConnString);
 
 
 var app = builder.Build();

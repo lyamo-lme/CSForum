@@ -3,10 +3,9 @@ using CSForum.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 var assembly = typeof(Program).Assembly.GetName().Name;
+
 // Add services to the container.
-
 builder.Services.AddControllers();
-
 
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("Secrets.json", optional: true);

@@ -9,11 +9,12 @@ public class DtoMapper:Profile
 {
     public DtoMapper()
     {
-        CreateMap<Post, CreatePost>().ReverseMap();
-        CreateMap<Post, EditPost>().ReverseMap();
+        CreateMap<Post, CreatePostDto>().ReverseMap();
+        CreateMap<Post, EditPostDto>().ReverseMap();
 
         CreateMap<Answer, CreateAnswer>().ReverseMap();
 
         CreateMap<Tag, CreateTagDto>().ReverseMap();
+        CreateMap<Tag, EditTagDto>().ReverseMap();
     }
 }

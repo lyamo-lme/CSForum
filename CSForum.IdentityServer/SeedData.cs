@@ -24,7 +24,7 @@ namespace CSForum.IdentityServer
             );
 
             services
-                .AddIdentity<User, IdentityRole>()
+                .AddIdentity<User, IdentityRole<int>>()
                 .AddEntityFrameworkStores<ForumDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -73,7 +73,7 @@ namespace CSForum.IdentityServer
                 Email = "maks@email.com",
                 EmailConfirmed = true
             };
-            var result = userMgr.CreateAsync(user, "password").Result;
+            var result = userMgr.CreateAsync(user, "Password123@").Result;
             if (!result.Succeeded)
             {
                 throw new Exception(result.Errors.First().Description);

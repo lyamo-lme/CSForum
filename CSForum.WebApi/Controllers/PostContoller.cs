@@ -11,25 +11,25 @@ namespace CSForum.WebApi.Controllers
     [Route("api/posts")]
     public class PostContoller : Controller
     {
-        private readonly IRepository<Post> PostRepository;
-        private readonly IMapper mapper;
+        private readonly IRepository<Post> _postRepository;
+        private readonly IMapper _dtoMapper;
 
         public PostContoller(IRepository<Post> postRepository)
         {
-            mapper = MapperFactory.CreateMapper<DtoMapper>();
-            PostRepository = postRepository;
+            _dtoMapper = MapperFactory.CreateMapper<DtoMapper>();
+            _postRepository = postRepository;
         }
 
         [HttpPost, Route("create")]
-        public async Task<ActionResult<Post>> CreatePost([FromBody] CreatePost model)
+        public async Task<ActionResult<Post>> CreatePost([FromBody] CreatePostDto model)
         {
             try
             {
-                var mappedPost = mapper.Map<Post>(model);
+                var mappedPost = _dtoMapper.Map<Post>(model);
                 /* need to set user id and after add tags*/
 
-                var post = await PostRepository.CreateAsync(mappedPost);
-                await PostRepository.SaveChangesAsync();
+                var post = await _postRepository.CreateAsync(mappedPost);
+                await _postRepository.SaveChangesAsync();
                 return Ok(post);
             }
             catch (Exception e)
@@ -39,13 +39,13 @@ namespace CSForum.WebApi.Controllers
         }
 
         [HttpPost, Route("edit")]
-        public async Task<ActionResult<Post>> EditPost([FromBody] EditPost model)
+        public async Task<ActionResult<Post>> EditPost([FromBody] EditPostDto model)
         {
             try
             {
-                var mappedPost = mapper.Map<Post>(model);
-                var post = await PostRepository.UpdateAsync(mappedPost);
-                await PostRepository.SaveChangesAsync();
+                var mappedPost = _dtoMapper.Map<Post>(model);
+                var post = await _postRepository.UpdateAsync(mappedPost);
+                await _postRepository.SaveChangesAsync();
                 return Ok(post);
             }
             catch (Exception e)
@@ -59,7 +59,7 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                return Ok(await PostRepository.FindAsync(x => x.Id == postId));
+                return Ok(await _postRepository.FindAsync(x => x.Id == postId));
             }
             catch (Exception e)
             {
@@ -72,7 +72,7 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                return Ok(await PostRepository.GetAsync());
+                return Ok(await _postRepository.GetAsync());
             }
             catch (Exception e)
             {
@@ -85,8 +85,8 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                var state = await PostRepository.DeleteAsync(postId);
-                await PostRepository.SaveChangesAsync();
+                var state = await _postRepository.DeleteAsync(postId);
+                await _postRepository.SaveChangesAsync();
                 return Ok(state);
             }
             catch (Exception e)

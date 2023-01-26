@@ -10,6 +10,7 @@ namespace CSForum.Services.HttpClients;
 
 public class TagClient : TypedApiClient, ITagClient
 {
+   
     public TagClient(HttpClient client, IOptions<ApiSettingConfig> apiSettings) : base(client, apiSettings.Value)
     {
     }
@@ -18,6 +19,7 @@ public class TagClient : TypedApiClient, ITagClient
     {
         try
         {
+            
             var uri = new Uri(client.BaseAddress + "api/tags/create");
             var json = JsonConvert.SerializeObject(model);
             var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");

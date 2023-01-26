@@ -36,11 +36,11 @@ namespace CSForum.WebApi.Controllers
         }
 
         [HttpPost, Route("edit")]
-        public async Task<ActionResult<Tag>> EditTag([FromBody] Tag model)
+        public async Task<ActionResult<Tag>> EditTag([FromBody] EditTagDto model)
         {
             try
             {
-                var tag = await _tagRepository.UpdateAsync(model);
+                var tag = await _tagRepository.UpdateAsync(_dtoMapper.Map<Tag>(model));
                 await _tagRepository.SaveChangesAsync();
                 return Ok(tag);
             }

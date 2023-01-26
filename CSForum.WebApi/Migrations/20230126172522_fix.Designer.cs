@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSForum.WebApi.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    [Migration("20230123174618_ChangedUserKey")]
-    partial class ChangedUserKey
+    [Migration("20230126172522_fix")]
+    partial class fix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -32,11 +32,9 @@ builder.Services.Configure<ApiSettingConfig>(
 //http client
 builder.Services.AddHttpClient<IUserClient, UserClient>();
 builder.Services.AddHttpClient<IPostClient, PostClient>();
-
+builder.Services.AddHttpClient<ITagClient, TagClient>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-
 
 //email service di
 var password = builder.Configuration["emailPassword"];
