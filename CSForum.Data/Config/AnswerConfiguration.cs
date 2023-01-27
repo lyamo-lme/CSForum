@@ -18,12 +18,10 @@ public class AnswerConfiguration:IEntityTypeConfiguration<Answer>
 
         builder.HasOne<User>(prop => prop.AnswerCreator)
             .WithMany(prop => prop.Answers)
-            .HasForeignKey(p=>p.UserId)
-            .OnDelete(DeleteBehavior.ClientNoAction);
+            .HasForeignKey(p=>p.UserId);
         
         builder.HasOne<Post>(prop => prop.Post)
             .WithMany(prop => prop.Answers)
-            .HasForeignKey(p=>p.PostId)
-            .OnDelete(DeleteBehavior.ClientNoAction);
+            .HasForeignKey(p=>p.PostId);
     }
 }

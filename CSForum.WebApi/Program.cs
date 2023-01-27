@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddAuthentication("Bearer")
     .AddIdentityServerAuthentication("Bearer", options =>
     {
-        options.Authority = "https://localhost:5444";
+        options.Authority = "https://localhost:6000";
         options.ApiName = "api";
     });
 

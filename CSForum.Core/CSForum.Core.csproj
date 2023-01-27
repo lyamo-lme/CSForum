@@ -8,7 +8,9 @@
 
     <ItemGroup><!--      <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="7.0.1" />-->
     
-      <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.13" />
+      <PackageReference Include="IdentityModel" Version="4.4.0" />
+    
+      <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.1" />
     </ItemGroup>
 
 </Project>
