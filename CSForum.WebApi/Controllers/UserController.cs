@@ -18,7 +18,7 @@ public class UserController : Controller
     {
         try
         {
-            return await _uofRepository.Users.GetByFuncExpAsync();
+            return await _uofRepository.Users.GetAsync();
         }
         catch (Exception e )
         {

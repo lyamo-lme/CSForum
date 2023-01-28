@@ -71,7 +71,7 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                return Ok(await _uofRepository.Posts.GetByFuncExpAsync());
+                return Ok(await _uofRepository.Posts.GetAsync());
             }
             catch (Exception e)
             {

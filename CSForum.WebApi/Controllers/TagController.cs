@@ -70,7 +70,7 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                return Ok(await _uofRepository.Tags.GetByFuncExpAsync(x=>x.Name.Contains(name)));
+                return Ok(await _uofRepository.Tags.GetAsync(x=>x.Name.Contains(name)));
             }
             catch (Exception e)
             {
@@ -101,7 +101,7 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                return Ok(await _uofRepository.Tags.GetByFuncExpAsync());
+                return Ok(await _uofRepository.Tags.GetAsync());
             }
             catch (Exception e)
             {

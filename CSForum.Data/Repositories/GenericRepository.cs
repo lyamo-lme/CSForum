@@ -17,18 +17,33 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
         _entity = context.Set<TEntity>();
     }
 
-
-    public async Task<List<TEntity>> GetByFuncExpAsync(Func<TEntity, bool>? func = null)
+    public async Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+        string includeProperties = "")
     {
         try
         {
-            IQueryable<TEntity> queryable = _entity;
-            if (func == null)
+            IQueryable<TEntity> query = _entity;
+
+            if (filter != null)
             {
-                return await _entity.ToListAsync();
+                query = query.Where(filter);
             }
 
-            return queryable.AsEnumerable().Where(func).ToList();
+            foreach (var includeProperty in includeProperties.Split
+                         (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return orderBy(query).ToList();
+            }
+            else
+            {
+                return query.ToList();
+            }
         }
         catch (Exception e)
         {
@@ -52,7 +67,7 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
     {
         try
         {
-            var md =  _entity.Add(model);
+            var md = _entity.Add(model);
             return Task.FromResult(model);
         }
         catch (Exception e)
