@@ -25,7 +25,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbForumContext(
     builder.Configuration.GetConnectionString("MsSqlConnection"), assembly);
 
-builder.Services.AddRepositories();
+builder.Services.AddForumDbContext();
 
 builder.Services.AddCors(options =>
 {

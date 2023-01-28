@@ -19,12 +19,13 @@ public static class StartupDataDI
         
         return serviceCollection;
     }
-    public static IServiceCollection AddRepositories(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddForumDbContext(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddTransient<IRepository<User>, UserRepository>();
-        serviceCollection.AddTransient<IRepository<Post>, PostRepository>();
-        serviceCollection.AddTransient<IRepository<Answer>, AnswerRepository>();
-        serviceCollection.AddTransient<IRepository<Tag>, TagRepository>();
+        serviceCollection.AddScoped<IUnitOfWorkRepository, UOWRepository>();
+        serviceCollection.AddScoped<IRepository<Tag>, GenericRepository<Tag>>();
+        serviceCollection.AddScoped<IRepository<PostTag>, GenericRepository<PostTag>>();
+        serviceCollection.AddScoped<IRepository<User>, GenericRepository<User>>();
+        serviceCollection.AddScoped<IRepository<Post>, GenericRepository<Post>>();
         return serviceCollection;
     }
 }

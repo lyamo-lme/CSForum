@@ -8,14 +8,13 @@ using System.Threading.Tasks;
 
 namespace CSForum.Core.IRepositories
 {
-    public interface IRepository<T> where T:class
+    public interface IRepository<TEntity> where TEntity:class
     {
-        public Task<IEnumerable<T>> GetAsync();
-        public Task<IEnumerable<T>> GetByFuncExpAsync(Func<T, bool> func);
-        public Task<T> FindAsync(Expression<Func<T, bool>> func);
-        public Task<T> CreateAsync(T model);
-        public Task<bool> DeleteAsync(int id);
-        public Task<T> UpdateAsync(T model);
+        public Task<List<TEntity>> GetByFuncExpAsync(Func<TEntity, bool>? func=null);
+        public Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func);
+        public Task<TEntity> CreateAsync(TEntity model);
+        public Task<bool> DeleteAsync(TEntity entity);
+        public Task<TEntity> UpdateAsync(TEntity model);
         public Task SaveChangesAsync();
     }
 }

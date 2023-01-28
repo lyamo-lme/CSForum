@@ -8,17 +8,17 @@ namespace CSForum.WebApi.Controllers;
 [Route("api/users")]
 public class UserController : Controller
 {
-    private readonly IRepository<User> userRepository;
-    public UserController(IRepository<User>  userRepository)
+    private readonly IUnitOfWorkRepository _uofRepository;
+    public UserController(IUnitOfWorkRepository uofRepository)
     {
-        this.userRepository = userRepository;
+        _uofRepository = uofRepository;
     }
     [HttpGet]
     public async Task<IEnumerable<User>> GetUsers()
     {
         try
         {
-            return await userRepository.GetAsync();
+            return await _uofRepository.Users.GetByFuncExpAsync();
         }
         catch (Exception e )
         {
@@ -26,11 +26,11 @@ public class UserController : Controller
         }
     }
     [HttpGet, Route("id/{id}")]
-    public async Task<IEnumerable<User>> GetUsers(int id)
+    public async Task<User> GetUser(int id)
     {
         try
         {
-            return await userRepository.GetAsync();
+            return await _uofRepository.Users.FindAsync(x => x.Id == id);
         }
         catch (Exception e )
         {
@@ -42,8 +42,8 @@ public class UserController : Controller
     {
         try
         {
-            var user = await userRepository.CreateAsync(model);
-            await userRepository.SaveChangesAsync();
+            var user = await _uofRepository.Users.CreateAsync(model);
+            _uofRepository.SaveAsync();
             return user;
         }
         catch (Exception e )
@@ -56,8 +56,8 @@ public class UserController : Controller
     {
         try
         {
-            var user = await userRepository.UpdateAsync(model);
-            await userRepository.SaveChangesAsync();
+            var user = await  _uofRepository.Users.UpdateAsync(model);
+            _uofRepository.SaveAsync();
             return user;
         }
         catch (Exception e )
@@ -70,8 +70,11 @@ public class UserController : Controller
     {
         try
         {
-            var result = await userRepository.DeleteAsync(userId);
-            await userRepository.SaveChangesAsync();
+            var result = await _uofRepository.Users.DeleteAsync(new User
+            {
+                Id = userId
+            });
+             _uofRepository.SaveAsync();
             return result;
         }
         catch (Exception e )
