@@ -48,12 +48,12 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
         }
     }
 
-    public async Task<TEntity> CreateAsync(TEntity model)
+    public Task<TEntity> CreateAsync(TEntity model)
     {
         try
         {
-            await _entity.AddAsync(model);
-            return model;
+            var md =  _entity.Add(model);
+            return Task.FromResult(model);
         }
         catch (Exception e)
         {

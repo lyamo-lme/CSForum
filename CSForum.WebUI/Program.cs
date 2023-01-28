@@ -29,7 +29,7 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
 builder.Services.Configure<ApiSettingConfig>(
     builder.Configuration.GetSection("DevelopmentApiSettings"));
 
-
+builder.Services.AddHttpClient<IForumClient, ForumHttpClient>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

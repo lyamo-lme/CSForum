@@ -26,8 +26,9 @@ namespace CSForum.WebApi.Controllers
             try
             {
                 var mappedPost = _dtoMapper.Map<Post>(model);
+                mappedPost.DateCreate = DateTime.Now;
                 var post = await _uofRepository.Posts.CreateAsync(mappedPost);
-                 _uofRepository.SaveAsync();
+                 await _uofRepository.SaveAsync();
                 return Ok(post);
             }
             catch (Exception e)

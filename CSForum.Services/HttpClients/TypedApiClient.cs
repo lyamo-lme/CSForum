@@ -16,7 +16,7 @@ public abstract class  TypedApiClient
     public TypedApiClient(ApiSettingConfig apiSettings)
     {
         client = new HttpClient();
-        this._apiSettings = apiSettings;
-        this.client.BaseAddress = new Uri(this._apiSettings.WebApiUrl);
+        _apiSettings = apiSettings;
+        client.BaseAddress = new Uri(this._apiSettings.WebApiUrl);
     }
 }

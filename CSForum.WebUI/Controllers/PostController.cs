@@ -32,7 +32,8 @@ public class PostController : Controller
     {
         try
         {
-            var post = await _forumClient.PostAsync<CreatePostDto, Post>(model, "/api/post/create");
+            model.UserId = 1;
+            var post = await _forumClient.PostAsync<CreatePostDto, Post>(model, "api/posts/create");
             return View("Post", post);
         }
         catch (Exception e)
@@ -46,7 +47,7 @@ public class PostController : Controller
     {
         try
         {
-            var post = await _forumClient.GetAsync<Post>($"/api/posts/id/{postId}");
+            var post = await _forumClient.GetAsync<Post>($"api/posts/id/{postId}");
             return View("Post", post);
         }
         catch (Exception e)
