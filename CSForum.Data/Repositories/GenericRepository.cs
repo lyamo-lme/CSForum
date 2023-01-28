@@ -97,9 +97,4 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
             throw;
         }
     }
-
-    public Task SaveChangesAsync()
-    {
-        return _context.SaveChangesAsync();
-    }
 }

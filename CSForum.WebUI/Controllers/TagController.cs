@@ -9,16 +9,16 @@ namespace CSForum.WebUI.Controllers
 {
     public class TagController:Controller
     {
-        public ITagClient tagClient { get; set; }
-        public TagController(ITagClient tagClient)
+        private readonly IForumClient _forumClient;
+        public TagController(IForumClient tagClient)
         {
-            this.tagClient = tagClient;
+            this._forumClient = tagClient;
         }
         public async Task<ActionResult> FindTag(int tagId) {
 
             try
             {
-               return View("TagView",await tagClient.FindAsync(tagId));
+               return View("TagView",await _forumClient.GetAsync<Tag>($"/api/tags/tagId/{tagId}"));
             }
             catch(Exception e)
             {
@@ -30,8 +30,8 @@ namespace CSForum.WebUI.Controllers
         {
             try
             {
-                var tag = await tagClient.CreateAsync(model);
-                return View("TagView",await tagClient.FindAsync(tag.Id));
+                var tag = await _forumClient.PostAsync<CreateTagDto, Tag>(model, "/api/tags/create");
+                return View("TagView",tag);
             }
             catch(Exception e)
             {

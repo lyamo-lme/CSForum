@@ -32,7 +32,7 @@ namespace CSForum.WebApi.Controllers
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message, e);
+                throw;
             }
         }
 
@@ -48,7 +48,7 @@ namespace CSForum.WebApi.Controllers
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message, e);
+                throw;
             }
         }
 
@@ -61,7 +61,7 @@ namespace CSForum.WebApi.Controllers
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message, e);
+                throw;
             }
         }
 
@@ -74,7 +74,7 @@ namespace CSForum.WebApi.Controllers
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message, e);
+                throw;
             }
         }
 
@@ -92,7 +92,7 @@ namespace CSForum.WebApi.Controllers
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message, e);
+                throw;
             }
         }
     }

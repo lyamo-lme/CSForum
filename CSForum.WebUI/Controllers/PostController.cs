@@ -12,13 +12,13 @@ namespace CSForum.WebUI.Controllers;
 
 public class PostController : Controller
 {
-    private IMapper mapper;
-    private IPostClient _postClient;
+    private readonly IMapper _mapper;
+    private readonly IForumClient _forumClient;
 
-    public PostController(IOptions<ApiSettingConfig> options, IPostClient client)
+    public PostController(IOptions<ApiSettingConfig> options, IForumClient client)
     {
-        _postClient = client;
-        mapper = MapperFactory.CreateMapper<DtoMapper>();
+        _forumClient = client;
+        _mapper = MapperFactory.CreateMapper<DtoMapper>();
     }
 
     [HttpGet]
@@ -30,13 +30,28 @@ public class PostController : Controller
     [HttpPost]
     public async Task<ViewResult> CreatePost(CreatePostDto model)
     {
-        await _postClient.CreateAsync(model);
-        return View("Post", mapper.Map<Post>(model));
+        try
+        {
+            var post = await _forumClient.PostAsync<CreatePostDto, Post>(model, "/api/post/create");
+            return View("Post", post);
+        }
+        catch (Exception e)
+        {
+            throw;
+        }
     }
 
     [HttpGet]
-    IActionResult Post(int postId)
+    public  async Task<ViewResult> Post(int postId)
     {
-        return View();
+        try
+        {
+            var post = await _forumClient.GetAsync<Post>($"/api/posts/id/{postId}");
+            return View("Post", post);
+        }
+        catch (Exception e)
+        {
+            throw;
+        }
     }
 }

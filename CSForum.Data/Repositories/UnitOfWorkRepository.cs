@@ -13,11 +13,11 @@ namespace CSForum.Data.Repositories
     public class UOWRepository:IUnitOfWorkRepository
     {
         private readonly ForumDbContext forumDbContext;
-        private GenericRepository<Tag> _tagRepository;
-        private GenericRepository<Post> _postRepository;
-        private GenericRepository<User> _userRepository;
-        private GenericRepository<Answer> _answerRepository;
-        private GenericRepository<PostTag> _postTagsRepository;
+        private GenericRepository<Tag>? _tagRepository;
+        private GenericRepository<Post>? _postRepository;
+        private GenericRepository<User>? _userRepository;
+        private GenericRepository<Answer>? _answerRepository;
+        private GenericRepository<PostTag>? _postTagsRepository;
         
         public IRepository<Tag> Tags => _tagRepository ?? (_tagRepository = new GenericRepository<Tag>(forumDbContext));
         public IRepository<Post> Posts => _postRepository ?? (_postRepository = new GenericRepository<Post>(forumDbContext));

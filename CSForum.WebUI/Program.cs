@@ -29,10 +29,7 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
 builder.Services.Configure<ApiSettingConfig>(
     builder.Configuration.GetSection("DevelopmentApiSettings"));
 
-//http client
-builder.Services.AddHttpClient<IUserClient, UserClient>();
-builder.Services.AddHttpClient<IPostClient, PostClient>();
-builder.Services.AddHttpClient<ITagClient, TagClient>();
+
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

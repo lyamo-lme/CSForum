@@ -1,10 +1,9 @@
 namespace CSForum.Core.IHttpClients;
 
-public interface IHttpClient<T>
+public interface IHttpClient
 {
-    public Task<T> CreateAsync<TDto>(TDto model);
-    public Task<T> EditAsync<TDto>(TDto model);
-    public Task<bool> DeleteAsync(int postId);
-    public Task<List<T>> GetAsync();
-    public Task<T> FindAsync(int id);
+    public Task<TOut> PostAsync<TDto, TOut>(TDto model, string? path = null);
+    public Task<TDto> GetAsync<TDto>(string path);
+    public Task<TDto> PostAsync<TDto>(TDto model, string? path = null);
+
 }

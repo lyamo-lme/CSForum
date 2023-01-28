@@ -15,6 +15,5 @@ namespace CSForum.Core.IRepositories
         public Task<TEntity> CreateAsync(TEntity model);
         public Task<bool> DeleteAsync(TEntity entity);
         public Task<TEntity> UpdateAsync(TEntity model);
-        public Task SaveChangesAsync();
     }
 }
