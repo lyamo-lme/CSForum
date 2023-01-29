@@ -30,6 +30,11 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+    
+      <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.9.4">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
@@ -42,6 +47,14 @@
     <ItemGroup>
       <Folder Include="Views\User\" />
       <Folder Include="wwwroot\skeditorscript" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\js\site.js" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <TypeScriptCompile Include="wwwroot\js\test.ts" />
     </ItemGroup>
 
 </Project>
