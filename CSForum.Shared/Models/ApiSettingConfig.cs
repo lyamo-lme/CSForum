@@ -11,7 +11,5 @@ public class ApiSettingConfig
 		this.IdentityServerUrl = identityServerUrl;
 	}
 	public ApiSettingConfig()
-	{
-
-	}
+	{ }
 }
