@@ -10,12 +10,20 @@ public class DtoMapper:Profile
 {
     public DtoMapper()
     {
+        //users
+        CreateMap<User, UserViewModel>().ReverseMap();
+        
+        //posts
         CreateMap<Post, CreatePostDto>().ReverseMap();
         CreateMap<Post, EditPostDto>().ReverseMap();
+        CreateMap<Post, PostViewModel>().ReverseMap();
 
+        //answers
         CreateMap<Answer, CreateAnswerDto>().ReverseMap();
+        CreateMap<Answer, AnswerViewModel>().ReverseMap();
         CreateMap<CreateAnswerViewModel,CreateAnswerDto>().ReverseMap();
         
+        //tags
         CreateMap<Tag, CreateTagDto>().ReverseMap();
         CreateMap<Tag, EditTagDto>().ReverseMap();
     }
