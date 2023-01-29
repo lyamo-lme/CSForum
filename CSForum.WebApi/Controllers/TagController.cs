@@ -26,8 +26,8 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                var mapperPost = _dtoMapper.Map<Tag>(model);
-                var tag = await _uofRepository.Tags.CreateAsync(mapperPost);
+                var mappedPost = _dtoMapper.Map<Tag>(model);
+                var tag = await _uofRepository.Tags.CreateAsync(mappedPost);
                 _uofRepository.SaveAsync();
                 return Ok(tag);
             }

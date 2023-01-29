@@ -1,11 +1,12 @@
-
-
-<form style="display: none" id="answerForm">
+@model CreateAnswerViewModel
+<form style="display: none" id="answerForm"
+      asp-controller="Answer" asp-action="CreateAnswer" method="post">
+    <input asp-for="PostId" hidden="hidden" value="@Model.PostId">
     <link rel="stylesheet" href="~/skeditorscript/ckeditor4/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css">
     <script src="~/skeditorscript/ckeditor4/ckeditor.js"></script>
     <script src="~/skeditorscript/ckeditor4/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
-
-    <textarea  name="Content" id="Content"></textarea>
+    <label asp-for="Content">Content</label>
+    <textarea asp-for="Content"  name="Content" id="Content"></textarea>
     <script>  
       document.addEventListener("DOMContentLoaded", ()=>{
           let config = {
@@ -13,8 +14,11 @@
               codeSnippet_theme: 'monokai_sublime',
               height: 100
           };
-      
+          
           let editor = CKEDITOR.replace("Content",config); 
       });
       </script>
+    <button type="submit">
+        Send
+    </button>
 </form>

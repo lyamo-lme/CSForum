@@ -26,7 +26,6 @@ namespace CSForum.WebApi.Controllers
             try
             {
                 var mappedPost = _dtoMapper.Map<Post>(model);
-                mappedPost.DateCreate = DateTime.Now;
                 var post = await _uofRepository.Posts.CreateAsync(mappedPost);
                  await _uofRepository.SaveAsync();
                 return Ok(post);
@@ -58,7 +57,10 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                return Ok(await _uofRepository.Posts.FindAsync(x => x.Id == postId));
+                var model = await _uofRepository.Posts.FindAsync(x => x.Id == postId);
+                model.PostCreator = await _uofRepository.Users.FindAsync(x => x.Id == model.UserId);
+                model.Answers = await _uofRepository.Answers.GetAsync(x=>x.PostId==model.Id,null,"AnswerCreator"    );
+                return Ok(model);
             }
             catch (Exception e)
             {

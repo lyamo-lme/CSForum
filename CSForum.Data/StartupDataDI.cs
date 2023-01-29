@@ -21,11 +21,11 @@ public static class StartupDataDI
     }
     public static IServiceCollection AddForumDbContext(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddScoped<IRepository<Tag>, GenericRepository<Tag>>();
-        serviceCollection.AddScoped<IRepository<PostTag>, GenericRepository<PostTag>>();
-        serviceCollection.AddScoped<IRepository<User>, GenericRepository<User>>();
-        serviceCollection.AddScoped<IRepository<Post>, GenericRepository<Post>>();
-        serviceCollection.AddScoped<IUnitOfWorkRepository, UOWRepository>();
+        serviceCollection.AddTransient<IRepository<Tag>, GenericRepository<Tag>>();
+        serviceCollection.AddTransient<IRepository<PostTag>, GenericRepository<PostTag>>();
+        serviceCollection.AddTransient<IRepository<User>, GenericRepository<User>>();
+        serviceCollection.AddTransient<IRepository<Post>, GenericRepository<Post>>();
+        serviceCollection.AddTransient<IUnitOfWorkRepository, UOWRepository>();
         return serviceCollection;
     }
 }

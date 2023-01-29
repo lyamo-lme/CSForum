@@ -41,7 +41,8 @@ public class ForumHttpClient : TypedApiClient, IForumClient
         {
             var uri = new Uri(client.BaseAddress+path);
             var response = await client.GetAsync(uri);
-            return JsonConvert.DeserializeObject<TOut>(response.Content.ToString());
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TOut>(content);
         }
         catch(Exception e)
         {

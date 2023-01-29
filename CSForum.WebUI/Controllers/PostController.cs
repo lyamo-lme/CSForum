@@ -27,7 +27,7 @@ public class PostController : Controller
         return View("FormPost");
     }
 
-    [HttpPost]
+    [HttpPost,Route("create")]
     public async Task<ViewResult> CreatePost(CreatePostDto model)
     {
         try
@@ -42,7 +42,7 @@ public class PostController : Controller
         }
     }
 
-    [HttpGet]
+    [HttpGet,Route("post/{postId}")]
     public  async Task<ViewResult> Post(int postId)
     {
         try

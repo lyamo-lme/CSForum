@@ -55,7 +55,8 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
     {
         try
         {
-            return await _entity.FirstAsync(func);
+            var result = await _entity.FirstAsync(func);
+            return result;
         }
         catch (Exception e)
         {
@@ -95,17 +96,16 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
     }
 
 
-    public async Task<TEntity> UpdateAsync(TEntity model)
+    public  Task<TEntity> UpdateAsync(TEntity model)
     {
         try
         {
-            var entity = await Task.Run(() =>
+            return Task.Run(() =>
             {
                 var entity = _entity.Update(model);
                 _context.Entry(model).State = EntityState.Modified;
                 return entity.Entity;
             });
-            return entity;
         }
         catch (Exception e)
         {
