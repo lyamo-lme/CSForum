@@ -4,11 +4,13 @@
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
-<link rel="stylesheet" href="~/skeditorscript/ckeditor4/plugins/codesnippet/">
+
 <h2>@Model.Title</h2>
+
 <div>
     @Html.Raw(@Model.Content);
 </div>
+<div class="line-yellow"></div>
 <div>
     @if (@Model.Answers != null)
     {
@@ -16,18 +18,16 @@
         {
             <div>
                 <p>@answers.AnswerCreator.UserName</p>
-                <p>@answers.Content</p>
+                <p>@Html.Raw(@answers.ContentBody)</p>
             </div>
         }
     }
 </div>
-<p onclick="showAnswerForm()">Give Answer</p>
+<p onclick="showAnswerForm()" class="btn-dark">Give Answer</p>
 @await Html.PartialAsync("AnswerFormPartialView", new CreateAnswerViewModel
        {
            PostId = @Model.Id
        });
-
-
 <script>
  let answerForm = document.querySelector("#answerForm");
 function showAnswerForm(){
@@ -35,5 +35,4 @@ function showAnswerForm(){
     answerForm.style.display="block":
      answerForm.style.display="none";
 }
-
  </script>

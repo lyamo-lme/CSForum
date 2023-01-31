@@ -18,7 +18,7 @@ namespace CSForum.WebUI.Controllers
 
             try
             {
-               return View("TagView",await _forumClient.GetAsync<Tag>($"/api/tags/tagId/{tagId}"));
+               return View("TagView",await _forumClient.GetAsync<Tag>($"api/tags/tagId/{tagId}"));
             }
             catch(Exception e)
             {
@@ -30,7 +30,7 @@ namespace CSForum.WebUI.Controllers
         {
             try
             {
-                var tag = await _forumClient.PostAsync<CreateTagDto, Tag>(model, "/api/tags/create");
+                var tag = await _forumClient.PostAsync<CreateTagDto, Tag>(model, "api/tags/create");
                 return View("TagView",tag);
             }
             catch(Exception e)

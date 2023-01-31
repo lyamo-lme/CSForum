@@ -8,7 +8,7 @@ public class AnswerViewModel
     public int UserId { get; set; }
     public bool Accepted { get; set; }
     public DateTime DateCreate { get; set; }  
-    public string Content { get; set; }
+    public string ContentBody { get; set; }
     public UserViewModel? AnswerCreator { get; set; }
     public PostViewModel? Post { get; set; }
 }

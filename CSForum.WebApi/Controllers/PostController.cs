@@ -59,7 +59,7 @@ namespace CSForum.WebApi.Controllers
             {
                 var model = await _uofRepository.Posts.FindAsync(x => x.Id == postId);
                 model.PostCreator = await _uofRepository.Users.FindAsync(x => x.Id == model.UserId);
-                model.Answers = await _uofRepository.Answers.GetAsync(x=>x.PostId==model.Id,null,"AnswerCreator"    );
+                model.Answers = await _uofRepository.Answers.GetAsync(x=>x.PostId==model.Id,null,"AnswerCreator");
                 return Ok(model);
             }
             catch (Exception e)

@@ -1,3 +1,3 @@
-var towqeq = "text";
-console.log(towqeq);
+const testSomeText = "text";
+console.log(testSomeText);
 //# sourceMappingURL=test.js.map

@@ -8,13 +8,13 @@ public class AnswerConfiguration:IEntityTypeConfiguration<Answer>
 {
     public void Configure(EntityTypeBuilder<Answer> builder)
     {
-        builder.HasIndex(prop=>prop.Id);
+        builder.HasIndex(prop => prop.Id);
         builder.HasKey(prop=>prop.Id);
 
         builder.Property(prop=>prop.PostId).IsRequired();
         builder.Property(prop=>prop.UserId).IsRequired();
         builder.Property(prop=>prop.DateCreate).IsRequired();
-        builder.Property(prop => prop.Content).IsRequired();
+        builder.Property(prop => prop.ContentBody).IsRequired();
 
         builder.HasOne<User>(prop => prop.AnswerCreator)
             .WithMany(prop => prop.Answers)

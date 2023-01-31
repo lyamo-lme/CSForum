@@ -1,8 +1,23 @@
-@model CSForum.Core.Models.User
+@model UserViewModel
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+<div class="user-block">
+    <div class="user-bio"></div>
+    <div class="user-content">
+        <div class="user-posts">
+            @if (@Model.Posts != null)
+            {
+                @foreach (var post in @Model.Posts)
+                {
+                    <div class="post">
+                        @post.Title
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

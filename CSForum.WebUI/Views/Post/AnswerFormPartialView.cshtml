@@ -5,8 +5,8 @@
     <link rel="stylesheet" href="~/skeditorscript/ckeditor4/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css">
     <script src="~/skeditorscript/ckeditor4/ckeditor.js"></script>
     <script src="~/skeditorscript/ckeditor4/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
-    <label asp-for="Content">Content</label>
-    <textarea asp-for="Content"  name="Content" id="Content"></textarea>
+    <label asp-for="ContentBody">Content</label>
+    <textarea name="ContentBody"  id="Content"></textarea>
     <script>  
       document.addEventListener("DOMContentLoaded", ()=>{
           let config = {
@@ -18,7 +18,7 @@
           let editor = CKEDITOR.replace("Content",config); 
       });
       </script>
-    <button type="submit">
+    <button type="submit" class="btn-dark">
         Send
     </button>
 </form>

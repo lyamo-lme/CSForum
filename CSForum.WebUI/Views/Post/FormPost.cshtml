@@ -5,22 +5,22 @@
     // Layout = "_Layout";
 }
 
-<form asp-action="CreatePost" method="post">
+<form class="form-post" asp-action="CreatePost" method="post">
     <link rel="stylesheet" href="~/skeditorscript/ckeditor4/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css">
     <script src="~/skeditorscript/ckeditor4/ckeditor.js"></script>
     <script src="~/skeditorscript/ckeditor4/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
     <div>
         <label>Title</label>
-        <input asp-for="Title" />
+        <input class="input-box" asp-for="Title" />
     </div>
     <div>
         <label>Content</label>
-        <textarea asp-for="Content" id="content"></textarea>
+        <textarea class="border-radius-ckeditor" asp-for="Content" id="content"></textarea>
     </div>
     <div>
         <label>Tags</label>
-        <input id="tagFind" onchange="getTagsByName(tagFind.value)" />
-        <div id="selectedTag"></div>
+        <input id="tagFind" class="input-box"/>
+        <div id="selectedTag" class="selected-tag"></div>
         <select id="selectTag">
         </select>
     </div>
@@ -35,34 +35,5 @@
             let editor = CKEDITOR.replace("content", config);
         });
     </script>
-    <script>
-        const urlOrigin = "https://localhost:5000";
-        const getTagsByName = async (name) => {
-            try {
-                const response = await fetch(urlOrigin + `/api/tags/${name}`, {
-                    method: "GET"
-                });
-
-                let data = await response.json();
-
-                selectTag.innerHtml = "";
-
-                //need to set onchange on select tag
-                data.map((tag) => {
-                    let option = document.createElement("option");
-                    option.textContent = tag.name;
-                    option.value = tag.id;
-                    option.addEventListener("onclick", function () {
-                        console.log("click");
-                        let div = document.createElement("div");
-                        div.textContent = tag.name;
-                        selectedTag.appendChild(div);
-                    });
-                    selectTag.appendChild(option);
-                })
-            }
-            catch {
-            }
-        }
-    </script>  
+    <script src="~/js/loadTag.js"></script>  
 </form>

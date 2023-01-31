@@ -54,6 +54,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <TypeScriptCompile Include="wwwroot\js\loadTag.ts" />
       <TypeScriptCompile Include="wwwroot\js\test.ts" />
     </ItemGroup>
 

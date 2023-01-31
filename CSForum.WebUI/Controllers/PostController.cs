@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 
 namespace CSForum.WebUI.Controllers;
 
+[Route("post")]
 public class PostController : Controller
 {
     private readonly IMapper _mapper;
@@ -44,7 +45,7 @@ public class PostController : Controller
             var postDto = _mapper.Map<CreatePostDto>(model);
             postDto.UserId = user.Id;
             var post = await _forumClient.PostAsync<CreatePostDto, Post>(postDto, "api/posts/create");
-            return View("Post", _mapper.Map<PostViewModel>(post));
+            return await Post(post.Id);
         }
         catch (Exception e)
         {

@@ -9,5 +9,5 @@ public class CreateAnswerViewModel
     public int? ParentAnswerId { get; set; } = null;
     [Required]
     [MinLength(50)]
-    public string Content { get; set; }
+    public string ContentBody { get; set; }
 }
