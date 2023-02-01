@@ -45,6 +45,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Resources\Controllers\" />
       <Folder Include="Views\User\" />
       <Folder Include="wwwroot\skeditorscript" />
     </ItemGroup>
@@ -56,6 +57,21 @@
     <ItemGroup>
       <TypeScriptCompile Include="wwwroot\js\loadTag.ts" />
       <TypeScriptCompile Include="wwwroot\js\test.ts" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\Views\Shared\_Layout.en-US.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>LayoutResource.en-US.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Resources\LayoutResource.en-US.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>LayoutResource.en-US.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

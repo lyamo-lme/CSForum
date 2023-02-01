@@ -6,11 +6,14 @@ using CSForum.Data.Context;
 using CSForum.Services.EmailService;
 using CSForum.Services.HttpClients;
 using CSForum.Shared.Models;
-using Microsoft.AspNetCore.Identity;
+using CSForum.WebUI.Resources;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly.GetName().Name;
 
+builder.Services.AddLocalizationApp();
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("MsSqlConnection");
 
@@ -41,19 +44,26 @@ var email = builder.Configuration["email"];
 builder.Services.AddSingleton<IEmailService>(new EmailService(password, email));
 
 
-builder.Services.AddControllersWithViews();
+builder.Services
+    .AddControllersWithViews()
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+    .AddDataAnnotationsLocalization();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{ }
+if (app.Environment.IsDevelopment()){}
 else
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+ 
+
+app.UseRequestLocalization(
+    app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value
+    );
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

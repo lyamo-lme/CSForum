@@ -1,4 +1,4 @@
-namespace CSForum.Test;
+namespace CSForum.Services.Test;
 
 public class UnitTest1
 {
