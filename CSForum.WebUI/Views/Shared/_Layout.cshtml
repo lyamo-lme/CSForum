@@ -1,7 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using Microsoft.AspNetCore.Localization
-@using Microsoft.Extensions.Options
-@inject IOptions<RequestLocalizationOptions> LocalizationOptions
 @inject IViewLocalizer ViewLocalizer
 
 <!DOCTYPE html>
@@ -16,29 +13,6 @@
 
 <body>
 
-@{
-    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-    var cultureItems = LocalizationOptions.Value.SupportedUICultures
-        .Select(c => new SelectListItem { Value = c.Name, Text = c.Name })
-        .ToList();
-
-    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) 
-        ? "~/" 
-        : $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
-}
-
-<div>
-    <form asp-controller="Culture" asp-action="SetCulture" asp-route-returnUrl="@returnUrl" 
-          class="form-horizontal nav-link text-dark">
-        <select name="culture" 
-                onchange="this.form.submit();" 
-                asp-for="@requestCulture.RequestCulture.UICulture.Name" 
-                asp-items="cultureItems">
-        </select>
-    </form>
-</div>
-
-@ViewLocalizer["Home"]
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-black color-lemon-orange border-bottom box-shadow mb-3">
         <div class="container-fluid">
@@ -51,20 +25,20 @@
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
                         <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
-                            @* @MultiLanguage *@
+                            @ViewLocalizer["Home"]
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Post" asp-action="CreatePost">Create Post</a>
+                        <a class="nav-link text-white" asp-area="" asp-controller="Post" asp-action="CreatePost">
+                            @ViewLocalizer["CreatePost"]
+                        </a>
                     </li>
                 </ul>
                 <partial name="_LoginPartial"/>
             </div>
         </div>
     </nav>
+   
 </header>
 <div class="container">
     <main role="main" class="pb-3">

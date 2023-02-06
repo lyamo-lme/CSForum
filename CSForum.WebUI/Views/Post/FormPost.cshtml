@@ -1,5 +1,6 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer ViewLocalizer
 @model CreatePostView
-
 @{
     ViewBag.Title = "Create Post";
     // Layout = "_Layout";
@@ -10,21 +11,21 @@
     <script src="~/skeditorscript/ckeditor4/ckeditor.js"></script>
     <script src="~/skeditorscript/ckeditor4/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
     <div>
-        <label>Title</label>
+        <label>@ViewLocalizer["Title"]</label>
         <input class="input-box" asp-for="Title" />
     </div>
     <div>
-        <label>Content</label>
+        <label>@ViewLocalizer["Content"]</label>
         <textarea class="border-radius-ckeditor" asp-for="Content" id="content"></textarea>
     </div>
     <div>
-        <label>Tags</label>
+        <label>@ViewLocalizer["Tags"]</label>
         <input id="tagFind" class="input-box"/>
         <div id="selectedTag" class="selected-tag"></div>
         <select id="selectTag">
         </select>
     </div>
-    <button type="submit">Post</button>
+    <button type="submit">@ViewLocalizer["CreatePost"]</button>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             let config = {

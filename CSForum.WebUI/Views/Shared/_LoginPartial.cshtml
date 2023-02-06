@@ -1,8 +1,20 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using CSForum.Core.Models
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@inject IOptions<RequestLocalizationOptions> LocalizationOptions
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocalizationOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.Name })
+        .ToList();
 
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path)
+        ? "~/"
+        : $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
+}
 <ul class="navbar-nav identity">
     @if (SignInManager.IsSignedIn(User))
     {
@@ -22,6 +34,16 @@
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+        <li class="nav-item">
+            <form asp-controller="Culture" asp-action="SetCulture" asp-route-returnUrl="@returnUrl"
+                  class="form-horizontal nav-link text-dark">
+                <select name="culture"
+                        onchange="this.form.submit();"
+                        asp-for="@requestCulture.RequestCulture.UICulture.Name"
+                        asp-items="cultureItems">
+                </select>
+            </form>
         </li>
     }
 </ul>

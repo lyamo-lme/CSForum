@@ -18,6 +18,8 @@
 <!--        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.1" />-->
 <!--        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.2" />-->
     
+      <PackageReference Include="AutoFixture" Version="4.13.0" />
+    
       <PackageReference Include="AutoMapper" Version="12.0.1" />
     
       <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
@@ -63,6 +65,14 @@
       <EmbeddedResource Update="Resources\Views\Shared\_Layout.en-US.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>LayoutResource.en-US.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Post\FormPost.en-US.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Post.en-US.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Post\FormPost.uk-UA.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Post.uk-UA.Designer.cs</LastGenOutput>
       </EmbeddedResource>
     </ItemGroup>
 

@@ -38,11 +38,11 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
 
             if (orderBy != null)
             {
-                return orderBy(query).ToList();
+                return await orderBy(query).ToListAsync();
             }
             else
             {
-                return query.ToList();
+                return await query.ToListAsync();
             }
         }
         catch (Exception e)
@@ -100,12 +100,11 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
     {
         try
         {
-            return Task.Run(() =>
-            {
+          
                 var entity = _entity.Update(model);
                 _context.Entry(model).State = EntityState.Modified;
-                return entity.Entity;
-            });
+                return Task.FromResult(entity.Entity);
+
         }
         catch (Exception e)
         {
