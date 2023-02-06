@@ -10,11 +10,11 @@ using Newtonsoft.Json.Linq;
 
 namespace CSForum.Services.HttpClients;
 
-public class ForumHttpClient : TypedApiClient, IForumClient
+public class ForumHttpClientBase : ApiClientBase, IForumClient
 {
-    public ForumHttpClient(HttpClient client, IOptions<ApiSettingConfig> apiSettings) : base(client, apiSettings.Value)
+    public ForumHttpClientBase(HttpClient client, IOptions<ApiSettingConfig> apiSettings) : base(client, apiSettings.Value)
     { }
-    public ForumHttpClient(IOptions<ApiSettingConfig> apiSettings) : base(apiSettings.Value)
+    public ForumHttpClientBase(IOptions<ApiSettingConfig> apiSettings) : base(apiSettings.Value)
     { }
 
     public async Task<TDto> PostAsync<TDto>(TDto model, string? path = null)
