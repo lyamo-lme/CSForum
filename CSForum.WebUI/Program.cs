@@ -6,6 +6,7 @@ using CSForum.Data.Context;
 using CSForum.Services.EmailService;
 using CSForum.Services.HttpClients;
 using CSForum.Shared.Models;
+using CSForum.WebUI;
 using CSForum.WebUI.Resources;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Options;
@@ -19,14 +20,21 @@ var connectionString = builder.Configuration.GetConnectionString("MsSqlConnectio
 
 //add users secrets json
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
-        .AddJsonFile("Secrets.json", optional: true);
+    .AddJsonFile("Secrets.json", optional: true);
 
 //add dbcontext for forum db
 builder.Services.AddDbForumContext(connectionString, assembly);
 
-//identity server 
-builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ForumDbContext>();
+builder.Services.AddAppIdentity<User>(_ => { });
+
+ //identity 
+ // builder.Services.AddDefaultIdentity<User>(options =>
+ //     {
+ //         options.SignIn.RequireConfirmedAccount = true;
+ //     })
+ //  .AddEntityFrameworkStores<ForumDbContext>();
+
+
 
 //Ioptions for api settings
 builder.Services.Configure<ApiSettingConfig>(
@@ -36,7 +44,7 @@ builder.Services.Configure<ApiSettingConfig>(
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
-builder.Services.AddHttpClient<IForumClient, ForumHttpClientBase>();
+builder.Services.AddHttpClient<IForumClient, ApiHttpClientBase>();
 
 //email service di
 var password = builder.Configuration["emailPassword"];
@@ -61,9 +69,7 @@ else
 }
  
 
-app.UseRequestLocalization(
-    app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value
-    );
+app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

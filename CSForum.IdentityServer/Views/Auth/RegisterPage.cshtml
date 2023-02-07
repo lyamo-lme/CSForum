@@ -1,0 +1,36 @@
+@model CSForum.IdentityServer.Models.RegisterViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div>
+      <div>
+          <form asp-controller="Auth" asp-action="Register" method="post">
+              <input hidden="hidden" name="ReturnUrl" value="@Model.ReturnUrl"/>
+              <div>
+                  <label>User name</label>
+                  <input name="Username" id="Username"/>
+              </div>
+              <div>
+                  <label>Password</label>
+                  <input name="Password" id="Password"/>
+              </div>  
+              <div>
+                  <label>ConfirmPassword password</label>
+                  <input name="ConfirmPassword" id="ConfirmPassword"/>
+              </div>
+              <div>
+                  <button type="submit">
+                      sign in
+                      @* @ViewLocalizer["SignIn"] *@
+                  </button>
+              </div>
+          </form>
+      </div>
+</div>
+</body>
+</html>

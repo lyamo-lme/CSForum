@@ -9,18 +9,14 @@ namespace CSForum.WebApi.Test;
 
 public class UnitOfWorkTests
 {
-    private readonly Mock<IUnitOfWorkRepository> _uofRepository = new Mock<IUnitOfWorkRepository>();
     private readonly Mock<IRepository<User>> _userRepository = new Mock<IRepository<User>>();
 
     [Fact]
-    public async Task DbSetTest_GetAllUsers_NotNullListOfUsers()
+    public async Task RepositoryTest_GetAllUsers_NotNullListOfUsers()
     {
         //arrange
-        var fixture = new Fixture();
-        fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList().ForEach(b => fixture.Behaviors.Remove(b));
-        fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-        var usersList = fixture.Create<List<User>>();
-        
+         var usersList =  CreateEntityWithoutThrowingRecursionError<List<User>>();
+         
         _userRepository.Setup(x => x.GetAsync(null, null, ""))
             .ReturnsAsync(usersList);
 
@@ -32,7 +28,7 @@ public class UnitOfWorkTests
 
       
     [Fact]  
-    public async Task DbSetTest_AddUserEntity_UserDbSetMustContainOneEntity()
+    public async Task RepositoryTest_AddUserEntity_UserDbSetMustContainOneEntity()
     {
         var user = CreateEntityWithoutThrowingRecursionError<User>();
         _userRepository.Setup(x => x.CreateAsync(user)).ReturnsAsync(
@@ -41,7 +37,7 @@ public class UnitOfWorkTests
         createdEntity.Should().Be(user);
     }
     [Fact]  
-    public async Task DbSetTest_GetUserById_MustReturnOneCreatedEntity()
+    public async Task RepositoryTest_GetUserById_MustReturnOneCreatedEntity()
     {
         var user = CreateEntityWithoutThrowingRecursionError<User>();
         _userRepository.Setup(x => x.FindAsync(x=>x.Id==user.Id)).

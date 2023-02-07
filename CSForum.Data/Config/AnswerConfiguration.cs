@@ -22,6 +22,7 @@ public class AnswerConfiguration:IEntityTypeConfiguration<Answer>
         
         builder.HasOne<Post>(prop => prop.Post)
             .WithMany(prop => prop.Answers)
-            .HasForeignKey(p=>p.PostId);
+            .HasForeignKey(p=>p.PostId)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

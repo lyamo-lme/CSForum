@@ -3,6 +3,7 @@ using CSForum.Core.Models;
 using CSForum.Shared.Models.dtoModels;
 using CSForum.Shared.Models.dtoModels.Tag;
 using CSForum.WebUI.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace CSForum.Services.MapperConfigurations;
 
@@ -12,6 +13,7 @@ public class DtoMapper:Profile
     {
         //users
         CreateMap<User, UserViewModel>().ReverseMap();
+        CreateMap<User, IdentityUser<int>>().ReverseMap();
         
         //posts
         CreateMap<Post, CreatePostDto>().ReverseMap();

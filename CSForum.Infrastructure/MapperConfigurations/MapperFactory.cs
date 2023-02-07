@@ -2,7 +2,7 @@ using AutoMapper;
 
 namespace CSForum.Services.MapperConfigurations;
 
-public class MapperFactory
+public static class MapperFactory
 {
     public static Mapper CreateMapper<T>() where T : Profile, new()
     {

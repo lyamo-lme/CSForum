@@ -12,27 +12,38 @@ var defaultConnString = builder.Configuration.GetConnectionString("MsSqlConnecti
 
 // SeedData.EnsureSeedData(defaultConnString);
 
-builder.Services.AddControllers();
+builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ForumDbContext>(options =>
     options.UseSqlServer(defaultConnString,
         b => b.MigrationsAssembly(assembly)));
 
 builder.Services.AddIdentity<User, IdentityRole<int>>()
-    .AddEntityFrameworkStores<ForumDbContext>();
+    .AddEntityFrameworkStores<ForumDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(config =>
+{
+    config.Cookie.Name = "IdentityServer.Cookie";
+    config.LoginPath = "/Auth/Login";
+});
 
 builder.Services.AddIdentityServer()
+    .AddInMemoryClients(Config.Clients)
+    .AddInMemoryApiResources(Config.ApiResources)
+    .AddInMemoryApiScopes(Config.ApiScopes)
+    .AddInMemoryIdentityResources(Config.IdentityResources)
     .AddAspNetIdentity<User>()
-    .AddConfigurationStore(options =>
-    {
-        options.ConfigureDbContext = b =>
-            b.UseSqlServer(defaultConnString, opt => opt.MigrationsAssembly(assembly));
-    })
-    .AddOperationalStore(options =>
-    {
-        options.ConfigureDbContext = b =>
-            b.UseSqlServer(defaultConnString, opt => opt.MigrationsAssembly(assembly));
-    })
+    // .AddConfigurationStore(options =>
+    // {
+    //     options.ConfigureDbContext = b =>
+    //         b.UseSqlServer(defaultConnString, opt => opt.MigrationsAssembly(assembly));
+    // })
+    // .AddOperationalStore(options =>
+    // {
+    //     options.ConfigureDbContext = b =>
+    //         b.UseSqlServer(defaultConnString, opt => opt.MigrationsAssembly(assembly));
+    // })
     .AddDeveloperSigningCredential();
 
 var app = builder.Build();
@@ -41,7 +52,6 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseIdentityServer();
-app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {

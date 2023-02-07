@@ -3,6 +3,7 @@ using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models.dtoModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CSForum.WebApi.Controllers
@@ -69,6 +70,7 @@ namespace CSForum.WebApi.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<Post>> GetPosts()
         {
             try

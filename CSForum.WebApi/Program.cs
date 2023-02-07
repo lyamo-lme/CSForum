@@ -11,10 +11,10 @@ builder.Services.AddControllers()
     );
 
 builder.Services.AddAuthentication("Bearer")
-    .AddIdentityServerAuthentication("Bearer", options =>
+    .AddJwtBearer("Bearer",config =>
     {
-        options.Authority = "https://localhost:6000";
-        options.ApiName = "api";
+        config.Authority = "https://localhost:5444/";
+        config.Audience = "api";
     });
 
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
