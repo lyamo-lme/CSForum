@@ -1,7 +1,9 @@
+using System.Security.Claims;
 using AutoMapper;
 using CSForum.Core.Models;
 using CSForum.IdentityServer.Models;
 using CSForum.Services.MapperConfigurations;
+using IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,16 +45,16 @@ public class AuthController : Controller
     {
         try
         {
-            if (model.Password.Equals(model.ConfirmPassword) || !ModelState.IsValid)
+            if (!model.Password.Equals(model.ConfirmPassword) && !ModelState.IsValid)
             {
                 return View("RegisterPage", model);
             }
 
             await _userManager.CreateAsync(
-                _mapper.Map<User>(new IdentityUser(model.Username)),
+                _mapper.Map<User>(new IdentityUser<int>(model.Username)),
                 model.Password);
 
-            return Login(model.ReturnUrl);
+            return Redirect( $"Login?ReturnUrl={model.ReturnUrl}");
         }
         catch (Exception e)
         {
@@ -64,6 +66,8 @@ public class AuthController : Controller
     public async Task<IActionResult> Login(LoginViewModel model)
     {
         var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
+        var user = await _userManager.FindByNameAsync(model.Username);
+        // await _userManager.AddClaimAsync(user, new Claim(JwtClaimTypes.Id,$"{user.Id}"));
         if (result.Succeeded)
         {
             return Redirect(model.ReturnUrl);

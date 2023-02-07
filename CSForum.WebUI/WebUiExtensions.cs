@@ -21,6 +21,8 @@ public static class WebUiExtensions
                 config.ClientSecret = "ClientSecret_MVC";
                 config.SaveTokens = true;
                 config.ResponseType = "code";
+                
+                config.Scope.Add("UserClaims");
             });
 
 

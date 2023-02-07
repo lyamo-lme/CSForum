@@ -21,14 +21,14 @@
         </div>
         <div>
             <button type="submit">
-                sign in
+                Sign in
                 @* @ViewLocalizer["SignIn"] *@
             </button>
         </div>
     </form>
 </div>
 <div>
-    
+    <a asp-action="Register"  asp-route-ReturnUrl="@Model.ReturnUrl">Register</a>
 </div>
 </body>
 </html>

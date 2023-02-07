@@ -1,4 +1,5 @@
-﻿using IdentityServer4;
+﻿using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Models;
 
 namespace CSForum.IdentityServer
@@ -9,7 +10,16 @@ namespace CSForum.IdentityServer
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResource()
+                {
+                    Name = "UserClaims",
+                    UserClaims = new List<string>()
+                    {
+                        JwtClaimTypes.Id,
+                        JwtClaimTypes.Email
+                    }
+                }
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
@@ -22,7 +32,11 @@ namespace CSForum.IdentityServer
                 {
                     Scopes = new List<string> { "api" },
                     ApiSecrets = new List<Secret> { new Secret("ScopeSecret".Sha256()) },
-                    UserClaims = new List<string> { "role" }
+                    UserClaims = new List<string>
+                    {
+                        JwtClaimTypes.Id,
+                        JwtClaimTypes.Email
+                    }
                 }
             };
 
@@ -40,8 +54,10 @@ namespace CSForum.IdentityServer
                     },
                     AllowedScopes =
                     {
-                        "api"
-                    }
+                        "api",
+                        "UserClaims"
+                    },
+                    AlwaysIncludeUserClaimsInIdToken = true
                 },
                 new Client
                 {
@@ -57,9 +73,12 @@ namespace CSForum.IdentityServer
                     AllowedScopes =
                     {
                         "api",
+                        "UserClaims",
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
-                    }
+                    },
+                    AllowOfflineAccess = true,
+                    AlwaysIncludeUserClaimsInIdToken = true
                 },
                 new Client
                 {

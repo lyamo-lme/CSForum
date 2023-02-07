@@ -10,7 +10,7 @@
 <div>
       <div>
           <form asp-controller="Auth" asp-action="Register" method="post">
-              <input hidden="hidden" name="ReturnUrl" value="@Model.ReturnUrl"/>
+              <input hidden="hidden" name="ReturnUrl"   value="@Model.ReturnUrl"/>
               <div>
                   <label>User name</label>
                   <input name="Username" id="Username"/>
@@ -20,7 +20,7 @@
                   <input name="Password" id="Password"/>
               </div>  
               <div>
-                  <label>ConfirmPassword password</label>
+                  <label>Confirm password</label>
                   <input name="ConfirmPassword" id="ConfirmPassword"/>
               </div>
               <div>
