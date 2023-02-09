@@ -1,4 +1,5 @@
 using CSForum.Data;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,11 @@ builder.Services.AddAuthentication("Bearer")
     {
         config.Authority = "https://localhost:5444/";
         config.Audience = "api";
+        
+        config.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = false
+        };
     });
 
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())

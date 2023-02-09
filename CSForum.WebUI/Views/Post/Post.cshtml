@@ -7,8 +7,20 @@
 
 <h2>@Model.Title</h2>
 
-<div>
-    @Html.Raw(@Model.Content);
+<div class="post-block">
+    <div class="post-info">
+        <p>
+            <b>Created: </b>@Model.DateCreate
+        </p>
+        <p>
+            <a asp-controller="User" asp-action="GetUserById" asp-route-id="@Model.PostCreator.Id">
+                by @Model.PostCreator.UserName
+            </a>
+        </p>
+    </div>
+    <div class="post-content">
+        @Html.Raw(@Model.Content)
+    </div>
 </div>
 <div class="line-yellow"></div>
 <div>
@@ -27,9 +39,10 @@
 @await Html.PartialAsync("AnswerFormPartialView", new CreateAnswerViewModel
        {
            PostId = @Model.Id
-       });
+       })
 <script>
  let answerForm = document.querySelector("#answerForm");
+ 
 function showAnswerForm(){
    answerForm.style.display=="none"?
     answerForm.style.display="block":

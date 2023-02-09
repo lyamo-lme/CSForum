@@ -1,5 +1,6 @@
 ﻿using CSForum.Core.IHttpClients;
 using CSForum.Core.Models;
+using CSForum.Services.HttpClients;
 using CSForum.Shared.Models.dtoModels;
 using CSForum.Shared.Models.dtoModels.Tag;
 using CSForum.WebUI.Models;
@@ -9,10 +10,10 @@ namespace CSForum.WebUI.Controllers
 {
     public class TagController:Controller
     {
-        private readonly IForumClient _forumClient;
-        public TagController(IForumClient tagClient)
+        private readonly ApiHttpClientBase _forumClient;
+        public TagController(ApiHttpClientBase tagClient)
         {
-            this._forumClient = tagClient;
+            _forumClient = tagClient;
         }
         public async Task<ActionResult> FindTag(int tagId) {
 

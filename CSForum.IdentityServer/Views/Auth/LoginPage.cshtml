@@ -5,30 +5,32 @@
 
 <html>
 <head>
-    <title></title>
+    <title>Login</title>
+    <link href="~/css/site.css" rel="stylesheet">
 </head>
 <body>
-<div>
-    <form asp-controller="Auth" asp-action="Login" method="post">
-        <input hidden="hidden" name="ReturnUrl" value="@Model.ReturnUrl"/>
+
+<form class="login" asp-controller="Auth" asp-action="Login" method="post">
+    <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl"/>
+
+    <h3>Login Here</h3>
+
+    <label>Username</label>
+    <input name="Username" id="Username" type="text" placeholder="Email or Phone">
+
+    <label>Password</label>
+    <input name="Password" id="Password" type="password" placeholder="Password">
+    <div class="buttons" style="display: flex">
+        <button type="submit">Log In</button>
         <div>
-            <label>User name</label>
-            <input name="Username" id="Username"/>
+            <a asp-action="Register" asp-route-ReturnUrl="@Model.ReturnUrl">Register</a>
         </div>
-        <div>
-            <label>Password</label>
-            <input name="Password" id="Password"/>
-        </div>
-        <div>
-            <button type="submit">
-                Sign in
-                @* @ViewLocalizer["SignIn"] *@
-            </button>
-        </div>
-    </form>
-</div>
-<div>
-    <a asp-action="Register"  asp-route-ReturnUrl="@Model.ReturnUrl">Register</a>
-</div>
+    </div>
+
+    <div class="social">
+        <div class="go"><i class="fab fa-google"></i> Google</div>
+    </div>
+</form>
+
 </body>
 </html>

@@ -1,5 +1,6 @@
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CSForum.WebApi.Controllers;
@@ -13,6 +14,11 @@ public class UserController : Controller
     {
         _uofRepository = uofRepository;
     }
+    [HttpGet,Route("secret"),Authorize]
+    public  IActionResult Secret()
+    {
+        return Ok("success");
+    }
     [HttpGet]
     public async Task<IEnumerable<User>> GetUsers()
     {
@@ -25,7 +31,7 @@ public class UserController : Controller
             throw new Exception(e.Message, e);
         }
     }
-    [HttpGet, Route("id/{id}")]
+    [HttpGet, Route("{id}")]
     public async Task<User> GetUser(int id)
     {
         try

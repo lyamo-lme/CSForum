@@ -1,0 +1,246 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+body header > nav.navbar.bg-black.color-lemon-orange {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+body header > nav.navbar.bg-black.color-lemon-orange div.container-fluid a {
+    color: #efc134 !important;
+    font-weight: bold;
+}
+
+body header > nav.navbar.bg-blue ul.identity li.nav-item {
+    margin: 2px;
+    border-radius: 10px;
+}
+
+.form-post {
+    font-size: 17px;
+    background-color: #2b2c2d;
+    color: #efc134;
+    border-radius: 25px;
+    padding: 50px;
+}
+
+.border-radius-ckeditor {
+    border-radius: 25px;
+}
+
+.form-post .input-box {
+    border-radius: 10px;
+    padding: 2px 10px;
+    border: 2px solid #001d3a;
+}
+
+.form-post .input-box:focus-visible {
+    outline: 2px solid #efc134;
+}
+
+.selected-tag {
+    display: flex;
+}
+
+.selected-tag > * {
+    background-color: #2b2c2d;
+    border: 2px solid #efc134;
+    border-radius: 5px;
+    padding: 5px;
+    color: #efc134;
+    margin-left: 2px;
+}
+
+ul.user-manage.nav.nav-pills.flex-column > li.nav-item {
+    background-color: black;
+    margin: 1px;
+    border-radius: 5px;
+}
+
+ul.user-manage.nav.nav-pills.flex-column > li.nav-item > a.nav-link {
+    color: #efc134;
+}
+
+ul.user-manage.nav.nav-pills.flex-column > li.nav-item > a.nav-link.active {
+    background-color: #efc134;
+    color: black;
+}
+
+.btn-dark {
+    color: #efc134;
+    padding: 3px;
+    background: black;
+}
+
+.line-yellow {
+    background-color: #efc134;
+    height: 5px;
+    padding: 10px;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Raleway, sans-serif;
+}
+
+body {
+    background: linear-gradient(90deg, #71708a, #776BCC);
+}
+
+*,
+*:before,
+*:after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #080710;
+}
+
+.background {
+    width: 430px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+}
+
+form.login {
+
+    width: 400px;
+    background-color: rgba(10, 8, 8, 0.58);
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+    padding: 50px 35px;
+}
+
+form.login * {
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+
+form.login h3 {
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    text-align: center;
+}
+
+form.login label {
+    display: block;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+input {
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+::placeholder {
+    color: #e5e5e5;
+}
+.login .buttons div a {
+    color: black;
+    text-decoration: none;
+}
+.login .buttons div {
+    margin: 10px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    text-align:  center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login button {
+    margin: 10px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login button a {
+    color: black;
+    text-decoration: none;
+}
+
+.social {
+    display: flex;
+    justify-content: center;
+}
+
+.social p {
+    padding: 4px;
+}
+
+.social div {
+    width: 150px;
+    border-radius: 3px;
+    padding: 5px 10px 10px 5px;
+    background-color: rgba(255, 255, 255, 0.27);
+    color: #eaf0fb;
+    text-align: center;
+}
+
+.social div:hover {
+    background-color: rgba(255, 255, 255, 0.47);
+}
+
+.social i {
+    margin-right: 4px;
+}

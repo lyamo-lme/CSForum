@@ -65,9 +65,15 @@ public class AuthController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return View("LoginPage", new LoginViewModel()
+            {
+                ReturnUrl = model.ReturnUrl
+            });
+        }
         var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
-        var user = await _userManager.FindByNameAsync(model.Username);
-        // await _userManager.AddClaimAsync(user, new Claim(JwtClaimTypes.Id,$"{user.Id}"));
+       
         if (result.Succeeded)
         {
             return Redirect(model.ReturnUrl);

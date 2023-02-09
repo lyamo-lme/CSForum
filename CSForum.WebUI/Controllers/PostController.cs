@@ -2,10 +2,12 @@ using System.Security.Claims;
 using AutoMapper;
 using CSForum.Core.IHttpClients;
 using CSForum.Core.Models;
+using CSForum.Services.HttpClients;
 using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models;
 using CSForum.Shared.Models.dtoModels;
 using CSForum.WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -17,12 +19,12 @@ namespace CSForum.WebUI.Controllers;
 public class PostController : Controller
 {
     private readonly IMapper _mapper;
-    private readonly IForumClient _forumClient; 
+    private readonly ApiHttpClientBase _forumClient; 
     private readonly UserManager<User> _userManager;
 
     
 
-    public PostController(IOptions<ApiSettingConfig> options, IForumClient client,
+    public PostController(IOptions<ApiSettingConfig> options, ApiHttpClientBase client,
         UserManager<User> userManager)
     {
         _forumClient = client;
@@ -37,7 +39,8 @@ public class PostController : Controller
     }
 
     [HttpPost,Route("create")]
-    public async Task<ViewResult> CreatePost(CreatePostView model)
+    [Authorize]
+    public async Task<IActionResult> CreatePost(CreatePostView model)
     {
         try
         {
@@ -45,7 +48,7 @@ public class PostController : Controller
             var postDto = _mapper.Map<CreatePostDto>(model);
             postDto.UserId = user.Id;
             var post = await _forumClient.PostAsync<CreatePostDto, Post>(postDto, "api/posts/create");
-            return await Post(post.Id);
+            return RedirectToAction($"{post.Id}");
         }
         catch (Exception e)
         {
@@ -53,7 +56,7 @@ public class PostController : Controller
         }
     }
 
-    [HttpGet,Route("post/{postId}")]
+    [HttpGet,Route("{postId}")]
     public  async Task<ViewResult> Post(int postId)
     {
         try

@@ -44,7 +44,7 @@ builder.Services.Configure<ApiSettingConfig>(
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
-builder.Services.AddHttpClient<IForumClient, ApiHttpClientBase>();
+builder.Services.AddHttpClient<ApiHttpClientBase>();
 
 //email service di
 var password = builder.Configuration["emailPassword"];

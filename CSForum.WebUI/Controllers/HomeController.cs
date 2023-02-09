@@ -1,23 +1,34 @@
 ﻿using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
+using CSForum.Core.IHttpClients;
 using CSForum.Core.Models;
+using CSForum.Services.HttpClients;
 using Microsoft.AspNetCore.Mvc;
 using CSForum.WebUI.Models;
+using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace CSForum.WebUI.Controllers;
 
 public class HomeController : Controller
 {
-    public HomeController()
+    private readonly ApiHttpClientBase _forumClient;
+
+    private UserManager<User> _userManager;
+    public HomeController(UserManager<User> userManager, ApiHttpClientBase forumClient)
     {
+        _userManager = userManager;
+        _forumClient = forumClient;
     }
     
     public IActionResult Index()
     {
         return View();
     }
+    
+    //created to check auth state
     [Authorize]
     public async Task<ActionResult<Post>> SecretPath()
     {
@@ -26,7 +37,9 @@ public class HomeController : Controller
         var refresh = await HttpContext.GetTokenAsync("refresh_token");
         var _acToken = new JwtSecurityTokenHandler().ReadJwtToken(accToken);
         var _idToken = new JwtSecurityTokenHandler().ReadJwtToken(idToken);
-        
+
+        _forumClient.client.SetBearerToken(accToken);
+        var result =  await _forumClient.GetAsync<string>("api/users/secret");
         return new  Post();
     }
 

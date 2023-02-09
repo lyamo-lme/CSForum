@@ -4,33 +4,46 @@
 
 <html>
 <head>
-    <title>title</title>
+    <title>Register</title>
+    <link href="~/css/site.css" rel="stylesheet">
+
 </head>
 <body>
 <div>
-      <div>
-          <form asp-controller="Auth" asp-action="Register" method="post">
-              <input hidden="hidden" name="ReturnUrl"   value="@Model.ReturnUrl"/>
-              <div>
-                  <label>User name</label>
-                  <input name="Username" id="Username"/>
-              </div>
-              <div>
-                  <label>Password</label>
-                  <input name="Password" id="Password"/>
-              </div>  
-              <div>
-                  <label>Confirm password</label>
-                  <input name="ConfirmPassword" id="ConfirmPassword"/>
-              </div>
-              <div>
-                  <button type="submit">
-                      sign in
-                      @* @ViewLocalizer["SignIn"] *@
-                  </button>
-              </div>
-          </form>
-      </div>
+    <div>
+
+        <form class="login" asp-controller="Auth" asp-action="Register">
+            <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl"/>
+
+            <h3>Register new account</h3>
+
+            <label >Username</label>
+            <input name="Username" id="Username" type="text" placeholder="Email or Phone">
+
+            <label >Password</label>
+            <input name="Password" id="Password" type="password" placeholder="Password">
+
+            <label >Confirm Password</label>
+            <input name="ConfirmPassword" id="ConfirmPassword" type="password" placeholder="Password">
+
+            <div class="buttons" style="display: flex">
+                <button type="submit">Register</button>
+                <div>
+                    <a  asp-action="Login" asp-route-ReturnUrl="@Model.ReturnUrl">Log in</a>
+                </div>
+            </div>
+
+            <div>
+                <div class="social">
+                    <p>Sign in With</p>
+                </div>
+                <div class="social">
+                    <div class="go">Google</div>
+                </div>
+            </div>
+        </form>
+
+    </div>
 </div>
 </body>
 </html>

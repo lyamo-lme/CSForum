@@ -55,7 +55,9 @@ namespace CSForum.IdentityServer
                     AllowedScopes =
                     {
                         "api",
-                        "UserClaims"
+                        "UserClaims",
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
                     },
                     AlwaysIncludeUserClaimsInIdToken = true
                 },
