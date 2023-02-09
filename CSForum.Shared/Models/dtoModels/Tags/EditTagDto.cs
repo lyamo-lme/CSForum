@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSForum.Shared.Models.dtoModels.Tag
+namespace CSForum.Shared.Models.dtoModels.Tags
 {
     public class EditTagDto
     {

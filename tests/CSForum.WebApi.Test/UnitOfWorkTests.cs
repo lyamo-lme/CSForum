@@ -17,7 +17,7 @@ public class UnitOfWorkTests
         //arrange
          var usersList =  CreateEntityWithoutThrowingRecursionError<List<User>>();
          
-        _userRepository.Setup(x => x.GetAsync(null, null, ""))
+        _userRepository.Setup(x => x.GetAsync(null, null, null,null,""))
             .ReturnsAsync(usersList);
 
         var users = await _userRepository.Object.GetAsync();

@@ -50,6 +50,7 @@
 
     <ItemGroup>
       <Folder Include="Resources\Controllers\" />
+      <Folder Include="Resources\Views\User" />
       <Folder Include="Views\User\" />
       <Folder Include="wwwroot\skeditorscript" />
     </ItemGroup>
@@ -114,6 +115,22 @@
       <EmbeddedResource Update="Resources\Views\Post\FormPost.uk-UA.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Post.uk-UA.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Home\Index.en-US.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Index.en-US.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Home\Index.uk-UA.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Index.en-US.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Shared\_LoginPartial.en-US.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>_LoginPartial.en-US.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Shared\_LoginPartial.uk-UA.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>_LoginPartial.en-US.Designer.cs</LastGenOutput>
       </EmbeddedResource>
     </ItemGroup>
 

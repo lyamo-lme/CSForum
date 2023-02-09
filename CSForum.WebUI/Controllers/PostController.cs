@@ -2,10 +2,12 @@ using System.Security.Claims;
 using AutoMapper;
 using CSForum.Core.IHttpClients;
 using CSForum.Core.Models;
+using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.HttpClients;
 using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models;
 using CSForum.Shared.Models.dtoModels;
+using CSForum.Shared.Models.dtoModels.Posts;
 using CSForum.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -66,6 +68,20 @@ public class PostController : Controller
         }
         catch (Exception e)
         {
+            throw;
+        }
+    }
+
+    public async Task<IActionResult> GetRecentPosts(int? take=null)
+    {
+        try
+        {
+            var recentPosts =  await _forumClient.GetAsync<List<Post>>($"api/posts/recent/{take}");
+            return View("PostsView", _mapper.Map<List<PostViewModel>>(recentPosts));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
             throw;
         }
     }

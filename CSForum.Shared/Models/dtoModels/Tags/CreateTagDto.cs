@@ -1,4 +1,4 @@
-namespace CSForum.Shared.Models.dtoModels.Tag;
+namespace CSForum.Shared.Models.dtoModels.Tags;
 
 public class CreateTagDto
 {

@@ -1,0 +1,15 @@
+@model List<PostViewModel>
+
+@{
+    ViewBag.Title = "Main page - Posts";
+    Layout = "_Layout";
+}
+<ul class="recent-posts">
+ @foreach(var post in @Model)
+    {
+        <li class="element">
+            <a asp-controller="Post" asp-action="Post" asp-route-postId="@post.Id">@post.Title</a>
+            <p>Created: @post.DateCreate</p>
+        </li>
+    }
+</ul>

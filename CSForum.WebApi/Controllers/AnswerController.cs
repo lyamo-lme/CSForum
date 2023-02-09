@@ -1,6 +1,7 @@
 using AutoMapper;
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
+using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models.dtoModels;
 using Microsoft.AspNetCore.Mvc;

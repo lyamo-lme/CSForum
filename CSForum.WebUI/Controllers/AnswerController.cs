@@ -1,10 +1,11 @@
 using AutoMapper;
 using CSForum.Core.IHttpClients;
 using CSForum.Core.Models;
+using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.HttpClients;
 using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models.dtoModels;
-using CSForum.Shared.Models.dtoModels.Tag;
+using CSForum.Shared.Models.dtoModels.Tags;
 using CSForum.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

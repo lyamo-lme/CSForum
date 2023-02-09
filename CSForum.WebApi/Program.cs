@@ -1,4 +1,6 @@
+using CSForum.Core.IRepositories.Services;
 using CSForum.Data;
+using CSForum.WebApi.RepositoryServices;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +32,7 @@ builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IPostService, PostService>();
 
 builder.Services.AddDbForumContext(
     builder.Configuration.GetConnectionString("MsSqlConnection"), assembly);

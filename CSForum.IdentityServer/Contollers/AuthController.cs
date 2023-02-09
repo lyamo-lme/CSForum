@@ -2,8 +2,11 @@ using System.Security.Claims;
 using AutoMapper;
 using CSForum.Core.Models;
 using CSForum.IdentityServer.Models;
+using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.MapperConfigurations;
 using IdentityModel;
+using IdentityServer4.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,11 +17,13 @@ public class AuthController : Controller
     private readonly SignInManager<User> _signInManager;
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
+    private readonly IIdentityServerInteractionService _interactionService;
 
-    public AuthController(SignInManager<User> signInManager, UserManager<User> userManager)
+    public AuthController(SignInManager<User> signInManager, UserManager<User> userManager, IIdentityServerInteractionService interactionService)
     {
         this._signInManager = signInManager;
         _userManager = userManager;
+        _interactionService = interactionService;
         _mapper = MapperFactory.CreateMapper<DtoMapper>();
     }
 
@@ -54,7 +59,7 @@ public class AuthController : Controller
                 _mapper.Map<User>(new IdentityUser<int>(model.Username)),
                 model.Password);
 
-            return Redirect( $"Login?ReturnUrl={model.ReturnUrl}");
+            return Redirect($"Login?ReturnUrl={model.ReturnUrl}");
         }
         catch (Exception e)
         {
@@ -72,8 +77,9 @@ public class AuthController : Controller
                 ReturnUrl = model.ReturnUrl
             });
         }
+
         var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
-       
+
         if (result.Succeeded)
         {
             return Redirect(model.ReturnUrl);
@@ -84,4 +90,13 @@ public class AuthController : Controller
 
         return View("LoginPage");
     }
+
+    [HttpGet, Authorize]
+    public async Task<IActionResult> Logout(string logoutId)
+    {
+        await _signInManager.SignOutAsync();
+        var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
+        return Redirect(logoutRequest.PostLogoutRedirectUri);
+    }
+
 }

@@ -10,6 +10,7 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
 {
     private readonly ForumDbContext _context;
     private readonly DbSet<TEntity> _entity;
+    private IRepository<TEntity> _repositoryImplementation;
 
     public GenericRepository(ForumDbContext context)
     {
@@ -18,7 +19,7 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
     }
 
     public async Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null,
-        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, int? take = null, int? skip = null,
         string includeProperties = "")
     {
         try
@@ -38,12 +39,20 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
 
             if (orderBy != null)
             {
-                return await orderBy(query).ToListAsync();
+                query = orderBy(query);
             }
-            else
+
+            if (skip != null)
             {
-                return await query.ToListAsync();
+                query = query.Skip((int)skip);
             }
+
+            if (take != null)
+            {
+                query = query.Take((int)take);
+            }
+            
+            return await query.ToListAsync();
         }
         catch (Exception e)
         {

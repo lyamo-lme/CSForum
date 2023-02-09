@@ -11,7 +11,7 @@
 <body>
 
 <form class="login" asp-controller="Auth" asp-action="Login" method="post">
-    <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl"/>
+    <input type="hidden" id="ReturnUrl"  name="ReturnUrl" value="@Model.ReturnUrl"/>
 
     <h3>Login Here</h3>
 

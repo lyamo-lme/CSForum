@@ -71,6 +71,15 @@ namespace CSForum.IdentityServer
                         "http://localhost:5161/signin-oidc",
                         "https://localhost:5161/signin-oidc"
                     },
+                    PostLogoutRedirectUris = new List<string>()
+                    {
+                        "http://localhost:5161/signin-oidc",
+                        "https://localhost:5161/Home/Index"
+                    },
+                    AllowedCorsOrigins = new List<string>()
+                    {
+                        "https://localhost:5161"
+                    },
                     ClientSecrets = { new Secret("ClientSecret_MVC".Sha256()) },
                     AllowedScopes =
                     {

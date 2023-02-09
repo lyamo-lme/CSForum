@@ -2,9 +2,12 @@
 @using CSForum.Core.Models
 @using Microsoft.AspNetCore.Localization
 @using Microsoft.Extensions.Options
-@inject IOptions<RequestLocalizationOptions> LocalizationOptions
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer ViewLocalizer
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
+@inject IOptions<RequestLocalizationOptions> LocalizationOptions
+
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     var cultureItems = LocalizationOptions.Value.SupportedUICultures
@@ -16,21 +19,31 @@
         : $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
 }
 <ul class="navbar-nav identity">
-    @if (SignInManager.IsSignedIn(User))
+    @if (User.Identity!.IsAuthenticated)
     {
-      
+        <li class="nav-item">
+            <a class="nav-link text-white">@ViewLocalizer["Hello"], @User.Identity?.Name!</a>
+        </li>
+        <li class="nav-item">
+            <a asp-controller="Home" asp-action="Logout" class="nav-link text-white">@ViewLocalizer["Logout"]</a>
+        </li>
     }
     else
     {
         <li class="nav-item">
-            <form asp-controller="Culture" asp-action="SetCulture" asp-route-returnUrl="@returnUrl"
-                  class="form-horizontal nav-link text-dark">
-                <select name="culture"
-                        onchange="this.form.submit();"
-                        asp-for="@requestCulture.RequestCulture.UICulture.Name"
-                        asp-items="cultureItems">
-                </select>
-            </form>
+            <a asp-controller="Home" asp-action="Login"
+               asp-route-returnUrl="@returnUrl"
+               class="nav-link text-white">@ViewLocalizer["Login"]</a>
         </li>
     }
+    <li class="nav-item">
+        <form asp-controller="Culture" asp-action="SetCulture" asp-route-returnUrl="@returnUrl"
+              class="form-horizontal nav-link text-dark">
+            <select name="culture"
+                    onchange="this.form.submit();"
+                    asp-for="@requestCulture.RequestCulture.UICulture.Name"
+                    asp-items="cultureItems">
+            </select>
+        </form>
+    </li>
 </ul>

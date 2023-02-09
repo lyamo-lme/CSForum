@@ -1,8 +1,12 @@
+using System.Linq.Expressions;
 using AutoMapper;
 using CSForum.Core.IRepositories;
+using CSForum.Core.IRepositories.Services;
 using CSForum.Core.Models;
+using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models.dtoModels;
+using CSForum.Shared.Models.dtoModels.Posts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,11 +18,13 @@ namespace CSForum.WebApi.Controllers
     {
         private readonly IUnitOfWorkRepository _uofRepository;
         private readonly IMapper _dtoMapper;
+        private readonly IPostService _postService;
 
-        public PostController(IUnitOfWorkRepository uofRepository)
+        public PostController(IUnitOfWorkRepository uofRepository, IPostService postService)
         {
             _dtoMapper = MapperFactory.CreateMapper<DtoMapper>();
             _uofRepository = uofRepository;
+            _postService = postService;
         }
 
         [HttpPost, Route("create")]
@@ -28,7 +34,7 @@ namespace CSForum.WebApi.Controllers
             {
                 var mappedPost = _dtoMapper.Map<Post>(model);
                 var post = await _uofRepository.Posts.CreateAsync(mappedPost);
-                 await _uofRepository.SaveAsync();
+                await _uofRepository.SaveAsync();
                 return Ok(post);
             }
             catch (Exception e)
@@ -60,7 +66,7 @@ namespace CSForum.WebApi.Controllers
             {
                 var model = await _uofRepository.Posts.FindAsync(x => x.Id == postId);
                 model.PostCreator = await _uofRepository.Users.FindAsync(x => x.Id == model.UserId);
-                model.Answers = await _uofRepository.Answers.GetAsync(x=>x.PostId==model.Id,null,"AnswerCreator");
+                model.Answers = await _uofRepository.Answers.GetAsync(x=>x.PostId==model.Id,null,null,null,"AnswerCreator");
                 return Ok(model);
             }
             catch (Exception e)
@@ -76,6 +82,21 @@ namespace CSForum.WebApi.Controllers
             try
             {
                 return Ok(await _uofRepository.Posts.GetAsync());
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+        [HttpGet,Route("recent/{count}")]
+        public async Task<ActionResult<Post>> GetRecentPosts(int count=10)
+        {
+            try
+            {
+                return Ok(await _uofRepository.Posts.GetAsync(
+                    null,
+                    orderBy: post =>post.OrderBy(obj=>obj.DateCreate)
+                    ));
             }
             catch (Exception e)
             {

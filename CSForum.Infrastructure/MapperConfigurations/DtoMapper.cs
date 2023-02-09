@@ -1,11 +1,12 @@
 using AutoMapper;
 using CSForum.Core.Models;
 using CSForum.Shared.Models.dtoModels;
-using CSForum.Shared.Models.dtoModels.Tag;
+using CSForum.Shared.Models.dtoModels.Posts;
+using CSForum.Shared.Models.dtoModels.Tags;
 using CSForum.WebUI.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace CSForum.Services.MapperConfigurations;
+namespace CSForum.Infrastructure.MapperConfigurations;
 
 public class DtoMapper:Profile
 {
@@ -29,5 +30,9 @@ public class DtoMapper:Profile
         //tags
         CreateMap<Tag, CreateTagDto>().ReverseMap();
         CreateMap<Tag, EditTagDto>().ReverseMap();
+        CreateMap<Tag, TagInPostDto>().ReverseMap();
+       
+        //postTags
+        CreateMap<PostTag, TagInPostDto>().ReverseMap();
     }
 }

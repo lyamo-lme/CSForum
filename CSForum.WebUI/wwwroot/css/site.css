@@ -96,3 +96,13 @@ ul.user-manage.nav.nav-pills.flex-column > li.nav-item > a.nav-link.active {
     height: 5px;
     padding: 5px;
 }
+
+.recent-posts{
+    
+}
+.recent-posts > .element {
+    border-bottom: 2px solid #efc134;
+}
+ul.recent-posts{
+    list-style: none;
+}

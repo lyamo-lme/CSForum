@@ -1,5 +1,6 @@
 using AutoMapper;
 using CSForum.Core.Models;
+using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.HttpClients;
 using CSForum.Services.MapperConfigurations;
 using CSForum.WebUI.Models;

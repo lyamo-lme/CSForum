@@ -17,6 +17,7 @@ public static class WebUiExtensions
             .AddOpenIdConnect("oidc", config =>
             {
                 config.Authority = "https://localhost:5444/";
+                config.SignedOutCallbackPath = "/Home/Index";
                 config.ClientId = "mvc.client";
                 config.ClientSecret = "ClientSecret_MVC";
                 config.SaveTokens = true;
