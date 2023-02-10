@@ -34,7 +34,7 @@ public class PostController : Controller
         _userManager = userManager;
     }
 
-    [HttpGet, Route("create")]
+    [HttpGet, Route("create"), Authorize]
     public IActionResult CreatePost()
     {
         return View("FormPost");
@@ -42,7 +42,7 @@ public class PostController : Controller
 
     [HttpPost,Route("create")]
     [Authorize]
-    public async Task<IActionResult> CreatePost(CreatePostView model)
+    public async Task<IActionResult> CreatePost([FromBody]CreatePostView model)
     {
         try
         {

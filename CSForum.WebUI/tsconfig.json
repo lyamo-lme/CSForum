@@ -4,10 +4,12 @@
     "target": "ES6",
     "sourceMap": true,
     "lib": [
-      "dom",
       "es5",
       "scripthost",
-      "es2015.promise"
+      "es2015.promise",
+      "es2019",
+      "dom",
+      "dom.iterable"
     ]
   },
   "exclude": [

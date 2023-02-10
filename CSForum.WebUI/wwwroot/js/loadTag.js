@@ -8,11 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const urlOrigin = "https://localhost:5000";
-const selectTag = document.querySelector("#selectTag");
+const selectTag = document.querySelector(".selectTag");
 const selectedTags = document.querySelector("#selectedTag");
-const inputTag = document.querySelector("#tagFind");
+const inputTag = document.querySelector(".tag-find");
 let selectedTagIds = [];
-console.log("here");
 console.log(inputTag);
 inputTag.addEventListener("change", () => {
     console.log("here");
@@ -28,20 +27,28 @@ function getTagsByName(name) {
             let data = yield response.json();
             console.log(data);
             selectTag.innerHTML = "";
+            let option = document.createElement("option");
+            option.value = "0";
+            option.style.display = "none";
+            selectTag.appendChild(option);
             //need to set onchange on select tag
             data.map((tag) => {
                 let option = document.createElement("option");
                 option.textContent = tag.name;
                 option.value = `${tag.id}`;
                 selectTag.appendChild(option);
+                console.log("here");
                 selectTag.addEventListener("change", () => {
-                    // @ts-ignore
+                    console.log("change here");
+                    //@ts-ignore
                     let id = parseInt(selectTag.value);
-                    if (!containValue(selectedTagIds, id)) {
-                        selectedTagIds.push(id);
-                        let div = document.createElement("div");
-                        div.textContent = getNameOption(id);
-                        selectedTags.appendChild(div);
+                    if (id != 0) {
+                        if (!containValue(selectedTagIds, id)) {
+                            selectedTagIds.push(id);
+                            let div = document.createElement("div");
+                            div.textContent = getNameOption(id);
+                            selectedTags.appendChild(div);
+                        }
                     }
                 });
             });

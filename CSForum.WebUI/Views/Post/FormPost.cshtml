@@ -6,7 +6,7 @@
     // Layout = "_Layout";
 }
 
-<form class="form-post" asp-action="CreatePost" method="post">
+<form id="formPost" class="form-post" asp-action="CreatePost" method="post">
     <link rel="stylesheet" href="~/skeditorscript/ckeditor4/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css">
     <script src="~/skeditorscript/ckeditor4/ckeditor.js"></script>
     <script src="~/skeditorscript/ckeditor4/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
@@ -20,9 +20,9 @@
     </div>
     <div>
         <label>@ViewLocalizer["Tags"]</label>
-        <input id="tagFind" class="input-box"/>
+        <input class="input-box tag-find"/>
         <div id="selectedTag" class="selected-tag"></div>
-        <select id="selectTag">
+        <select  class="selectTag">
         </select>
     </div>
     <button type="submit">@ViewLocalizer["CreatePost"]</button>
@@ -34,7 +34,37 @@
                 height: 365
             };
             let editor = CKEDITOR.replace("content", config);
+            console.log(editor)
         });
+        
+        let form = document.querySelector("#formPost");
+        form.addEventListener("submit", async (e) => {    
+             e.preventDefault(); 
+            form = document.querySelector("#formPost");
+            const formData = new FormData(form);
+            let data = JSON.parse(JSON.stringify(Object.fromEntries(formData)));
+            data.PostTags = [];
+            for (let i=0;i<selectedTagIds.length;i++){
+                data.PostTags.push({
+                tagId: selectedTagIds[i]  
+                });
+            }
+            
+            let iframe = document.querySelector("iframe.cke_wysiwyg_frame.cke_reset");
+            let contentBody  = iframe.contentWindow.document.querySelector(".cke_editable > p") ;
+            data.Content = contentBody.innerHTML;
+            let body=  JSON.stringify(data); 
+            let response = await fetch(form.baseURI,
+            {
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: body
+            });
+            window.location.replace(response.url);
+            });
     </script>
     <script src="~/js/loadTag.js"></script>  
 </form>

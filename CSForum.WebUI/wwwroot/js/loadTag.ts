@@ -1,10 +1,10 @@
 const urlOrigin = "https://localhost:5000";
-const selectTag = document.querySelector("#selectTag");
+const selectTag = document.querySelector(".selectTag");
 const selectedTags = document.querySelector("#selectedTag");
-const inputTag = document.querySelector("#tagFind");
+const inputTag = document.querySelector(".tag-find");
 let selectedTagIds: number[] = [];
 
-console.log("here");
+
 console.log(inputTag);
 
 inputTag.addEventListener("change", () => {
@@ -23,6 +23,10 @@ async function getTagsByName(name: string) {
         console.log(data);
 
         selectTag.innerHTML = "";
+        let option = document.createElement("option");
+        option.value = "0";
+        option.style.display = "none";
+        selectTag.appendChild(option);
 
         //need to set onchange on select tag
         data.map((tag) => {
@@ -30,16 +34,18 @@ async function getTagsByName(name: string) {
             option.textContent = tag.name;
             option.value = `${tag.id}`;
             selectTag.appendChild(option);
-            
+            console.log("here");
             selectTag.addEventListener("change", () => {
-                // @ts-ignore
+                console.log("change here")
+                //@ts-ignore
                 let id = parseInt(selectTag.value);
-                
-                if (!containValue(selectedTagIds, id)) {
-                    selectedTagIds.push(id);
-                    let div = document.createElement("div");
-                    div.textContent = getNameOption(id);
-                    selectedTags.appendChild(div);
+                if (id != 0) {
+                    if (!containValue(selectedTagIds, id)) {
+                        selectedTagIds.push(id);
+                        let div = document.createElement("div");
+                        div.textContent = getNameOption(id);
+                        selectedTags.appendChild(div);
+                    }
                 }
             });
         })
@@ -47,16 +53,17 @@ async function getTagsByName(name: string) {
     }
 }
 
-const getNameOption = (id:number)=>{
+const getNameOption = (id: number) => {
     const options = document.querySelectorAll("select > option");
     for (let i = 0; options.length > i; i++) {
         // @ts-ignore
-        if(parseInt(options[i].value)==id){
+        if (parseInt(options[i].value) == id) {
             return options[i].textContent;
         }
     }
     return undefined;
 }
+
 
 const containValue = (array: number[], value: number): boolean => {
     for (let i = 0; array.length > i; i++) {
@@ -71,3 +78,4 @@ interface Tags {
     id: number,
     name: string
 }
+
