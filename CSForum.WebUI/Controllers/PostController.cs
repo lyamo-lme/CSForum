@@ -24,8 +24,6 @@ public class PostController : Controller
     private readonly ApiHttpClientBase _forumClient; 
     private readonly UserManager<User> _userManager;
 
-    
-
     public PostController(IOptions<ApiSettingConfig> options, ApiHttpClientBase client,
         UserManager<User> userManager)
     {

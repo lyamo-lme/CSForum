@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>29c35c77-ed08-462d-ab15-a40978f9d88f</UserSecretsId>
   </PropertyGroup>
 
 
@@ -25,6 +26,7 @@
     <ProjectReference Include="..\CSForum.Core\CSForum.Core.csproj" />
     <ProjectReference Include="..\CSForum.Data\CSForum.Data.csproj" />
     <ProjectReference Include="..\CSForum.Infrastructure\CSForum.Infrastructure.csproj" />
+    <ProjectReference Include="..\CSForum.Services\CSForum.Services.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 namespace CSForum.Shared.Models.dtoModels.Tags;
 
-public class TagInPostDto
+public class TagIdInPostDto
 {
     public int TagId { get; set; }
 }

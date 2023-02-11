@@ -65,6 +65,7 @@ namespace CSForum.WebApi.Controllers
             try
             {
                 var model = await _uofRepository.Posts.FindAsync(x => x.Id == postId);
+                model.PostTags =  await _uofRepository.PostTags.GetAsync(x => x.PostId == model.Id, null, null, null, "Tag");
                 model.PostCreator = await _uofRepository.Users.FindAsync(x => x.Id == model.UserId);
                 model.Answers = await _uofRepository.Answers.GetAsync(x=>x.PostId==model.Id,null,null,null,"AnswerCreator");
                 return Ok(model);
@@ -95,7 +96,7 @@ namespace CSForum.WebApi.Controllers
             {
                 return Ok(await _uofRepository.Posts.GetAsync(
                     null,
-                    orderBy: post =>post.OrderBy(obj=>obj.DateCreate)
+                    orderBy: post =>post.OrderByDescending(obj=>obj.DateCreate)
                     ));
             }
             catch (Exception e)

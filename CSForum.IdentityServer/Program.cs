@@ -1,6 +1,8 @@
 using CSForum.Core.Models;
+using CSForum.Core.Service;
 using CSForum.Data.Context;
 using CSForum.IdentityServer;
+using CSForum.Services.EmailService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,12 +49,17 @@ builder.Services.AddIdentityServer()
     // })
     .AddDeveloperSigningCredential();
 
+var password = builder.Configuration["emailPassword"];
+var email = builder.Configuration["email"];
+builder.Services.AddSingleton<IEmailService>(new EmailService(password, email));
+
 var app = builder.Build();
 
 app.UseStaticFiles();
 app.UseRouting();
 
 app.UseIdentityServer();
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {

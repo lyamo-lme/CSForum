@@ -86,15 +86,17 @@ ul.user-manage.nav.nav-pills.flex-column > li.nav-item > a.nav-link.active {
     color: black;
 }
 
-.btn-dark{
+button.post.btn-dark{
     color: #efc134;
-    padding: 3px;
+    padding: 5px;
     background: black;
+    border-radius: 10px;
+    border: none;
 }
 .line-yellow{
     background-color: #efc134;
-    height: 5px;
-    padding: 5px;
+    height:1px;
+    padding: 1px;
 }
 
 .recent-posts{

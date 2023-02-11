@@ -35,7 +35,6 @@ public class HomeController : Controller
     {
         var accToken = await HttpContext.GetTokenAsync("access_token");
         var idToken = await HttpContext.GetTokenAsync("id_token");
-        var refresh = await HttpContext.GetTokenAsync("refresh_token");
         var _acToken = new JwtSecurityTokenHandler().ReadJwtToken(accToken);
         var _idToken = new JwtSecurityTokenHandler().ReadJwtToken(idToken);
 

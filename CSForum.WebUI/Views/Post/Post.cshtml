@@ -21,6 +21,15 @@
     <div class="post-content">
         @Html.Raw(@Model.Content)
     </div>
+    <div id="selectedTag" class="selected-tag">
+        @if (Model.PostTags != null)
+        {
+            @foreach (var postTag in @Model.PostTags)
+            {
+                <div>@postTag.Tag.Name</div>
+            }
+        }
+</div>
 </div>
 <div class="line-yellow"></div>
 <div>
@@ -29,17 +38,25 @@
         @foreach (var answers in @Model.Answers)
         {
             <div>
-                <p>@answers.AnswerCreator.UserName</p>
+                <p>
+                    <a asp-controller="User" asp-action="GetUserById" asp-route-id="@answers.AnswerCreator.Id">@answers.AnswerCreator.UserName</a>
+                </p>
                 <p>@Html.Raw(@answers.ContentBody)</p>
             </div>
         }
     }
 </div>
-<p onclick="showAnswerForm()" class="btn-dark">Give Answer</p>
-@await Html.PartialAsync("AnswerFormPartialView", new CreateAnswerViewModel
-       {
-           PostId = @Model.Id
-       })
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div style="display: flex;justify-content: flex-end;">
+        <button onclick="showAnswerForm()" class="post btn-dark">Give Answer</button>
+    </div>
+    @await Html.PartialAsync("AnswerFormPartialView", new CreateAnswerViewModel
+           {
+               PostId = @Model.Id
+           })
+}
 <script>
  let answerForm = document.querySelector("#answerForm");
  

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CSForum.Data.Config;
 
-public class PostTagsConfiguration:IEntityTypeConfiguration<PostTag>
+public class PostTagConfiguration:IEntityTypeConfiguration<PostTag>
 {
     public void Configure(EntityTypeBuilder<PostTag> builder)
     {
@@ -14,12 +14,12 @@ public class PostTagsConfiguration:IEntityTypeConfiguration<PostTag>
             pt.TagId
         });
         
-        builder.HasOne<Post>(
+        builder.HasOne(
                 p => p.Post)
             .WithMany(p => p.PostTags)
             .HasForeignKey(p=>p.PostId);
         
-        builder.HasOne<Tag>(
+        builder.HasOne(
                 p => p.Tag)
             .WithMany(p => p.TagPosts)
             .HasForeignKey(p=>p.TagId);

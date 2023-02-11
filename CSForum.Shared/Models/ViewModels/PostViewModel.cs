@@ -1,4 +1,5 @@
 using CSForum.Core.Models;
+using CSForum.Shared.Models.ViewModels;
 
 namespace CSForum.WebUI.Models;
 
@@ -12,4 +13,5 @@ public class PostViewModel
     public UserViewModel? PostCreator { get; set; }
     public List<PostViewModel>? Tags { get; set; }
     public List<AnswerViewModel>? Answers { get; set; }
+    public List<PostTagsViewModel>? PostTags { get; set; }
 }

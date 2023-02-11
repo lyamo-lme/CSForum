@@ -2048,7 +2048,6 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
                 var a = document.createElement("p");
                 a.innerHTML = "x";
                 a = a.textContent;
-                p.id = "contentModify";
                 return function (b) {
                     this.$[a ? "textContent" : "innerText"] = b
                 }

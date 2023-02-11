@@ -31,9 +31,12 @@ public class UnitOfWorkTests
     public async Task RepositoryTest_AddUserEntity_UserDbSetMustContainOneEntity()
     {
         var user = CreateEntityWithoutThrowingRecursionError<User>();
+
         _userRepository.Setup(x => x.CreateAsync(user)).ReturnsAsync(
             user);
+
         var createdEntity = await _userRepository.Object.CreateAsync(user);
+
         createdEntity.Should().Be(user);
     }
     [Fact]  

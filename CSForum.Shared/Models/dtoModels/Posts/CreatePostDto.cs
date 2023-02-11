@@ -8,5 +8,5 @@ public class CreatePostDto
     public int UserId { get; set; }
     public string Title { get; set; }
     public string Content { get; set; }
-    public List<TagInPostDto>? PostTags { get; set; }
+    public List<TagIdInPostDto>? PostTags { get; set; }
 }

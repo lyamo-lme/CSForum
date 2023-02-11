@@ -1,6 +1,8 @@
 using System.Security.Claims;
+using System.Text.Encodings.Web;
 using AutoMapper;
 using CSForum.Core.Models;
+using CSForum.Core.Service;
 using CSForum.IdentityServer.Models;
 using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.MapperConfigurations;
@@ -14,6 +16,7 @@ namespace CSForum.IdentityServer.Contollers;
 
 public class AuthController : Controller
 {
+    private readonly IEmailService _emailSender;
     private readonly SignInManager<User> _signInManager;
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
@@ -58,6 +61,15 @@ public class AuthController : Controller
             await _userManager.CreateAsync(
                 _mapper.Map<User>(new IdentityUser<int>(model.Username)),
                 model.Password);
+
+            //await _emailSender.SendMessage<Email>(
+            //            new Email()
+            //            {
+            //                senderName = "code?reply",
+            //                receiverEmail = model.Email,
+            //                htmlContent = $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
+            //                subject = "Confirming registration"
+            //            });
 
             return Redirect($"Login?ReturnUrl={model.ReturnUrl}");
         }
