@@ -3,6 +3,7 @@ using CSForum.Core.Service;
 using CSForum.Data.Context;
 using CSForum.IdentityServer;
 using CSForum.Services.EmailService;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly.GetName().Name;
 var defaultConnString = builder.Configuration.GetConnectionString("MsSqlConnection");
 
-
+builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("Secrets.json", optional: true);
 // SeedData.EnsureSeedData(defaultConnString);
 
 builder.Services.AddControllersWithViews();
@@ -49,6 +51,13 @@ builder.Services.AddIdentityServer()
     // })
     .AddDeveloperSigningCredential();
 
+builder.Services.AddAuthentication()
+    .AddGoogle( options =>
+    {
+        options.ClientId = builder.Configuration["googleClientId"];
+        options.ClientSecret = builder.Configuration["googlePassword"];
+    });
+
 var password = builder.Configuration["emailPassword"];
 var email = builder.Configuration["email"];
 builder.Services.AddSingleton<IEmailService>(new EmailService(password, email));
@@ -60,6 +69,8 @@ app.UseRouting();
 
 app.UseIdentityServer();
 app.UseAuthorization();
+
+
 
 app.UseEndpoints(endpoints =>
 {

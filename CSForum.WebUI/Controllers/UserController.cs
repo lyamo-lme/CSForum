@@ -23,7 +23,8 @@ public class UserController : Controller
     {
         try
         {
-            var user = _mapper.Map<UserViewModel>(await _forumClient.GetAsync<User>($"api/users/{id}"));
+            var user = _mapper.Map<UserViewModel>(
+                await _forumClient.GetAsync<User>($"api/users/{id}"));
             return View("UserView", user);
         }
         catch(Exception e)

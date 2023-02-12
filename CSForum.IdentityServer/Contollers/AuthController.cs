@@ -22,7 +22,8 @@ public class AuthController : Controller
     private readonly IMapper _mapper;
     private readonly IIdentityServerInteractionService _interactionService;
 
-    public AuthController(SignInManager<User> signInManager, UserManager<User> userManager, IIdentityServerInteractionService interactionService)
+    public AuthController(SignInManager<User> signInManager, UserManager<User> userManager,
+        IIdentityServerInteractionService interactionService)
     {
         this._signInManager = signInManager;
         _userManager = userManager;
@@ -31,11 +32,13 @@ public class AuthController : Controller
     }
 
     [HttpGet]
-    public IActionResult Login(string returnUrl)
+    public async Task<IActionResult> Login(string returnUrl)
     {
+        var externalProviders = await _signInManager.GetExternalAuthenticationSchemesAsync();
         return View("LoginPage", new LoginViewModel()
         {
-            ReturnUrl = returnUrl
+            ReturnUrl = returnUrl,
+            ExternalProviders = externalProviders
         });
     }
 
@@ -59,7 +62,10 @@ public class AuthController : Controller
             }
 
             await _userManager.CreateAsync(
-                _mapper.Map<User>(new IdentityUser<int>(model.Username)),
+                _mapper.Map<User>(new IdentityUser<int>(model.Username)
+                {
+                    Email = model.Email
+                }),
                 model.Password);
 
             //await _emailSender.SendMessage<Email>(
@@ -111,4 +117,59 @@ public class AuthController : Controller
         return Redirect(logoutRequest.PostLogoutRedirectUri);
     }
 
+    public async Task<IActionResult> ExternalProvider(string provider, string returnUrl)
+    {
+        var redirect = Url.Action(nameof(ExternalLoginCallback), "Auth", new
+        {
+            returnUrl
+        });
+        var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirect);
+
+        return Challenge(properties, provider);
+    }
+
+    public async Task<IActionResult> ExternalLoginCallback(string returnUrl)
+    {
+        try
+        {
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                return RedirectToAction($"Login?returnUrl={returnUrl}");
+            }
+
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
+            if (result.Succeeded)
+            {
+                return Redirect(returnUrl);
+            }
+
+            var email = info.Principal.FindFirst(ClaimTypes.Email);
+            var userName = info.Principal.FindFirst(ClaimTypes.Name).Value.Replace(" ","");
+             
+            var user = _mapper.Map<User>(new IdentityUser<int>(userName)
+            {
+                Email = email.Value
+            });
+
+            var resultRegister = await _userManager.CreateAsync(user);
+
+            // await _emailSender.SendMessage<Email>(
+            //             new Email()
+            //             {
+            //                 senderName = "code?reply",
+            //                 receiverEmail = email.Value,
+            //                 htmlContent = $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
+            //                 subject = "Confirming registration"
+            //             });
+
+            var loginResult = await _userManager.AddLoginAsync(user, info);
+
+            return Redirect(returnUrl);
+        }
+        catch (Exception e)
+        {
+            throw;
+        }
+    }
 }
