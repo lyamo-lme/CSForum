@@ -17,6 +17,7 @@
       <PackageReference Include="MailKit" Version="3.4.3" />
       <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="7.0.2" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+      <PackageReference Include="Polly" Version="7.2.3" />
     </ItemGroup>
 
 </Project>
