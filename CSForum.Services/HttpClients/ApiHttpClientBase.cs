@@ -69,7 +69,6 @@ public class ApiHttpClientBase : ApiClientBase
             throw;
         }
     }
-    
 
     private async Task<TOut> GetDeserializeObject<TOut>(HttpResponseMessage response)
     {
@@ -101,7 +100,6 @@ public class ApiHttpClientBase : ApiClientBase
         return await GetDeserializeObject<TOut>(response);
     }
     
-
     private async Task<TOut> ExecuteRequestAsync<TDto, TOut>(HttpMethod method, string path, TDto? model)
     {
         var uri = new Uri(client.BaseAddress + path);
@@ -126,7 +124,6 @@ public class ApiHttpClientBase : ApiClientBase
         return await GetDeserializeObject<TOut>(response);
     }
 
-
     private async Task<TOut> ExecuteAsync<TOut>(Func<Task<TOut>> function)
     {
         try
@@ -138,26 +135,4 @@ public class ApiHttpClientBase : ApiClientBase
             throw;
         }
     }
-
-    /*idea to organize*/
-    // public async Task<TDto> PostAsync<TDto>(TDto model, string? path = null) where TDto : class
-    //     => await PostObjAsync<TDto, TDto>(model, path);
-    //
-    // public async Task<TDto> PostObjAsync<TDto>(TDto model, string? path = null) where TDto : struct
-    //     => await PostStrAsync<TDto, TDto>(model, path);
-    //
-    // private async Task<TOut> PostStrAsync<TDto, TOut>(TDto model, string? path = null) where TOut : struct
-    //     => (TOut)Convert.ChangeType(await PostRequestContent(model, path), typeof(TOut));
-    //
-    // private async Task<TOut> PostObjAsync<TDto, TOut>(TDto model, string? path = null) where TOut : class
-    //     => JsonConvert.DeserializeObject<TOut>(await PostRequestContent(model, path));
-    //
-    //
-    // private async Task<string> PostRequestContent<TDto>(TDto model, string? path = null)
-    // {
-    //     var uri = new Uri(client.BaseAddress + path);
-    //     var response = await client.PostAsJsonAsync(uri, model);
-    //     var content = await response.Content.ReadAsStringAsync();
-    //     return content;
-    // }
 }

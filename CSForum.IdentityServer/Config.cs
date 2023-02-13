@@ -59,6 +59,7 @@ namespace CSForum.IdentityServer
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
                     },
+                    AccessTokenLifetime = 60*3,
                     AlwaysIncludeUserClaimsInIdToken = true
                 },
                 new Client
@@ -88,6 +89,7 @@ namespace CSForum.IdentityServer
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
                     },
+                    AccessTokenLifetime = 60*3,
                     AllowOfflineAccess = true,
                     AlwaysIncludeUserClaimsInIdToken = true
                 },

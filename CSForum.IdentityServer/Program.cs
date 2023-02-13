@@ -31,6 +31,7 @@ builder.Services.ConfigureApplicationCookie(config =>
     config.Cookie.Name = "IdentityServer.Cookie";
     config.LoginPath = "/Auth/Login";
     config.LogoutPath = "/Auth/Logout";
+    config.ExpireTimeSpan = TimeSpan.FromMinutes(3);
 });
 
 builder.Services.AddIdentityServer()

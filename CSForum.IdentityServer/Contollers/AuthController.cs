@@ -102,9 +102,7 @@ public class AuthController : Controller
         {
             return Redirect(model.ReturnUrl);
         }
-        else if (result.IsLockedOut)
-        {
-        }
+       
 
         return View("LoginPage");
     }
@@ -128,6 +126,45 @@ public class AuthController : Controller
         return Challenge(properties, provider);
     }
 
+    private async Task<bool> ExternalRegister(ExternalLoginInfo info)
+    {
+        try
+        {
+            var email = info.Principal.FindFirst(ClaimTypes.Email);
+            var userName = info.Principal.FindFirst(ClaimTypes.Name).Value.Replace(" ", "");
+
+            var user = _mapper.Map<User>(new IdentityUser<int>(userName)
+            {
+                Email = email.Value
+            });
+
+            var resultRegister = await _userManager.CreateAsync(user);
+            if(!resultRegister.Succeeded)
+            {
+                return false;
+            }
+            // await _emailSender.SendMessage<Email>(
+            //             new Email()
+            //             {
+            //                 senderName = "code?reply",
+            //                 receiverEmail = email.Value,
+            //                 htmlContent = $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
+            //                 subject = "Confirming registration"
+            //             });
+
+            var loginResult = await _userManager.AddLoginAsync(user, info);
+            if(!loginResult.Succeeded)
+            {
+                return false;
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            throw;
+        }
+    }
+
     public async Task<IActionResult> ExternalLoginCallback(string returnUrl)
     {
         try
@@ -143,28 +180,7 @@ public class AuthController : Controller
             {
                 return Redirect(returnUrl);
             }
-
-            var email = info.Principal.FindFirst(ClaimTypes.Email);
-            var userName = info.Principal.FindFirst(ClaimTypes.Name).Value.Replace(" ","");
-             
-            var user = _mapper.Map<User>(new IdentityUser<int>(userName)
-            {
-                Email = email.Value
-            });
-
-            var resultRegister = await _userManager.CreateAsync(user);
-
-            // await _emailSender.SendMessage<Email>(
-            //             new Email()
-            //             {
-            //                 senderName = "code?reply",
-            //                 receiverEmail = email.Value,
-            //                 htmlContent = $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
-            //                 subject = "Confirming registration"
-            //             });
-
-            var loginResult = await _userManager.AddLoginAsync(user, info);
-
+            await ExternalRegister(info);
             return Redirect(returnUrl);
         }
         catch (Exception e)
