@@ -2,6 +2,7 @@ using CSForum.Core.Models;
 using CSForum.Core.Service;
 using CSForum.Data.Context;
 using CSForum.IdentityServer;
+using CSForum.IdentityServer.Identity;
 using CSForum.Services.EmailService;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
@@ -22,16 +23,19 @@ builder.Services.AddDbContext<ForumDbContext>(options =>
     options.UseSqlServer(defaultConnString,
         b => b.MigrationsAssembly(assembly)));
 
-builder.Services.AddIdentity<User, IdentityRole<int>>()
+builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
+    {
+        options.User.AllowedUserNameCharacters = string.Empty;
+    })
     .AddEntityFrameworkStores<ForumDbContext>()
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders()
+    .AddUserValidator<CustomUserValidator<User>>();
 
 builder.Services.ConfigureApplicationCookie(config =>
 {
     config.Cookie.Name = "IdentityServer.Cookie";
     config.LoginPath = "/Auth/Login";
     config.LogoutPath = "/Auth/Logout";
-    config.ExpireTimeSpan = TimeSpan.FromMinutes(3);
 });
 
 builder.Services.AddIdentityServer()

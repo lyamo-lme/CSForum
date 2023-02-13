@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
-using CSForum.Core.IHttpClients;
 using CSForum.Core.Models;
 using CSForum.Services.HttpClients;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +33,7 @@ public class HomeController : Controller
     public async Task<ActionResult<Post>> SecretPath()
     {
         var accToken = await HttpContext.GetTokenAsync("access_token");
+        var refsad = await HttpContext.GetTokenAsync("refresh_token");
         var idToken = await HttpContext.GetTokenAsync("id_token");
         var _acToken = new JwtSecurityTokenHandler().ReadJwtToken(accToken);
         var _idToken = new JwtSecurityTokenHandler().ReadJwtToken(idToken);

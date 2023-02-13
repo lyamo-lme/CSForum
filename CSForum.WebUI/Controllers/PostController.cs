@@ -1,6 +1,5 @@
 using System.Security.Claims;
 using AutoMapper;
-using CSForum.Core.IHttpClients;
 using CSForum.Core.Models;
 using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.HttpClients;
@@ -24,7 +23,7 @@ public class PostController : Controller
     private readonly ApiHttpClientBase _forumClient; 
     private readonly UserManager<User> _userManager;
 
-    public PostController(IOptions<ApiSettingConfig> options, ApiHttpClientBase client,
+    public PostController(ApiHttpClientBase client,
         UserManager<User> userManager)
     {
         _forumClient = client;

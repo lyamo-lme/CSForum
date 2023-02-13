@@ -10,7 +10,6 @@ public abstract class  ApiClientBase
 
     protected ApiClientBase(HttpClient client, ApiSettingConfig apiSettings)
     {
-        ApiSettingConfig? apiSettings1;
         this.client = client;
         this._apiSettings = apiSettings;
         this.client.BaseAddress = new Uri(this._apiSettings.WebApiUrl);
@@ -19,7 +18,7 @@ public abstract class  ApiClientBase
     protected ApiClientBase(ApiSettingConfig apiSettings)
     {
         client = new HttpClient();
-        var apiSettings1 = apiSettings;
+        _apiSettings = apiSettings;
         client.BaseAddress = new Uri(this._apiSettings.WebApiUrl);
     }
     

@@ -1,10 +1,12 @@
-using CSForum.Core.IHttpClients;
+using CSForum.Core;
 using CSForum.Core.Models;
 using CSForum.Core.Service;
 using CSForum.Data;
 using CSForum.Data.Context;
 using CSForum.Services.EmailService;
 using CSForum.Services.HttpClients;
+using CSForum.Services.TokenService;
+using CSForum.Shared;
 using CSForum.Shared.Models;
 using CSForum.WebUI;
 using CSForum.WebUI.Resources;
@@ -39,12 +41,16 @@ builder.Services.AddAppIdentity<User>(_ => { });
 //Ioptions for api settings
 builder.Services.Configure<ApiSettingConfig>(
     builder.Configuration.GetSection("DevelopmentApiSettings"));
+builder.Services.Configure<IdentityServerSettings>(
+    builder.Configuration.GetSection("IdentityServerSettings"));
 
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
-builder.Services.AddHttpClient<ApiHttpClientBase>();
+builder.Services.AddScoped<ApiHttpClientBase>();
+
+builder.Services.AddTransient<ITokenService, TokenService>();
 
 //email service di
 var password = builder.Configuration["emailPassword"];

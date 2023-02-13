@@ -36,4 +36,17 @@ public class TokenService:ITokenService
 
         return tokenResponse;
     }
+
+    public async Task<TokenResponse> RefreshAccessToken(string refreshToken)
+    {
+        var discoveryDocument = await 
+            _httpClient.GetDiscoveryDocumentAsync(_serverSettings.DiscoveryUrl);
+        var requestDate = new Dictionary<string, string>
+        {
+            ["grant_type"] = "refresh_token",
+            ["refresh_token"] = refreshToken
+        };
+        var request = new HttpRequestMessage(HttpMethod.Post, _serverSettings.DiscoveryUrl);
+        return new TokenResponse();
+    }
 }

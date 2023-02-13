@@ -130,12 +130,12 @@ public class AuthController : Controller
     {
         try
         {
-            var email = info.Principal.FindFirst(ClaimTypes.Email);
-            var userName = info.Principal.FindFirst(ClaimTypes.Name).Value.Replace(" ", "");
+            var email = info.Principal.FindFirst(ClaimTypes.Email).Value;
+            var userName = info.Principal.FindFirst(ClaimTypes.GivenName).Value;
 
             var user = _mapper.Map<User>(new IdentityUser<int>(userName)
             {
-                Email = email.Value
+                Email = email
             });
 
             var resultRegister = await _userManager.CreateAsync(user);

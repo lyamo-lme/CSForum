@@ -24,6 +24,7 @@ public static class WebUiExtensions
                 config.ResponseType = "code";
                 
                 config.Scope.Add("UserClaims");
+                config.Scope.Add("offline_access");
             });
 
 

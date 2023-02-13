@@ -60,6 +60,7 @@ namespace CSForum.IdentityServer
                         IdentityServerConstants.StandardScopes.Profile
                     },
                     AccessTokenLifetime = 60*3,
+                    AllowOfflineAccess = true,
                     AlwaysIncludeUserClaimsInIdToken = true
                 },
                 new Client

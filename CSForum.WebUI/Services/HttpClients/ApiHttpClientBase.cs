@@ -1,26 +1,35 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Http.Json;
+using CSForum.Core;
 using CSForum.Shared.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Polly;
+using Microsoft.AspNetCore.Authentication;
 using Polly.Retry;
 
 namespace CSForum.Services.HttpClients;
 
 public class ApiHttpClientBase : ApiClientBase
 {
-    private AsyncRetryPolicy _retryPolicy;
-    private HttpMethod _httpMethod;
+    private  AsyncRetryPolicy _retryPolicy;
+    private readonly ITokenService _tokenService;
+    private readonly IHttpContextAccessor _contextAccessor;
 
-    public ApiHttpClientBase(HttpClient client, IOptions<ApiSettingConfig> apiSettings) : base(client,
+    public ApiHttpClientBase(ITokenService tokenService,HttpClient client, IOptions<ApiSettingConfig> apiSettings, IHttpContextAccessor contextAccessor) : base(client,
         apiSettings.Value)
     {
+        _contextAccessor = contextAccessor;
+        _tokenService = tokenService;
         SetPolly();
     }
 
-    public ApiHttpClientBase(IOptions<ApiSettingConfig> apiSettings) : base(apiSettings.Value)
+    public ApiHttpClientBase(ITokenService tokenService,IOptions<ApiSettingConfig> apiSettings,  IHttpContextAccessor contextAccessor) : base(apiSettings.Value)
     {
+        _contextAccessor = contextAccessor;
+        _tokenService = tokenService;
         SetPolly();
     }
 
@@ -30,7 +39,7 @@ public class ApiHttpClientBase : ApiClientBase
         {
             if (exception.StatusCode == HttpStatusCode.Unauthorized)
             {
-                //need to refresh token
+                
             }
 
             Console.Write("here");
@@ -83,7 +92,7 @@ public class ApiHttpClientBase : ApiClientBase
         switch (method.Method)
         {
             case "GET":
-            {
+            { 
                 response = await client.GetAsync(uri);
                 break;
             }

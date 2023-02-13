@@ -18,10 +18,11 @@ builder.Services.AddAuthentication("Bearer")
     {
         config.Authority = "https://localhost:5444/";
         config.Audience = "api";
-        
+
         config.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateAudience = false
+            ValidateAudience = false,
+            ValidateLifetime = true
         };
     });
 
