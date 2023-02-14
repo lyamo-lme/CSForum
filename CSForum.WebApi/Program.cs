@@ -22,7 +22,8 @@ builder.Services.AddAuthentication("Bearer")
         config.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateAudience = false,
-            ValidateLifetime = true
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
         };
     });
 

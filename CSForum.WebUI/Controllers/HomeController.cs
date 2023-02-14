@@ -32,14 +32,8 @@ public class HomeController : Controller
     [Authorize]
     public async Task<ActionResult<Post>> SecretPath()
     {
-        var accToken = await HttpContext.GetTokenAsync("access_token");
-        var refsad = await HttpContext.GetTokenAsync("refresh_token");
-        var idToken = await HttpContext.GetTokenAsync("id_token");
-        var _acToken = new JwtSecurityTokenHandler().ReadJwtToken(accToken);
-        var _idToken = new JwtSecurityTokenHandler().ReadJwtToken(idToken);
-
-        _forumClient.client.SetBearerToken(accToken);
-        var result = await _forumClient.GetAsync<string>("api/users/secret");
+      
+        var result = await _forumClient.GetAsync<string>("api/users/secret",true);
 
         return new Post();
     }

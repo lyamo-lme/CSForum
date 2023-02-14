@@ -1,22 +1,24 @@
+using System.Text;
 using CSForum.Core;
 using CSForum.Shared;
 using IdentityModel.Client;
 using Microsoft.Extensions.Options;
 using  CSForum.Core.Models;
+using Newtonsoft.Json;
 
 namespace CSForum.Services.TokenService;
 
 public class TokenService:ITokenService
 {
     private readonly IdentityServerSettings _serverSettings;
-    private readonly DiscoveryDocumentResponse _discoveyDocument;
+    private readonly DiscoveryDocumentResponse _discoveryDocument;
     private readonly HttpClient _httpClient;
 
     public TokenService(IOptions<IdentityServerSettings> optionsIdentity)
     {
         _serverSettings = optionsIdentity.Value;
         _httpClient = new HttpClient();
-        _discoveyDocument = _httpClient.GetDiscoveryDocumentAsync(_serverSettings.DiscoveryUrl).Result;
+        _discoveryDocument = _httpClient.GetDiscoveryDocumentAsync(_serverSettings.DiscoveryUrl).Result;
         
     }
     public async Task<TokenResponse> GetToken(string scope)
@@ -24,7 +26,7 @@ public class TokenService:ITokenService
         var tokenResponse = await _httpClient.RequestClientCredentialsTokenAsync(
             new ClientCredentialsTokenRequest
             {
-                Address = _discoveyDocument.TokenEndpoint,
+                Address = _discoveryDocument.TokenEndpoint,
                 ClientId = _serverSettings.ClientName,
                 ClientSecret = _serverSettings.ClientPassword,
                 Scope = scope
@@ -39,14 +41,15 @@ public class TokenService:ITokenService
 
     public async Task<TokenResponse> RefreshAccessToken(string refreshToken)
     {
-        var discoveryDocument = await 
-            _httpClient.GetDiscoveryDocumentAsync(_serverSettings.DiscoveryUrl);
-        var requestDate = new Dictionary<string, string>
+        
+       var tokenResponse = await   _httpClient.RequestRefreshTokenAsync(new RefreshTokenRequest
         {
-            ["grant_type"] = "refresh_token",
-            ["refresh_token"] = refreshToken
-        };
-        var request = new HttpRequestMessage(HttpMethod.Post, _serverSettings.DiscoveryUrl);
-        return new TokenResponse();
+            Address = _discoveryDocument.TokenEndpoint,
+            RefreshToken = refreshToken,
+            ClientId = _serverSettings.ClientName,
+            ClientSecret = _serverSettings.ClientPassword,
+        });
+
+       return tokenResponse;
     }
 }
