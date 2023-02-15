@@ -52,6 +52,7 @@
     <ItemGroup>
       <Folder Include="Resources\Controllers\" />
       <Folder Include="Resources\Views\User" />
+      <Folder Include="Services\Interfaces" />
       <Folder Include="Views\Chat\" />
       <Folder Include="Views\User\" />
       <Folder Include="wwwroot\skeditorscript" />

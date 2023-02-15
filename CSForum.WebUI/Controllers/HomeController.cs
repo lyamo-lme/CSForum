@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using CSForum.Core.Models;
+using CSForum.Services.Http;
 using CSForum.Services.HttpClients;
 using Microsoft.AspNetCore.Mvc;
 using CSForum.WebUI.Models;
@@ -34,7 +35,7 @@ public class HomeController : Controller
     public async Task<ActionResult<Post>> SecretPath()
     {
       
-        var result = await _forumClient.GetAsync<string>("api/users/secret",true);
+        var result = await _forumClient.GetAsync<string>("api/users/secret");
 
         return new Post();
     }

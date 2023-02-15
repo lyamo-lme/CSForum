@@ -51,7 +51,7 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
             {
                 query = query.Take((int)take);
             }
-            
+
             return await query.ToListAsync();
         }
         catch (Exception e)
@@ -60,11 +60,11 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
         }
     }
 
-    public async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> func)
+    public async Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> func)
     {
         try
         {
-            var result = await _entity.FirstAsync(func);
+            var result = await _entity.FirstOrDefaultAsync(func);
             return result;
         }
         catch (Exception e)
@@ -105,15 +105,13 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
     }
 
 
-    public  Task<TEntity> UpdateAsync(TEntity model)
+    public Task<TEntity> UpdateAsync(TEntity model)
     {
         try
         {
-          
-                var entity = _entity.Update(model);
-                _context.Entry(model).State = EntityState.Modified;
-                return Task.FromResult(entity.Entity);
-
+            var entity = _entity.Update(model);
+            _context.Entry(model).State = EntityState.Modified;
+            return Task.FromResult(entity.Entity);
         }
         catch (Exception e)
         {

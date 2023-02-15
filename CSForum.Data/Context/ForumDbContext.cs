@@ -24,4 +24,6 @@ public class ForumDbContext :
     public DbSet<Answer> Answers { get; set; }
     public DbSet<Tag> Tags { get; set; }
     public DbSet<PostTag> PostTags { get; set; }
+    public DbSet<Chat> Chats { get; set; }
+    public DbSet<Message> Messages { get; set; }
 }

@@ -9,7 +9,7 @@ public class ChatController:Controller
     {
             
     }
-    [Authorize]
+    [Authorize, Route("")]
     public async Task<IActionResult> Chat()
     {
         return View("Chat");

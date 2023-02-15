@@ -27,7 +27,7 @@ namespace CSForum.WebApi.Controllers
             _postService = postService;
         }
 
-        [HttpPost, Route("create")]
+        [HttpPost, Route("")]
         public async Task<ActionResult<Post>> CreatePost([FromBody] CreatePostDto model)
         {
             try
@@ -43,14 +43,14 @@ namespace CSForum.WebApi.Controllers
             }
         }
 
-        [HttpPost, Route("edit")]
+        [HttpPut, Route("")]
         public async Task<ActionResult<Post>> EditPost([FromBody] EditPostDto model)
         {
             try
             {
                 var mappedPost = _dtoMapper.Map<Post>(model);
-                var post =  await _uofRepository.Posts.UpdateAsync(mappedPost);
-                 _uofRepository.SaveAsync();
+                var post = await _uofRepository.Posts.UpdateAsync(mappedPost);
+                _uofRepository.SaveAsync();
                 return Ok(post);
             }
             catch (Exception e)
@@ -64,11 +64,13 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                var model = await _uofRepository.Posts.FindAsync(x => x.Id == postId);
-                model.PostTags =  await _uofRepository.PostTags.GetAsync(x => x.PostId == model.Id, null, null, null, "Tag");
-                model.PostCreator = await _uofRepository.Users.FindAsync(x => x.Id == model.UserId);
-                model.Answers = await _uofRepository.Answers.GetAsync(x=>x.PostId==model.Id,null,null,null,"AnswerCreator");
-                return Ok(model);
+                var postResult = await _uofRepository.Posts.FindAsync(post => post.Id == postId);
+                postResult.PostTags = await _uofRepository.PostTags.GetAsync(postTag => postTag.PostId == postResult.Id,
+                    null, null, null, "Tag");
+                postResult.PostCreator = await _uofRepository.Users.FindAsync(user => user.Id == postResult.UserId);
+                postResult.Answers = await _uofRepository.Answers.GetAsync(answer => answer.PostId == postResult.Id,
+                    null, null, null, "AnswerCreator");
+                return Ok(postResult);
             }
             catch (Exception e)
             {
@@ -89,15 +91,16 @@ namespace CSForum.WebApi.Controllers
                 throw;
             }
         }
-        [HttpGet,Route("recent/{count}")]
-        public async Task<ActionResult<Post>> GetRecentPosts(int count=10)
+
+        [HttpGet, Route("recent/{count}")]
+        public async Task<ActionResult<Post>> GetRecentPosts(int count = 10)
         {
             try
             {
                 return Ok(await _uofRepository.Posts.GetAsync(
                     null,
-                    orderBy: post =>post.OrderByDescending(obj=>obj.DateCreate)
-                    ));
+                    orderBy: post => post.OrderByDescending(obj => obj.DateCreate)
+                ));
             }
             catch (Exception e)
             {
@@ -105,16 +108,20 @@ namespace CSForum.WebApi.Controllers
             }
         }
 
-        [HttpDelete, Route("delete")]
+        [HttpDelete, Route("")]
         public async Task<ActionResult<bool>> DeletePost(int postId)
         {
             try
             {
+                if (await _uofRepository.Posts.FindAsync(post => post.Id == postId) == null)
+                {
+                    return BadRequest("id failed");
+                }
                 var state = await _uofRepository.Posts.DeleteAsync(new Post()
                 {
                     Id = postId
                 });
-                 _uofRepository.SaveAsync();
+                _uofRepository.SaveAsync();
                 return Ok(state);
             }
             catch (Exception e)
