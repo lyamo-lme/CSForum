@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CSForum.Data;
 
-public static class StartupDataDI
+public static class StartupDataDi
 {
     public static IServiceCollection AddDbForumContext(this IServiceCollection serviceCollection, string connectionString, string assembly)
     {

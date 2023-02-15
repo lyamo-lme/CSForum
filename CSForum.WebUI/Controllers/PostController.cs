@@ -8,6 +8,7 @@ using CSForum.Shared.Models;
 using CSForum.Shared.Models.dtoModels;
 using CSForum.Shared.Models.dtoModels.Posts;
 using CSForum.WebUI.Models;
+using CSForum.WebUI.Services.HttpClients;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

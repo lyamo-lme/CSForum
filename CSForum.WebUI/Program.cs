@@ -10,6 +10,8 @@ using CSForum.Shared;
 using CSForum.Shared.Models;
 using CSForum.WebUI;
 using CSForum.WebUI.Resources;
+using CSForum.WebUI.Services.HttpClients;
+using CSForum.WebUI.SignalR;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Options;
 
@@ -47,6 +49,9 @@ builder.Services.Configure<IdentityServerSettings>(
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddSignalR();
+
+builder.Services.AddHttpClient();
 
 builder.Services.AddScoped<ApiHttpClientBase>();
 
@@ -81,6 +86,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.MapHub<ChatHub>("/chat");
 
 app.UseAuthentication();
 app.UseAuthorization();

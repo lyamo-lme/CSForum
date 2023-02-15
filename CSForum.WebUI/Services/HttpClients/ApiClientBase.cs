@@ -5,7 +5,7 @@ namespace CSForum.Services.HttpClients;
 
 public abstract class  ApiClientBase
 {
-    public readonly HttpClient client;
+    protected readonly HttpClient client;
     private readonly ApiSettingConfig? _apiSettings;
 
     protected ApiClientBase(HttpClient client, ApiSettingConfig apiSettings)

@@ -4,6 +4,7 @@ using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.HttpClients;
 using CSForum.Services.MapperConfigurations;
 using CSForum.WebUI.Models;
+using CSForum.WebUI.Services.HttpClients;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CSForum.WebUI.Controllers;

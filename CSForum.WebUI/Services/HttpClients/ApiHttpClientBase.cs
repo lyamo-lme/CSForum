@@ -1,21 +1,23 @@
-using System.IdentityModel.Tokens.Jwt;
 using System.Net;
-using System.Net.Http.Json;
 using CSForum.Core;
+using CSForum.Services.HttpClients;
 using CSForum.Shared.Models;
 using IdentityModel.Client;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Polly;
-using Microsoft.AspNetCore.Authentication;
 using Polly.Retry;
 
-namespace CSForum.Services.HttpClients;
+namespace CSForum.WebUI.Services.HttpClients;
 
+/// <summary>
+/// need to refactor:
+///create only one public method than will provide access to use http requests 
+/// </summary>
 public class ApiHttpClientBase : ApiClientBase
 {
-    private AsyncRetryPolicy _retryPolicy;
+    private readonly AsyncRetryPolicy _retryPolicy;
     private readonly ITokenService _tokenService;
     private readonly IHttpContextAccessor _contextAccessor;
 
@@ -25,20 +27,12 @@ public class ApiHttpClientBase : ApiClientBase
     {
         _contextAccessor = contextAccessor;
         _tokenService = tokenService;
-        SetPolly();
+        _retryPolicy = SetPolly();
     }
 
-    public ApiHttpClientBase(ITokenService tokenService, IOptions<ApiSettingConfig> apiSettings,
-        IHttpContextAccessor contextAccessor) : base(apiSettings.Value)
+    private AsyncRetryPolicy SetPolly()
     {
-        _contextAccessor = contextAccessor;
-        _tokenService = tokenService;
-        SetPolly();
-    }
-
-    private void SetPolly()
-    {
-        _retryPolicy = Policy.Handle<HttpRequestException>(exception =>
+        return Policy.Handle<HttpRequestException>(exception =>
         {
             if (exception.StatusCode == HttpStatusCode.Unauthorized)
             {
@@ -84,12 +78,19 @@ public class ApiHttpClientBase : ApiClientBase
 
     private async Task SetBearerToken()
     {
-        var accToken = await _contextAccessor.HttpContext.GetTokenAsync("access_token");
-        client.SetBearerToken(accToken);
+        try
+        {
+            var accToken = await _contextAccessor.HttpContext.GetTokenAsync("access_token");
+            client.SetBearerToken(accToken);
+        }
+        catch (Exception e)
+        {
+            throw;
+        }
     }
 
 
-    public async Task<TOut> GetAsync<TOut>(string path, bool isAuth = false)
+        public async Task<TOut> GetAsync<TOut>(string path, bool isAuth = false)
     {
         try
         {
@@ -100,7 +101,7 @@ public class ApiHttpClientBase : ApiClientBase
 
             var result = await _retryPolicy.ExecuteAsync(async () =>
                 await ExecuteRequestAsync<TOut>(HttpMethod.Get, path));
-            
+
             return result;
         }
         catch (Exception e)

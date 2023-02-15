@@ -4,6 +4,7 @@ using CSForum.Core.Models;
 using CSForum.Services.HttpClients;
 using Microsoft.AspNetCore.Mvc;
 using CSForum.WebUI.Models;
+using CSForum.WebUI.Services.HttpClients;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;

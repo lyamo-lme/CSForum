@@ -5,6 +5,7 @@ using CSForum.Services.HttpClients;
 using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models.dtoModels;
 using CSForum.WebUI.Models;
+using CSForum.WebUI.Services.HttpClients;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
