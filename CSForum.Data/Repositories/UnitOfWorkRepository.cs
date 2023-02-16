@@ -10,26 +10,27 @@ using System.Threading.Tasks;
 
 namespace CSForum.Data.Repositories
 {
-    public class UOWRepository:IUnitOfWorkRepository
+    public class UowRepository:IUnitOfWorkRepository
     {
-        private readonly ForumDbContext forumDbContext;
+        private readonly ForumDbContext _forumDbContext;
         private GenericRepository<Tag>? _tagRepository;
         private GenericRepository<Post>? _postRepository;
         private GenericRepository<User>? _userRepository;
         private GenericRepository<Answer>? _answerRepository;
         private GenericRepository<PostTag>? _postTagsRepository;
-        
-        public IRepository<Tag> Tags => _tagRepository ?? (_tagRepository = new GenericRepository<Tag>(forumDbContext));
-        public IRepository<Post> Posts => _postRepository ?? (_postRepository = new GenericRepository<Post>(forumDbContext));
-        public IRepository<User> Users => _userRepository ?? (_userRepository = new GenericRepository<User>(forumDbContext));
-        public IRepository<Answer> Answers => _answerRepository ?? (_answerRepository = new GenericRepository<Answer>(forumDbContext));
-        public IRepository<PostTag> PostTags => _postTagsRepository ?? (_postTagsRepository = new GenericRepository<PostTag>(forumDbContext));
 
-        public UOWRepository(ForumDbContext forumDbContext)
+        public IRepository<Tag> Tags => _tagRepository ?? (_tagRepository = new GenericRepository<Tag>(_forumDbContext));
+        public IRepository<Post> Posts => _postRepository ?? (_postRepository = new GenericRepository<Post>(_forumDbContext));
+        public IRepository<User> Users => _userRepository ?? (_userRepository = new GenericRepository<User>(_forumDbContext));
+        public IRepository<Answer> Answers => _answerRepository ?? (_answerRepository = new GenericRepository<Answer>(_forumDbContext));
+        public IRepository<PostTag> PostTags => _postTagsRepository ?? (_postTagsRepository = new GenericRepository<PostTag>(_forumDbContext));
+
+        public UowRepository(ForumDbContext forumDbContext)
         {
-            this.forumDbContext = forumDbContext;
+            this._forumDbContext = forumDbContext;
         }
-        public Task SaveAsync() => forumDbContext.SaveChangesAsync();
+
+        public Task SaveAsync() => _forumDbContext.SaveChangesAsync();
 
     }
 }

@@ -12,6 +12,7 @@ using CSForum.Shared.Models;
 using CSForum.WebUI;
 using CSForum.WebUI.Resources;
 using CSForum.WebUI.Services.HttpClients;
+using CSForum.WebUI.Services.Interfaces;
 using CSForum.WebUI.SignalR;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Options;
@@ -57,6 +58,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<ApiHttpClientBase>();
 
 builder.Services.AddTransient<ITokenService, TokenService>();
+builder.Services.AddScoped<IHttpAuthorization, HttpAuthorization>();
 
 //email service di
 var password = builder.Configuration["emailPassword"];

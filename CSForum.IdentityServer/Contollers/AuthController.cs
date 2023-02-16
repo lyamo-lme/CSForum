@@ -102,7 +102,7 @@ public class AuthController : Controller
         {
             return Redirect(model.ReturnUrl);
         }
-       
+
 
         return View("LoginPage");
     }
@@ -139,7 +139,7 @@ public class AuthController : Controller
             });
 
             var resultRegister = await _userManager.CreateAsync(user);
-            if(!resultRegister.Succeeded)
+            if (!resultRegister.Succeeded)
             {
                 return false;
             }
@@ -153,10 +153,11 @@ public class AuthController : Controller
             //             });
 
             var loginResult = await _userManager.AddLoginAsync(user, info);
-            if(!loginResult.Succeeded)
+            if (!loginResult.Succeeded)
             {
                 return false;
             }
+
             return true;
         }
         catch (Exception e)
@@ -178,8 +179,18 @@ public class AuthController : Controller
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
             if (result.Succeeded)
             {
+                var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+                await _signInManager.SignInWithClaimsAsync(user,
+                    false,
+                    new[]
+                    {
+                        new Claim("Id", $"{user.Id}")
+                    }
+                );
+
                 return Redirect(returnUrl);
             }
+
             await ExternalRegister(info);
             return Redirect(returnUrl);
         }

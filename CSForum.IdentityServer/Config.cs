@@ -16,14 +16,14 @@ namespace CSForum.IdentityServer
                     Name = "UserClaims",
                     UserClaims = new List<string>()
                     {
-                        JwtClaimTypes.Id,
+                        "Id",
                         JwtClaimTypes.Email
                     }
                 }
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
-            new[] { new ApiScope("api")};
+            new[] { new ApiScope("api") };
         
         public static IEnumerable<ApiResource> ApiResources =>
             new[]
@@ -34,7 +34,7 @@ namespace CSForum.IdentityServer
                     ApiSecrets = new List<Secret> { new Secret("ScopeSecret".Sha256()) },
                     UserClaims = new List<string>
                     {
-                        JwtClaimTypes.Id,
+                        "Id",
                         JwtClaimTypes.Email
                     }
                 }
@@ -80,12 +80,12 @@ namespace CSForum.IdentityServer
                     },
                     AllowedCorsOrigins = new List<string>()
                     {
-                        "https://localhost:5161"
+                        "https://localhost:5161",
+                        "https://localhost:5200"
                     },
                     ClientSecrets = { new Secret("ClientSecret_MVC".Sha256()) },
                     AllowedScopes =
                     {
-                        "api",
                         "UserClaims",
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile

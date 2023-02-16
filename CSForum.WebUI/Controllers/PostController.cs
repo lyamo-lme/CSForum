@@ -75,6 +75,7 @@ public class PostController : Controller
     {
         try
         {
+            
             var recentPosts =  await _forumClient.GetAsync<List<Post>>($"api/posts/recent/{take}");
             return View("PostsView", _mapper.Map<List<PostViewModel>>(recentPosts));
         }

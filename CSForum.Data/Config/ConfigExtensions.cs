@@ -10,6 +10,8 @@ public static class ConfigExtensions
         modelBuilder.ApplyConfiguration(new PostConfiguration());
         modelBuilder.ApplyConfiguration(new PostTagConfiguration());
         modelBuilder.ApplyConfiguration(new TagConfiguration());
+        modelBuilder.ApplyConfiguration(new MessageConfiguration());
+        modelBuilder.ApplyConfiguration(new ChatConfiguration());
         // modelBuilder.ApplyConfiguration(new UserConfiguration());
     }
 }

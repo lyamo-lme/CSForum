@@ -16,6 +16,7 @@ public class ForumDbContext :
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        
         modelBuilder.AddDbForumConfig();
         base.OnModelCreating(modelBuilder);
     }

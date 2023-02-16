@@ -25,7 +25,7 @@ public static class StartupDataDi
         serviceCollection.AddTransient<IRepository<PostTag>, GenericRepository<PostTag>>();
         serviceCollection.AddTransient<IRepository<User>, GenericRepository<User>>();
         serviceCollection.AddTransient<IRepository<Post>, GenericRepository<Post>>();
-        serviceCollection.AddTransient<IUnitOfWorkRepository, UOWRepository>();
+        serviceCollection.AddTransient<IUnitOfWorkRepository, UowRepository>();
         return serviceCollection;
     }
 }
