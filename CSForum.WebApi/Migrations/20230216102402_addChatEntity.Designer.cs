@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSForum.WebApi.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    [Migration("20230206203609_migrationFix")]
-    partial class migrationFix
+    [Migration("20230216102402_addChatEntity")]
+    partial class addChatEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,6 +60,56 @@ namespace CSForum.WebApi.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Answers");
+                });
+
+            modelBuilder.Entity("CSForum.Core.Models.Chat", b =>
+                {
+                    b.Property<int>("ChatId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChatId"), 1L, 1);
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ChatId");
+
+                    b.HasIndex("ChatId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Chats");
+                });
+
+            modelBuilder.Entity("CSForum.Core.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ChatId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatId");
+
+                    b.HasIndex("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("CSForum.Core.Models.Post", b =>
@@ -172,6 +222,9 @@ namespace CSForum.WebApi.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<int?>("RatingScores")
+                        .HasColumnType("int");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -363,6 +416,32 @@ namespace CSForum.WebApi.Migrations
                     b.Navigation("Post");
                 });
 
+            modelBuilder.Entity("CSForum.Core.Models.Chat", b =>
+                {
+                    b.HasOne("CSForum.Core.Models.User", null)
+                        .WithMany("Chats")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("CSForum.Core.Models.Message", b =>
+                {
+                    b.HasOne("CSForum.Core.Models.Chat", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CSForum.Core.Models.User", "User")
+                        .WithMany("Messages")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("CSForum.Core.Models.Post", b =>
                 {
                     b.HasOne("CSForum.Core.Models.User", "PostCreator")
@@ -460,6 +539,11 @@ namespace CSForum.WebApi.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("CSForum.Core.Models.Chat", b =>
+                {
+                    b.Navigation("Messages");
+                });
+
             modelBuilder.Entity("CSForum.Core.Models.Post", b =>
                 {
                     b.Navigation("Answers");
@@ -475,6 +559,10 @@ namespace CSForum.WebApi.Migrations
             modelBuilder.Entity("CSForum.Core.Models.User", b =>
                 {
                     b.Navigation("Answers");
+
+                    b.Navigation("Chats");
+
+                    b.Navigation("Messages");
 
                     b.Navigation("Posts");
                 });
