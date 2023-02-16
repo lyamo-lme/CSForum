@@ -143,14 +143,6 @@ public class AuthController : Controller
             {
                 return false;
             }
-            // await _emailSender.SendMessage<Email>(
-            //             new Email()
-            //             {
-            //                 senderName = "code?reply",
-            //                 receiverEmail = email.Value,
-            //                 htmlContent = $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
-            //                 subject = "Confirming registration"
-            //             });
 
             var loginResult = await _userManager.AddLoginAsync(user, info);
             if (!loginResult.Succeeded)
@@ -180,6 +172,7 @@ public class AuthController : Controller
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+                
                 await _signInManager.SignInWithClaimsAsync(user,
                     false,
                     new[]

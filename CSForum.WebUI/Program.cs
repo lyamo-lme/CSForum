@@ -30,6 +30,7 @@ builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
 
 //add dbcontext for forum db
 builder.Services.AddDbForumContext(connectionString, assembly);
+builder.Services.AddForumDbContext();
 
 builder.Services.AddAppIdentity<User>(_ => { });
 
@@ -81,7 +82,6 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
- 
 
 app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
 

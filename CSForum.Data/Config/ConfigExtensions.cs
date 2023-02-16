@@ -12,6 +12,7 @@ public static class ConfigExtensions
         modelBuilder.ApplyConfiguration(new TagConfiguration());
         modelBuilder.ApplyConfiguration(new MessageConfiguration());
         modelBuilder.ApplyConfiguration(new ChatConfiguration());
+        modelBuilder.ApplyConfiguration(new UsersChatsConfiguration());
         // modelBuilder.ApplyConfiguration(new UserConfiguration());
     }
 }

@@ -11,8 +11,8 @@ public class ForumDbContext :
 {
     public ForumDbContext(DbContextOptions<ForumDbContext> options) : base(options)
     {
-        // Database.EnsureDeleted();
-        // Database.EnsureCreated();  
+         Database.EnsureDeleted();
+         Database.EnsureCreated();  
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -27,4 +27,5 @@ public class ForumDbContext :
     public DbSet<PostTag> PostTags { get; set; }
     public DbSet<Chat> Chats { get; set; }
     public DbSet<Message> Messages { get; set; }
+    public DbSet<UsersChats> UsersChats { get; set; }
 }

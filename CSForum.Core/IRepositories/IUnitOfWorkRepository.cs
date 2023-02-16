@@ -14,6 +14,10 @@ namespace CSForum.Core.IRepositories
         IRepository<User> Users { get; }
         IRepository<Answer> Answers { get; }
         IRepository<PostTag> PostTags { get; }
+        IRepository<Chat> Chats { get; }
+        IRepository<Message> Messages { get; }
+        IRepository<UsersChats> UserChats { get; }
+        // public IRepository<T> Repository<T>() where T : class;
         Task SaveAsync();
     }
 }

@@ -10,7 +10,6 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
 {
     private readonly ForumDbContext _context;
     private readonly DbSet<TEntity> _entity;
-    private IRepository<TEntity> _repositoryImplementation;
 
     public GenericRepository(ForumDbContext context)
     {

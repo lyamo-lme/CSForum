@@ -1,4 +1,6 @@
+using System.Security.Claims;
 using CSForum.Data.Context;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
 namespace CSForum.WebUI;
@@ -22,6 +24,9 @@ public static class WebUiExtensions
                 config.ClientSecret = "ClientSecret_MVC";
                 config.SaveTokens = true;
                 config.ResponseType = "code";
+                config.GetClaimsFromUserInfoEndpoint = true;
+                
+                config.ClaimActions.MapUniqueJsonKey(ClaimTypes.NameIdentifier, ClaimTypes.NameIdentifier);
                 
                 config.Scope.Add("UserClaims");
                 config.Scope.Add("offline_access");
