@@ -1,5 +1,5 @@
+import {request} from "./fetch.js";
 
-// @ts-ignore
-const chats =  request(webUrl+"", "GET").then(data=>{
+const chats =  request(webUrl+"/web/chat/user", "GET").then(data=>{
     console.log(data);
 });

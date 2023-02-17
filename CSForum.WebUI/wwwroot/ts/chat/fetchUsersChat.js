@@ -1,5 +1,5 @@
-// @ts-ignore
-const chats = request(webUrl + "", "GET").then(data => {
+import { request } from "./fetch.js";
+const chats = request(webUrl + "/web/chat/user", "GET").then(data => {
     console.log(data);
 });
 //# sourceMappingURL=fetchUsersChat.js.map

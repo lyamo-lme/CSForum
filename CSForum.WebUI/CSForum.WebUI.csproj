@@ -103,10 +103,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <TypeScriptCompile Include="wwwroot\js\loadTag.ts" />
-      <TypeScriptCompile Include="wwwroot\js\test.ts" />
+      <TypeScriptCompile Include="wwwroot\ts\chat\fetch.ts" />
       <TypeScriptCompile Include="wwwroot\ts\chat\fetchUsersChat.ts" />
-      <TypeScriptCompile Include="wwwroot\ts\fetch.ts" />
+      <TypeScriptCompile Include="wwwroot\ts\loadTag.ts" />
+      <TypeScriptCompile Include="wwwroot\ts\test.ts" />
     </ItemGroup>
 
     <ItemGroup>
@@ -137,6 +137,22 @@
       <EmbeddedResource Update="Resources\Views\Shared\_LoginPartial.uk-UA.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>_LoginPartial.en-US.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Chat\Chat.en-US.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Chat.en-US.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Chat\Chat.uk-UA.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Chat.uk-UA.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Chat\CreateChat.en-US.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Chat.en-US.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Chat\CreateChat.uk-UA.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Chat.uk-UA.Designer.cs</LastGenOutput>
       </EmbeddedResource>
     </ItemGroup>
 

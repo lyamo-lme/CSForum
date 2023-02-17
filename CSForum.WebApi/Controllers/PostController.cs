@@ -1,7 +1,6 @@
 using System.Linq.Expressions;
 using AutoMapper;
 using CSForum.Core.IRepositories;
-using CSForum.Core.IRepositories.Services;
 using CSForum.Core.Models;
 using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.MapperConfigurations;
@@ -18,13 +17,13 @@ namespace CSForum.WebApi.Controllers
     {
         private readonly IUnitOfWorkRepository _uofRepository;
         private readonly IMapper _dtoMapper;
-        private readonly IPostService _postService;
+        private readonly ILogger<PostController> _logger;
 
-        public PostController(IUnitOfWorkRepository uofRepository, IPostService postService)
+        public PostController(IUnitOfWorkRepository uofRepository, ILogger<PostController> logger)
         {
             _dtoMapper = MapperFactory.CreateMapper<DtoMapper>();
             _uofRepository = uofRepository;
-            _postService = postService;
+            _logger = logger;
         }
 
         [HttpPost, Route("")]
@@ -32,6 +31,7 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
+                
                 var mappedPost = _dtoMapper.Map<Post>(model);
                 var post = await _uofRepository.Posts.CreateAsync(mappedPost);
                 await _uofRepository.SaveAsync();
@@ -39,6 +39,7 @@ namespace CSForum.WebApi.Controllers
             }
             catch (Exception e)
             {
+                _logger.Log(LogLevel.Error, e, e.Message);
                 throw;
             }
         }
@@ -55,6 +56,7 @@ namespace CSForum.WebApi.Controllers
             }
             catch (Exception e)
             {
+                _logger.Log(LogLevel.Error, e, e.Message);
                 throw;
             }
         }
@@ -65,19 +67,20 @@ namespace CSForum.WebApi.Controllers
             try
             {
                 var postResult = await _uofRepository.Posts.FindAsync(post => post.Id == postId);
-                
+
                 postResult.PostTags = await _uofRepository.PostTags.GetAsync(postTag => postTag.PostId == postResult.Id,
                     null, null, null, "Tag");
-                
+
                 postResult.PostCreator = await _uofRepository.Users.FindAsync(user => user.Id == postResult.UserId);
-                
+
                 postResult.Answers = await _uofRepository.Answers.GetAsync(answer => answer.PostId == postResult.Id,
                     null, null, null, "AnswerCreator");
-                
+
                 return Ok(postResult);
             }
             catch (Exception e)
             {
+                _logger.Log(LogLevel.Error, e, e.Message);
                 throw;
             }
         }
@@ -92,6 +95,7 @@ namespace CSForum.WebApi.Controllers
             }
             catch (Exception e)
             {
+                _logger.Log(LogLevel.Error, e, e.Message);
                 throw;
             }
         }
@@ -108,6 +112,7 @@ namespace CSForum.WebApi.Controllers
             }
             catch (Exception e)
             {
+                _logger.Log(LogLevel.Error, e, e.Message);
                 throw;
             }
         }
@@ -131,6 +136,7 @@ namespace CSForum.WebApi.Controllers
             }
             catch (Exception e)
             {
+                _logger.Log(LogLevel.Error, e, e.Message);
                 throw;
             }
         }

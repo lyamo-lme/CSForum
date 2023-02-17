@@ -6,10 +6,12 @@ namespace CSForum.WebUI.Services.HttpClients;
 public class HttpAuthorization : IHttpAuthorization
 {
     private readonly IHttpContextAccessor _contextAccessor;
+    private readonly ILogger<HttpAuthorization> _logger;
 
-    public HttpAuthorization(IHttpContextAccessor contextAccessor)
+    public HttpAuthorization(IHttpContextAccessor contextAccessor, ILogger<HttpAuthorization> logger)
     {
         _contextAccessor = contextAccessor;
+        _logger = logger;
     }
 
 
@@ -21,18 +23,27 @@ public class HttpAuthorization : IHttpAuthorization
         }
         catch (Exception e)
         {
+            _logger.Log(LogLevel.Error, e, e.Message);
             throw;
         }
     }
 
     public async Task UpdateTokens(Dictionary<string, string> tokens)
     {
-        var authInfo = await _contextAccessor.HttpContext.AuthenticateAsync("Cookie");
-        foreach (var token in tokens)
+        try
         {
-            authInfo.Properties.UpdateTokenValue(token.Key, token.Value);
-        }
+            var authInfo = await _contextAccessor.HttpContext.AuthenticateAsync("Cookie");
+            foreach (var token in tokens)
+            {
+                authInfo.Properties.UpdateTokenValue(token.Key, token.Value);
+            }
 
-        await _contextAccessor.HttpContext.SignInAsync("Cookie", authInfo.Principal, authInfo.Properties);
+            await _contextAccessor.HttpContext.SignInAsync("Cookie", authInfo.Principal, authInfo.Properties);
+        }
+        catch (Exception e)
+        {
+            _logger.Log(LogLevel.Error, e, e.Message);
+            throw;
+        }
     }
 }

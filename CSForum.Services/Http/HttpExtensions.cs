@@ -20,7 +20,7 @@ public static class HttpExtensions
         }
         catch (HttpRequestException e)
         {
-            throw;
+            throw new Exception(e.Message, e);
         }
     }
 }

@@ -4,7 +4,6 @@ using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.Http;
-using CSForum.Services.HttpClients;
 using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models;
 using CSForum.Shared.Models.dtoModels;

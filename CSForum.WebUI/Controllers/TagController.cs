@@ -1,7 +1,6 @@
 ﻿
 using CSForum.Core.Models;
 using CSForum.Services.Http;
-using CSForum.Services.HttpClients;
 using CSForum.Shared.Models.dtoModels;
 using CSForum.Shared.Models.dtoModels.Tags;
 using CSForum.WebUI.Models;

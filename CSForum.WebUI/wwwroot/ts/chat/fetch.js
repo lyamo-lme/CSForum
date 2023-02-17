@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,14 +7,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.request = void 0;
-const request = (pathUrl, method, headers, variables) => __awaiter(void 0, void 0, void 0, function* () {
+export const validation = (method, variables) => {
+    if ((method === "GET" || method == "DELETE") != true) {
+        return JSON.stringify({ variables });
+    }
+};
+export const request = (pathUrl, method, headers, variables) => __awaiter(void 0, void 0, void 0, function* () {
     return yield fetch(pathUrl, {
         method: method,
         headers: headers,
-        body: JSON.stringify({ variables }),
+        body: validation(method, variables)
     });
 });
-exports.request = request;
 //# sourceMappingURL=fetch.js.map

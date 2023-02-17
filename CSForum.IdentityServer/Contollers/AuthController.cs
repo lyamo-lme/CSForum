@@ -17,6 +17,7 @@ namespace CSForum.IdentityServer.Contollers;
 public class AuthController : Controller
 {
     private readonly IEmailService _emailSender;
+    private readonly ILogger<AuthController> _logger;
     private readonly SignInManager<User> _signInManager;
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
@@ -34,21 +35,37 @@ public class AuthController : Controller
     [HttpGet]
     public async Task<IActionResult> Login(string returnUrl)
     {
-        var externalProviders = await _signInManager.GetExternalAuthenticationSchemesAsync();
-        return View("LoginPage", new LoginViewModel()
+        try
         {
-            ReturnUrl = returnUrl,
-            ExternalProviders = externalProviders
-        });
+            var externalProviders = await _signInManager.GetExternalAuthenticationSchemesAsync();
+            return View("LoginPage", new LoginViewModel()
+            {
+                ReturnUrl = returnUrl,
+                ExternalProviders = externalProviders
+            });
+        }
+        catch (Exception e)
+        {
+            _logger.Log(LogLevel.Error, e, e.Message);
+            throw;
+        }
     }
 
     [HttpGet]
     public IActionResult Register(string returnUrl)
     {
-        return View("RegisterPage", new RegisterViewModel()
+        try
         {
-            ReturnUrl = returnUrl
-        });
+            return View("RegisterPage", new RegisterViewModel()
+            {
+                ReturnUrl = returnUrl
+            });
+        }
+        catch (Exception e)
+        {
+            _logger.Log(LogLevel.Error, e, e.Message);
+            throw;
+        }
     }
 
     [HttpPost]
@@ -81,6 +98,7 @@ public class AuthController : Controller
         }
         catch (Exception e)
         {
+            _logger.Log(LogLevel.Error, e, e.Message);
             throw;
         }
     }
@@ -88,42 +106,66 @@ public class AuthController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
-        if (!ModelState.IsValid)
+        try
         {
-            return View("LoginPage", new LoginViewModel()
+            if (!ModelState.IsValid)
             {
-                ReturnUrl = model.ReturnUrl
-            });
+                return View("LoginPage", new LoginViewModel()
+                {
+                    ReturnUrl = model.ReturnUrl
+                });
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
+
+            if (result.Succeeded)
+            {
+                return Redirect(model.ReturnUrl);
+            }
+
+
+            return View("LoginPage");
         }
-
-        var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
-
-        if (result.Succeeded)
+        catch (Exception e)
         {
-            return Redirect(model.ReturnUrl);
+            _logger.Log(LogLevel.Error, e, e.Message);
+            throw;
         }
-
-
-        return View("LoginPage");
     }
 
     [HttpGet, Authorize]
     public async Task<IActionResult> Logout(string logoutId)
     {
-        await _signInManager.SignOutAsync();
-        var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
-        return Redirect(logoutRequest.PostLogoutRedirectUri);
+        try
+        {
+            await _signInManager.SignOutAsync();
+            var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
+            return Redirect(logoutRequest.PostLogoutRedirectUri);
+        }
+        catch (Exception e)
+        {
+            _logger.Log(LogLevel.Error, e, e.Message);
+            throw;
+        }
     }
 
     public async Task<IActionResult> ExternalProvider(string provider, string returnUrl)
     {
-        var redirect = Url.Action(nameof(ExternalLoginCallback), "Auth", new
+        try
         {
-            returnUrl
-        });
-        var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirect);
+            var redirect = Url.Action(nameof(ExternalLoginCallback), "Auth", new
+            {
+                returnUrl
+            });
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirect);
 
-        return Challenge(properties, provider);
+            return Challenge(properties, provider);
+        }
+        catch (Exception e)
+        {
+            _logger.Log(LogLevel.Error, e, e.Message);
+            throw;
+        }
     }
 
     private async Task<bool> ExternalRegister(ExternalLoginInfo info)
@@ -154,6 +196,7 @@ public class AuthController : Controller
         }
         catch (Exception e)
         {
+            _logger.Log(LogLevel.Error, e, e.Message);
             throw;
         }
     }
@@ -172,7 +215,7 @@ public class AuthController : Controller
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
-                
+
                 await _signInManager.SignInWithClaimsAsync(user,
                     false,
                     new[]
@@ -189,6 +232,7 @@ public class AuthController : Controller
         }
         catch (Exception e)
         {
+            _logger.Log(LogLevel.Error, e, e.Message);
             throw;
         }
     }

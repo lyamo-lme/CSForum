@@ -7,11 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace CSForum.Data.Repositories
 {
     public class UowRepository:IUnitOfWorkRepository
     {
+        private readonly ILogger<UowRepository> _logger;
         private readonly ForumDbContext _forumDbContext;
         private IRepository<Tag>? _tagRepository;
         private GenericRepository<Post>? _postRepository;
@@ -31,12 +33,23 @@ namespace CSForum.Data.Repositories
         public IRepository<Message> Messages => _messageRepository ?? (_messageRepository = new GenericRepository<Message>(_forumDbContext));
         public IRepository<UsersChats> UserChats => _usersChatRepository ?? (_usersChatRepository = new GenericRepository<UsersChats>(_forumDbContext));
 
-        public UowRepository(ForumDbContext forumDbContext)
+        public UowRepository(ForumDbContext forumDbContext, ILogger<UowRepository> logger)
         {
             _forumDbContext = forumDbContext;
+            _logger = logger;
         }
 
-        public Task SaveAsync() => _forumDbContext.SaveChangesAsync();
-
+        public Task SaveAsync()
+        {
+            try
+            {
+               return _forumDbContext.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.Log(LogLevel.Critical,e,e.Message);
+                throw;
+            }
+        }
     }
 }

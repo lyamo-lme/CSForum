@@ -2,7 +2,6 @@ using AutoMapper;
 using CSForum.Core.Models;
 using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.Http;
-using CSForum.Services.HttpClients;
 using CSForum.Services.MapperConfigurations;
 using CSForum.WebUI.Models;
 using CSForum.WebUI.Services.HttpClients;

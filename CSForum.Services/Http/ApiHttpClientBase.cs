@@ -1,12 +1,12 @@
 using System.Net;
 using System.Net.Http.Json;
 using CSForum.Core;
-using CSForum.Services.HttpClients;
 using CSForum.WebUI.Services;
 using CSForum.Shared.Models;
 using CSForum.WebUI.Services.HttpClients;
 using CSForum.WebUI.Services.Interfaces;
 using IdentityModel.Client;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Polly;
@@ -23,12 +23,14 @@ public class ApiHttpClientBase : ApiClientBase
     private readonly AsyncRetryPolicy _retryPolicy;
     private readonly ITokenService _tokenService;
     private readonly IHttpAuthorization _httpAuthorization;
+    private readonly ILogger<ApiHttpClientBase> _logger;
 
     public ApiHttpClientBase(ITokenService tokenService, HttpClient client, IOptions<ApiSettingConfig> apiSettings,
-        IHttpAuthorization httpAuthorization)
+        IHttpAuthorization httpAuthorization, ILogger<ApiHttpClientBase> logger)
         : base(client, apiSettings.Value)
     {
         _httpAuthorization = httpAuthorization;
+        _logger = logger;
         _tokenService = tokenService;
         _retryPolicy = SetPolly();
     }
@@ -62,6 +64,7 @@ public class ApiHttpClientBase : ApiClientBase
         }
         catch (Exception e)
         {
+            _logger.Log(LogLevel.Error, e, e.Message);
             throw;
         }
     }
@@ -77,6 +80,7 @@ public class ApiHttpClientBase : ApiClientBase
         }
         catch (Exception e)
         {
+            _logger.Log(LogLevel.Error, e, e.Message);
             throw;
         }
     }
@@ -90,6 +94,7 @@ public class ApiHttpClientBase : ApiClientBase
         }
         catch (Exception e)
         {
+            _logger.Log(LogLevel.Error, e, e.Message);
             throw;
         }
     }
@@ -106,6 +111,7 @@ public class ApiHttpClientBase : ApiClientBase
         }
         catch (Exception e)
         {
+            _logger.Log(LogLevel.Error, e, e.Message);
             throw;
         }
     }
@@ -119,6 +125,7 @@ public class ApiHttpClientBase : ApiClientBase
         }
         catch (Exception e)
         {
+            _logger.Log(LogLevel.Error, e, e.Message);
             throw;
         }
     }
@@ -134,6 +141,7 @@ public class ApiHttpClientBase : ApiClientBase
         }
         catch (Exception e)
         {
+            _logger.Log(LogLevel.Error, e, e.Message);
             throw;
         }
     }
@@ -142,7 +150,6 @@ public class ApiHttpClientBase : ApiClientBase
     {
         try
         {
-            
             var uri = new Uri(client.BaseAddress + path);
             var result = await client.SendAuthAsync(
                 new HttpRequestMessage(method, uri)
@@ -155,6 +162,7 @@ public class ApiHttpClientBase : ApiClientBase
         }
         catch (Exception e)
         {
+            _logger.Log(LogLevel.Error, e, e.Message);
             throw;
         }
     }

@@ -2,7 +2,6 @@ using AutoMapper;
 using CSForum.Core.Models;
 using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.Http;
-using CSForum.Services.HttpClients;
 using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models.dtoModels;
 using CSForum.WebUI.Models;
@@ -17,11 +16,13 @@ public class AnswerController:Controller
 {
     private readonly IMapper _mapper;
     private readonly ApiHttpClientBase _forumClient;
+    private readonly ILogger<AnswerController> _logger;
     private readonly UserManager<User> _userManager;
-    public AnswerController(ApiHttpClientBase client, UserManager<User> userManager)
+    public AnswerController(ApiHttpClientBase client, UserManager<User> userManager, ILogger<AnswerController> logger)
     {
         _forumClient = client;
         _userManager = userManager;
+        _logger = logger;
         _mapper = MapperFactory.CreateMapper<DtoMapper>();
     }
     [HttpPost]
@@ -38,7 +39,8 @@ public class AnswerController:Controller
         }
         catch(Exception e)
         {
-            throw new Exception(e.Message, e);
+            _logger.Log(LogLevel.Error,e, e.Message);
+            throw ;
         }
     }
 }

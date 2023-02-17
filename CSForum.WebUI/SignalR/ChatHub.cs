@@ -13,12 +13,14 @@ namespace CSForum.WebUI.SignalR
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IUnitOfWorkRepository _uofRepository;
+        private readonly ILogger<ChatHub> _logger;
 
-        public ChatHub(UserManager<User> userManager, IUnitOfWorkRepository uofRepository)
+        public ChatHub(UserManager<User> userManager, IUnitOfWorkRepository uofRepository, ILogger<ChatHub> logger)
         {
             _mapper = MapperFactory.CreateMapper<DtoMapper>();
             _userManager = userManager;
             _uofRepository = uofRepository;
+            _logger = logger;
         }
 
         public async Task SendMessage(string receiverId, string message)
@@ -30,20 +32,27 @@ namespace CSForum.WebUI.SignalR
             }
             catch (Exception e)
             {
+                _logger.Log(LogLevel.Error, e, e.Message);
                 throw;
             }
         }
 
-        public override async Task OnConnectedAsync()
+        public override  Task OnConnectedAsync()
         {
-            base.OnConnectedAsync();
+            try
+            {
+               return  base.OnConnectedAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.Log(LogLevel.Error, e, e.Message);
+                throw;
+            }
         }
 
         public override Task OnDisconnectedAsync(Exception? exception)
         {
-            
-            return  base.OnDisconnectedAsync(exception);
+            return base.OnDisconnectedAsync(exception);
         }
-
     }
 }

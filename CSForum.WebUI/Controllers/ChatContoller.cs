@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CSForum.WebUI.Controllers;
 
-[Route("chat")]
+[Route("web/chat")]
 public class ChatController : Controller
 {
     private readonly IUnitOfWorkRepository _uofRepository;
@@ -32,9 +32,7 @@ public class ChatController : Controller
     public async Task<IActionResult> Chat()
     {
         try
-        {
-            await _forumClient.SetBearerTokenAsync();
-            var usersChat = await _forumClient.GetAsync<List<UsersChats>>("api/chat/user");
+        { 
             return View("Chat");
         }
         catch (Exception e)

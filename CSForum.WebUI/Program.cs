@@ -5,7 +5,6 @@ using CSForum.Data;
 using CSForum.Data.Context;
 using CSForum.Services.EmailService;
 using CSForum.Services.Http;
-using CSForum.Services.HttpClients;
 using CSForum.Services.TokenService;
 using CSForum.Shared;
 using CSForum.Shared.Models;
@@ -90,7 +89,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.MapHub<ChatHub>("/chat");
+app.MapHub<ChatHub>("chat");
 
 app.UseAuthentication();
 app.UseAuthorization();

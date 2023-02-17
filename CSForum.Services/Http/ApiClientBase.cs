@@ -1,11 +1,11 @@
 using CSForum.Shared.Models;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 
-namespace CSForum.Services.HttpClients;
+namespace CSForum.Services.Http;
 
 public abstract class  ApiClientBase
 {
-    public  HttpClient client;
+    protected readonly HttpClient client;
     private readonly ApiSettingConfig? _apiSettings;
 
     protected ApiClientBase(HttpClient client, ApiSettingConfig apiSettings)
