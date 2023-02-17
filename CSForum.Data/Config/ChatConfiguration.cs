@@ -8,8 +8,6 @@ public class ChatConfiguration:IEntityTypeConfiguration<Chat>
 {
     public void Configure(EntityTypeBuilder<Chat> builder)
     {
-
         builder.HasIndex(prop => prop.ChatId);
-        builder.HasKey(prop=>prop.ChatId);
     }
 }

@@ -2,6 +2,7 @@ using AutoMapper;
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Infrastructure.MapperConfigurations;
+using CSForum.Services.Http;
 using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -10,28 +11,46 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CSForum.WebUI.Controllers;
 
-public class ChatController:Controller
+[Route("chat")]
+public class ChatController : Controller
 {
     private readonly IUnitOfWorkRepository _uofRepository;
-    private readonly SignInManager<User> _signInManager;
+    private readonly ApiHttpClientBase _forumClient;
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
-    public ChatController(IUnitOfWorkRepository uofRepository, SignInManager<User> signInManager, UserManager<User> userManager)
+
+    public ChatController(IUnitOfWorkRepository uofRepository, SignInManager<User> signInManager,
+        UserManager<User> userManager, ApiHttpClientBase forumClient)
     {
         _uofRepository = uofRepository;
-        _signInManager = signInManager;
         _userManager = userManager;
+        _forumClient = forumClient;
         _mapper = MapperFactory.CreateMapper<DtoMapper>();
     }
 
-    [Authorize, Route("")]
+    [Authorize, HttpGet, Route("")]
     public async Task<IActionResult> Chat()
     {
         try
         {
-            var signedUser = _userManager.GetUserId(User);
-            var userChat = await _uofRepository.UserChats.GetAsync(x => x.UserId == int.Parse(signedUser), includeProperties: "User");
-            return View("Chat", _mapper.Map<List<UsersChatViewModel>>(userChat));
+            await _forumClient.SetBearerTokenAsync();
+            var usersChat = await _forumClient.GetAsync<List<UsersChats>>("api/chat/user");
+            return View("Chat");
+        }
+        catch (Exception e)
+        {
+            throw;
+        }
+    }
+
+    [Authorize, HttpGet, Route("user")]
+    public async Task<ActionResult<List<UsersChats>>> ChatsData()
+    {
+        try
+        {
+            await _forumClient.SetBearerTokenAsync();
+            var usersChat = await _forumClient.GetAsync<List<UsersChats>>("api/chat/user");
+            return Ok(usersChat);
         }
         catch (Exception e)
         {
@@ -40,6 +59,8 @@ public class ChatController:Controller
     }
 
     [Authorize]
+    [HttpPost]
+    [Route("")]
     public async Task<IActionResult> CreateChat(int userId)
     {
         try
@@ -63,7 +84,5 @@ public class ChatController:Controller
         {
             throw;
         }
-        
     }
-
 }

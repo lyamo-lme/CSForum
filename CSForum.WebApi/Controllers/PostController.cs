@@ -65,11 +65,15 @@ namespace CSForum.WebApi.Controllers
             try
             {
                 var postResult = await _uofRepository.Posts.FindAsync(post => post.Id == postId);
+                
                 postResult.PostTags = await _uofRepository.PostTags.GetAsync(postTag => postTag.PostId == postResult.Id,
                     null, null, null, "Tag");
+                
                 postResult.PostCreator = await _uofRepository.Users.FindAsync(user => user.Id == postResult.UserId);
+                
                 postResult.Answers = await _uofRepository.Answers.GetAsync(answer => answer.PostId == postResult.Id,
                     null, null, null, "AnswerCreator");
+                
                 return Ok(postResult);
             }
             catch (Exception e)
@@ -108,7 +112,7 @@ namespace CSForum.WebApi.Controllers
             }
         }
 
-        [HttpDelete, Route("")]
+        [HttpDelete, Route("{postId}")]
         public async Task<ActionResult<bool>> DeletePost(int postId)
         {
             try
@@ -117,6 +121,7 @@ namespace CSForum.WebApi.Controllers
                 {
                     return BadRequest("id failed");
                 }
+
                 var state = await _uofRepository.Posts.DeleteAsync(new Post()
                 {
                     Id = postId

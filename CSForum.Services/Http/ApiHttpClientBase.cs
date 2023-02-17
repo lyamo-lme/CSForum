@@ -2,7 +2,9 @@ using System.Net;
 using System.Net.Http.Json;
 using CSForum.Core;
 using CSForum.Services.HttpClients;
+using CSForum.WebUI.Services;
 using CSForum.Shared.Models;
+using CSForum.WebUI.Services.HttpClients;
 using CSForum.WebUI.Services.Interfaces;
 using IdentityModel.Client;
 using Microsoft.Extensions.Options;
@@ -44,7 +46,7 @@ public class ApiHttpClientBase : ApiClientBase
                     { "access_token", tokenResponse.AccessToken },
                     { "refresh_token", tokenResponse.RefreshToken }
                 }).Wait();
-                SetBearerToken().Wait();
+                SetBearerTokenAsync().Wait();
             }
 
             return true;
@@ -79,7 +81,7 @@ public class ApiHttpClientBase : ApiClientBase
         }
     }
 
-    private async Task SetBearerToken()
+    public async Task SetBearerTokenAsync()
     {
         try
         {
@@ -127,7 +129,7 @@ public class ApiHttpClientBase : ApiClientBase
         try
         {
             var uri = new Uri(client.BaseAddress + path);
-            var result = await client.SendAsync(new HttpRequestMessage(method, uri));
+            var result = await client.SendAuthAsync(new HttpRequestMessage(method, uri));
             return await GetDeserializeObject<TOut>(result);
         }
         catch (Exception e)
@@ -140,8 +142,9 @@ public class ApiHttpClientBase : ApiClientBase
     {
         try
         {
+            
             var uri = new Uri(client.BaseAddress + path);
-            var result = await client.SendAsync(
+            var result = await client.SendAuthAsync(
                 new HttpRequestMessage(method, uri)
                 {
                     Content = model

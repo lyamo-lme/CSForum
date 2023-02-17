@@ -9,7 +9,7 @@ public class TagConfiguration:IEntityTypeConfiguration<Tag>
     public void Configure(EntityTypeBuilder<Tag> builder)
     {
         builder.HasIndex(prop=>prop.Id);
-        builder.HasKey(prop=>prop.Id);
+
         
         builder.Property(prop => prop.Name).HasMaxLength(50);
     }

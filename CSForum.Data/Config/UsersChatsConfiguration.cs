@@ -9,8 +9,7 @@ public class UsersChatsConfiguration:IEntityTypeConfiguration<UsersChats>
     public void Configure(EntityTypeBuilder<UsersChats> builder)
     {
         builder.HasIndex(prop=>prop.Id);
-        builder.HasKey(prop=>prop.Id);
-        //fields
+         //fields
         builder.Property(prop => prop.UserId).IsRequired();
         builder.Property(prop => prop.ChatId).IsRequired();
         

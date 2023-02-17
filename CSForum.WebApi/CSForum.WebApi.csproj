@@ -25,6 +25,7 @@
     <ProjectReference Include="..\CSForum.Infrastructure\CSForum.Infrastructure.csproj" />
     <ProjectReference Include="..\CSForum.Services\CSForum.Services.csproj" />
     <ProjectReference Include="..\CSForum.Shared\CSForum.Shared.csproj" />
+    <ProjectReference Include="..\CSForum.WebUI\CSForum.WebUI.csproj" />
   </ItemGroup>
 
 </Project>

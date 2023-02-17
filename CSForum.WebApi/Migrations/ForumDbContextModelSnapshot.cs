@@ -265,6 +265,8 @@ namespace CSForum.WebApi.Migrations
 
                     b.HasIndex("ChatId");
 
+                    b.HasIndex("Id");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("UsersChats");
@@ -497,13 +499,13 @@ namespace CSForum.WebApi.Migrations
             modelBuilder.Entity("CSForum.Core.Models.UsersChats", b =>
                 {
                     b.HasOne("CSForum.Core.Models.Chat", "Chat")
-                        .WithMany()
+                        .WithMany("UsersChats")
                         .HasForeignKey("ChatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CSForum.Core.Models.User", "User")
-                        .WithMany()
+                        .WithMany("UsersChats")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -582,6 +584,8 @@ namespace CSForum.WebApi.Migrations
             modelBuilder.Entity("CSForum.Core.Models.Chat", b =>
                 {
                     b.Navigation("Messages");
+
+                    b.Navigation("UsersChats");
                 });
 
             modelBuilder.Entity("CSForum.Core.Models.Post", b =>
@@ -605,6 +609,8 @@ namespace CSForum.WebApi.Migrations
                     b.Navigation("Messages");
 
                     b.Navigation("Posts");
+
+                    b.Navigation("UsersChats");
                 });
 #pragma warning restore 612, 618
         }

@@ -6,17 +6,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSForum.Data.Context;
 
-public class ForumDbContext :
-    IdentityDbContext<User,IdentityRole<int>,int>
+public class ForumDbContext : IdentityDbContext<User, IdentityRole<int>, int>
 {
     public ForumDbContext(DbContextOptions<ForumDbContext> options) : base(options)
     {
-         Database.EnsureDeleted();
-         Database.EnsureCreated();  
+        // Database.EnsureDeleted();
+        // Database.EnsureCreated();  
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        
         modelBuilder.AddDbForumConfig();
         base.OnModelCreating(modelBuilder);
     }

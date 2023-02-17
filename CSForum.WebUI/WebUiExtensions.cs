@@ -41,4 +41,16 @@ public static class WebUiExtensions
             .AddDefaultUI()
             .AddEntityFrameworkStores<ForumDbContext>();
     }
+    public static IdentityBuilder AddCoreIdentity<TUser>(this IServiceCollection services,
+        Action<IdentityOptions> configureOptions) where TUser : class
+    {
+        return services.AddIdentityCore<TUser>(o =>
+            {
+                o.Stores.MaxLengthForKeys = 128;
+                configureOptions?.Invoke(o);
+            })
+            .AddDefaultUI()
+            .AddEntityFrameworkStores<ForumDbContext>();
+    }
+    
 }

@@ -20,7 +20,7 @@ public class UserController : Controller
         return Ok("success");
     }
     [HttpGet]
-    public async Task<IEnumerable<User>> GetUsers()
+    public async Task<List<User>> GetUsers()
     {
         try
         {

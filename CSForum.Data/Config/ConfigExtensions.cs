@@ -8,7 +8,7 @@ public static class ConfigExtensions
     {
         modelBuilder.ApplyConfiguration(new AnswerConfiguration());
         modelBuilder.ApplyConfiguration(new PostConfiguration());
-        modelBuilder.ApplyConfiguration(new PostTagConfiguration());
+        modelBuilder.ApplyConfiguration(new PostTagsConfiguration());
         modelBuilder.ApplyConfiguration(new TagConfiguration());
         modelBuilder.ApplyConfiguration(new MessageConfiguration());
         modelBuilder.ApplyConfiguration(new ChatConfiguration());

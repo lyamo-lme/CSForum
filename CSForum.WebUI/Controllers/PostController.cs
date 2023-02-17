@@ -73,7 +73,7 @@ public class PostController : Controller
             throw;
         }
     }
-
+    [HttpGet, Route("recent/{take}")]
     public async Task<IActionResult> GetRecentPosts(int? take=null)
     {
         try

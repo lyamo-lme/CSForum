@@ -1,6 +1,8 @@
 using CSForum.Core.IRepositories.Services;
+using CSForum.Core.Models;
 using CSForum.Data;
 using CSForum.WebApi.RepositoryServices;
+using CSForum.WebUI;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,6 +40,8 @@ builder.Services.AddScoped<IPostService, PostService>();
 
 builder.Services.AddDbForumContext(
     builder.Configuration.GetConnectionString("MsSqlConnection"), assembly);
+
+builder.Services.AddCoreIdentity<User>(_ => { });
 
 builder.Services.AddForumDbContext();
 

@@ -31,7 +31,6 @@ public class HttpAuthorization : IHttpAuthorization
         foreach (var token in tokens)
         {
             authInfo.Properties.UpdateTokenValue(token.Key, token.Value);
-            authInfo.Properties.UpdateTokenValue(token.Key, token.Value);
         }
 
         await _contextAccessor.HttpContext.SignInAsync("Cookie", authInfo.Principal, authInfo.Properties);
