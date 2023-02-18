@@ -24,11 +24,13 @@ public class AuthController : Controller
     private readonly IIdentityServerInteractionService _interactionService;
 
     public AuthController(SignInManager<User> signInManager, UserManager<User> userManager,
-        IIdentityServerInteractionService interactionService)
+        IIdentityServerInteractionService interactionService, IEmailService emailSender, ILogger<AuthController> logger)
     {
         this._signInManager = signInManager;
         _userManager = userManager;
         _interactionService = interactionService;
+        _emailSender = emailSender;
+        _logger = logger;
         _mapper = MapperFactory.CreateMapper<DtoMapper>();
     }
 

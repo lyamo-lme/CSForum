@@ -9,4 +9,12 @@ public class Message
     public string Content { get; set; }
     public User? User { get; set; }
     public Chat? Chat { get; set; }
+
+    public Message()
+    { }
+    public Message(int userId, string content)
+    {
+        UserId = userId;
+        Content = content;
+    }
 }

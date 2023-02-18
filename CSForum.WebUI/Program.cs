@@ -10,6 +10,7 @@ using CSForum.Shared;
 using CSForum.Shared.Models;
 using CSForum.WebUI;
 using CSForum.WebUI.Resources;
+using CSForum.WebUI.Services.Chat;
 using CSForum.WebUI.Services.HttpClients;
 using CSForum.WebUI.Services.Interfaces;
 using CSForum.WebUI.SignalR;
@@ -33,13 +34,12 @@ builder.Services.AddForumDbContext();
 
 builder.Services.AddAppIdentity<User>(_ => { });
 
- //identity 
- // builder.Services.AddDefaultIdentity<User>(options =>
- //     {
- //         options.SignIn.RequireConfirmedAccount = true;
- //     })
- //  .AddEntityFrameworkStores<ForumDbContext>();
-
+//identity 
+// builder.Services.AddDefaultIdentity<User>(options =>
+//     {
+//         options.SignIn.RequireConfirmedAccount = true;
+//     })
+//  .AddEntityFrameworkStores<ForumDbContext>();
 
 
 //Ioptions for api settings
@@ -57,6 +57,7 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddScoped<ApiHttpClientBase>();
 
+builder.Services.AddTransient<IChatService, ChatService>();
 builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddScoped<IHttpAuthorization, HttpAuthorization>();
 
@@ -74,7 +75,9 @@ builder.Services
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment()){}
+if (app.Environment.IsDevelopment())
+{
+}
 else
 {
     app.UseExceptionHandler("/Home/Error");
