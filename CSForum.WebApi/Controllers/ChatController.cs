@@ -12,11 +12,12 @@ namespace CSForum.WebApi.Controllers;
 
 [ApiController]
 [Route("api/chat")]
-public class ChatController:Controller
+public class ChatController : Controller
 {
     private readonly IUnitOfWorkRepository _uofRepository;
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
+
     public ChatController(IUnitOfWorkRepository uofRepository, UserManager<User> userManager)
     {
         _uofRepository = uofRepository;
@@ -24,20 +25,23 @@ public class ChatController:Controller
         _mapper = MapperFactory.CreateMapper<DtoMapper>();
     }
 
-    [HttpGet,Route("user"),Authorize]
-    public async Task<ActionResult<UsersChats>> GetUsersChats()
+    [HttpGet, Route("user"), Authorize]
+    public async Task<ActionResult<List<UsersChats>>> GetUsersChats()
     {
         try
         {
             var signedUser = _userManager.GetUserId(User);
-            var userChats = await _uofRepository.UserChats.GetAsync(x => x.UserId == int.Parse(signedUser), includeProperties: "User");
-            
+            var userChats =
+                await _uofRepository.UserChats.GetAsync(x => x.UserId == int.Parse(signedUser),
+                    includeProperties: "User");
+
             foreach (var userChat in userChats)
             {
                 userChat.Chat = await _uofRepository.Chats.FindAsync(x => x.ChatId == userChat.ChatId);
-                userChat.Chat.Messages = await _uofRepository.Messages.GetAsync(x => x.ChatId == userChat.ChatId, includeProperties: "User");
+                userChat.Chat.Messages =
+                    await _uofRepository.Messages.GetAsync(x => x.ChatId == userChat.ChatId, includeProperties: "User");
             }
-             
+
             return Ok(userChats);
         }
         catch (Exception e)

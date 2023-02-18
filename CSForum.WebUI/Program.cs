@@ -10,7 +10,7 @@ using CSForum.Shared;
 using CSForum.Shared.Models;
 using CSForum.WebUI;
 using CSForum.WebUI.Resources;
-using CSForum.WebUI.Services.Chat;
+using CSForum.WebUI.Services.ChatServ;
 using CSForum.WebUI.Services.HttpClients;
 using CSForum.WebUI.Services.Interfaces;
 using CSForum.WebUI.SignalR;

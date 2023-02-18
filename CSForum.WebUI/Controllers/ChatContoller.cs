@@ -1,6 +1,7 @@
 using AutoMapper;
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
+using CSForum.Core.Service;
 using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.Http;
 using CSForum.Services.MapperConfigurations;
@@ -17,14 +18,16 @@ public class ChatController : Controller
     private readonly IUnitOfWorkRepository _uofRepository;
     private readonly ApiHttpClientBase _forumClient;
     private readonly UserManager<User> _userManager;
+    private readonly IChatService _chatService;
     private readonly IMapper _mapper;
 
     public ChatController(IUnitOfWorkRepository uofRepository, SignInManager<User> signInManager,
-        UserManager<User> userManager, ApiHttpClientBase forumClient)
+        UserManager<User> userManager, ApiHttpClientBase forumClient, IChatService chatService)
     {
         _uofRepository = uofRepository;
         _userManager = userManager;
         _forumClient = forumClient;
+        _chatService = chatService;
         _mapper = MapperFactory.CreateMapper<DtoMapper>();
     }
 
@@ -32,7 +35,7 @@ public class ChatController : Controller
     public async Task<IActionResult> Chat()
     {
         try
-        { 
+        {
             return View("Chat");
         }
         catch (Exception e)
@@ -58,25 +61,13 @@ public class ChatController : Controller
 
     [Authorize]
     [HttpPost]
-    [Route("")]
-    public async Task<IActionResult> CreateChat(int userId)
+    [Route("{userId}")]
+    public async Task<Chat> CreateChat(int userId)
     {
         try
         {
             var signedUser = _userManager.GetUserId(User);
-            var chat = await _uofRepository.Chats.CreateAsync(new Chat());
-            _uofRepository.UserChats.CreateAsync(new UsersChats()
-            {
-                ChatId = chat.ChatId,
-                UserId = userId
-            });
-            _uofRepository.UserChats.CreateAsync(new UsersChats()
-            {
-                ChatId = chat.ChatId,
-                UserId = int.Parse(signedUser)
-            });
-            _uofRepository.SaveAsync();
-            return View();
+            return await _chatService.CreateChatAsync(int.Parse(signedUser), userId);
         }
         catch (Exception e)
         {

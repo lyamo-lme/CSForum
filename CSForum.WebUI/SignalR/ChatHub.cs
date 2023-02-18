@@ -5,7 +5,6 @@ using CSForum.Core.Models;
 using CSForum.Core.Service;
 using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.MapperConfigurations;
-using CSForum.WebUI.Services.Chat;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
@@ -16,7 +15,6 @@ namespace CSForum.WebUI.SignalR
     {
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
-        private readonly IUnitOfWorkRepository _uofRepository;
         private readonly ILogger<ChatHub> _logger;
         private readonly IChatService _chatService;
 
@@ -24,7 +22,6 @@ namespace CSForum.WebUI.SignalR
         {
             _mapper = MapperFactory.CreateMapper<DtoMapper>();
             _userManager = userManager;
-            _uofRepository = uofRepository;
             _logger = logger;
             _chatService = chatService;
         }
