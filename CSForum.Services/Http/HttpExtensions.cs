@@ -20,7 +20,7 @@ public static class HttpExtensions
         }
         catch (HttpRequestException e)
         {
-            throw new Exception(e.Message, e);
+            throw new HttpRequestException("non auth", new Exception(e.Message), e.StatusCode);
         }
     }
 }

@@ -137,7 +137,12 @@ public class ApiHttpClientBase : ApiClientBase
         {
             var uri = new Uri(client.BaseAddress + path);
             var result = await client.SendAuthAsync(new HttpRequestMessage(method, uri));
+            
             return await GetDeserializeObject<TOut>(result);
+        }
+        catch (HttpRequestException e)
+        {
+            throw new HttpRequestException("non auth", new Exception(e.Message), e.StatusCode);
         }
         catch (Exception e)
         {
@@ -159,6 +164,10 @@ public class ApiHttpClientBase : ApiClientBase
             );
 
             return await GetDeserializeObject<TOut>(result);
+        }
+        catch (HttpRequestException e)
+        {
+            throw new HttpRequestException("non auth", new Exception(e.Message), e.StatusCode);
         }
         catch (Exception e)
         {

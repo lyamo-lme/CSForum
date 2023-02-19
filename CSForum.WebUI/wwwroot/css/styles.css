@@ -3,9 +3,7 @@
   box-sizing: border-box;
 }
 
-
-
-.container {
+.chat-container {
   margin: 0 auto;
   width: 750px;
   background: #444753;

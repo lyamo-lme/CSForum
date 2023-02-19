@@ -7,6 +7,7 @@ public class Message
     public int ChatId { get; set; }
     public int UserId { get; set; }
     public string Content { get; set; }
+    public DateTime Created { get; set; }= DateTime.Now;
     public User? User { get; set; }
     public Chat? Chat { get; set; }
 

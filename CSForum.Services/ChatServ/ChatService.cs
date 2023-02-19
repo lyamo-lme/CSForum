@@ -1,8 +1,9 @@
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Core.Service;
+using Microsoft.Extensions.Logging;
 
-namespace CSForum.WebUI.Services.ChatServ;
+namespace CSForum.Services.ChatServ;
 
 public class ChatService : IChatService
 {

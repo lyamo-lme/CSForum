@@ -6,4 +6,5 @@ public interface IChatService
 {
     public Task<Message> AddMessageAsync(Message model, int receiverId);
     public Task<Chat> CreateChatAsync(int firstId,int secondId);
+    public Task<List<UsersChats>> GetUserChats(int userId);
 }

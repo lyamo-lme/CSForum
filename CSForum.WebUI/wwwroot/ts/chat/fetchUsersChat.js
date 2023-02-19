@@ -17,7 +17,9 @@ request(webUrl + "/web/chat/user", "GET").then((data) => __awaiter(void 0, void 
     console.log(userChats);
     userChats.map(userChat => {
         let chatElement = createElement("li", "clearfix", "");
-        let contentChat = createElement("div", "about", userChat.user.userName);
+        let contentChat = createElement("div", "about", "");
+        let nameUser = createElement("div", "name", userChat.user.userName);
+        contentChat.appendChild(nameUser);
         chatElement.appendChild(contentChat);
         listOfUserChatsHtml.appendChild(chatElement);
     });

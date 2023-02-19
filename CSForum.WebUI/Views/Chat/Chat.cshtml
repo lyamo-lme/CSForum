@@ -28,7 +28,7 @@
     </div>
 </div>
 
-<div class="container clearfix">
+<div class="chat-container" clearfix>
     <div class="people-list" id="people-list">
         <div class="search">
             <input type="text" placeholder="search"/>
@@ -36,12 +36,8 @@
         </div>
         <ul class="list" id="userChats">
             <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg" alt="avatar"/>
                 <div class="about">
                     <div class="name">Vincent Porter</div>
-                    <div class="status">
-                        <i class="fa fa-circle online"></i> online
-                    </div>
                 </div>
             </li>
         </ul>
@@ -149,7 +145,6 @@
         {{response}}
     </div>
 </li>
-
 
 <script type="module" src="~/ts/chat/fetchUsersChat.js"></script>
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>

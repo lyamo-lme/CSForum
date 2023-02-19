@@ -1,6 +1,7 @@
 using AutoMapper;
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
+using CSForum.Core.Service;
 using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models.ViewModels;
@@ -17,11 +18,13 @@ public class ChatController : Controller
     private readonly IUnitOfWorkRepository _uofRepository;
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
+    private readonly IChatService _chatService;
 
-    public ChatController(IUnitOfWorkRepository uofRepository, UserManager<User> userManager)
+    public ChatController(IUnitOfWorkRepository uofRepository, UserManager<User> userManager, IChatService chatService)
     {
         _uofRepository = uofRepository;
         _userManager = userManager;
+        _chatService = chatService;
         _mapper = MapperFactory.CreateMapper<DtoMapper>();
     }
 
