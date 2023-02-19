@@ -163,5 +163,10 @@
         <DependentUpon>LayoutResource.en-US.resx</DependentUpon>
       </Compile>
     </ItemGroup>
+  
+  <Target Name="ScssToCss" BeforeTargets="Build">
+    <Exec Command="mkdir $(ProjectDir)wwwroot\css" Condition="!Exists('$(ProjectDir)wwwroot\css')" />
+    <Exec Command="sass $(ProjectDir)wwwroot\scss\styles.scss $(ProjectDir)wwwroot\css\styles.css" />
+  </Target>
 
 </Project>

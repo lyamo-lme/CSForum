@@ -21,7 +21,10 @@ public class ChatService : IChatService
         {
             var userChat = await GetUserChat(model.UserId, receiverId);
             if (userChat == null)
+            {
                 throw new Exception("chat wasn't found");
+            }
+
             model.ChatId = userChat.ChatId;
             var message = await _uofRepository.Messages.CreateAsync(model);
             _uofRepository.SaveAsync();
@@ -66,24 +69,24 @@ public class ChatService : IChatService
         try
         {
             var userChat = await GetUserChat(firstId, secondId);
-            
+
             if (userChat != null)
                 throw new Exception("chat created");
 
             var chat = await _uofRepository.Chats.CreateAsync(new Chat());
-            
+
             await _uofRepository.UserChats.CreateAsync(new UsersChats()
             {
                 ChatId = chat.ChatId,
                 UserId = firstId
             });
-            
+
             await _uofRepository.UserChats.CreateAsync(new UsersChats()
             {
                 ChatId = chat.ChatId,
                 UserId = secondId
             });
-            
+
             _uofRepository.SaveAsync();
             return chat;
         }
