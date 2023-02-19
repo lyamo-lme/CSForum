@@ -105,6 +105,7 @@
     <ItemGroup>
       <TypeScriptCompile Include="wwwroot\ts\chat\fetch.ts" />
       <TypeScriptCompile Include="wwwroot\ts\chat\fetchUsersChat.ts" />
+      <TypeScriptCompile Include="wwwroot\ts\htmlLib\htmlLib.ts" />
       <TypeScriptCompile Include="wwwroot\ts\loadTag.ts" />
       <TypeScriptCompile Include="wwwroot\ts\test.ts" />
     </ItemGroup>

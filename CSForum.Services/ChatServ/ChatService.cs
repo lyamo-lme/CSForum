@@ -92,6 +92,33 @@ public class ChatService : IChatService
         }
         catch (Exception e)
         {
+            _logger.Log(LogLevel.Error, e.Message, e);
+
+            throw;
+        }
+    }
+
+    public async Task<List<UsersChats>> GetUserChats(int userId)
+    {
+        try
+        {
+            var userChats =
+                await _uofRepository.UserChats.GetAsync(x => x.UserId == userId,
+                    includeProperties: "User");
+
+            foreach (var userChat in userChats)
+            {
+                userChat.Chat = await _uofRepository.Chats.FindAsync(x => x.ChatId == userChat.ChatId);
+                userChat.Chat.Messages =
+                    await _uofRepository.Messages.GetAsync(x => x.ChatId == userChat.ChatId, includeProperties: "User");
+            }
+
+            return userChats;
+        }
+        catch (Exception e)
+        {
+            _logger.Log(LogLevel.Error, e.Message, e);
+
             throw;
         }
     }
