@@ -103,6 +103,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <TypeScriptCompile Include="wwwroot\js\chat.ts" />
       <TypeScriptCompile Include="wwwroot\ts\chat\fetch.ts" />
       <TypeScriptCompile Include="wwwroot\ts\chat\fetchUsersChat.ts" />
       <TypeScriptCompile Include="wwwroot\ts\htmlLib\htmlLib.ts" />

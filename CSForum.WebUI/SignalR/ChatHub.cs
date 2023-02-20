@@ -18,26 +18,27 @@ namespace CSForum.WebUI.SignalR
         private readonly ILogger<ChatHub> _logger;
         private readonly IChatService _chatService;
 
-        public ChatHub(UserManager<User> userManager, IUnitOfWorkRepository uofRepository, ILogger<ChatHub> logger, IChatService chatService)
+        public ChatHub(UserManager<User> userManager, IUnitOfWorkRepository uofRepository, ILogger<ChatHub> logger,
+            IChatService chatService)
         {
             _mapper = MapperFactory.CreateMapper<DtoMapper>();
             _userManager = userManager;
             _logger = logger;
             _chatService = chatService;
         }
-        
+
         [Authorize]
-        public async Task SendMessage(int receiverId, string message)
+        public Task SendMessage(int receiverId, string message)
         {
             try
             {
                 var userId = _userManager.GetUserId(Context.User);
-                
-                await _chatService.AddMessageAsync(
-                    new Message(int.Parse(userId),message), receiverId);
-                
-                await Clients.User(receiverId.ToString()).SendAsync("ReceiveMessage", message);
-                await Clients.Caller.SendAsync("ReceiveMessage", message);
+
+                _chatService.AddMessageAsync(
+                    new Message(int.Parse(userId), message), receiverId);
+
+                return Clients.User(receiverId.ToString()).SendAsync("ReceiveMessage", message);
+                // await Clients.Caller.SendAsync("ReceiveMessage", message);
             }
             catch (Exception e)
             {
@@ -46,11 +47,11 @@ namespace CSForum.WebUI.SignalR
             }
         }
 
-        public override  Task OnConnectedAsync()
+        public override Task OnConnectedAsync()
         {
             try
             {
-               return  base.OnConnectedAsync(); 
+                return base.OnConnectedAsync();
             }
             catch (Exception e)
             {

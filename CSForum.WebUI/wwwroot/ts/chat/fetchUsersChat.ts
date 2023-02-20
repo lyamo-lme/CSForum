@@ -1,10 +1,10 @@
 import {request} from "./fetch.js";
 import {createElement} from "../htmlLib/htmlLib.js";
 
-let userChats: UsersChats[];
-let selectedUserId = 0;
-let listOfUserChatsHtml = document.querySelector("#userChats");
-let chatHistory = document.querySelector("#chatHistory");
+export let userChats: UsersChats[];
+export let selectedUserId = 0;
+export let listOfUserChatsHtml = document.querySelector("#userChats");
+export let chatHistory = document.querySelector("#chatHistory");
 
 request(webUrl + "/web/chat/user", "GET").then(async (data) => {
     console.log(data);
@@ -25,18 +25,29 @@ request(webUrl + "/web/chat/user", "GET").then(async (data) => {
     Messages(userChats[0]);
 });
 
-const Messages = (userChat: UsersChats) => {
+export const Messages = (userChat: UsersChats) => {
     let userId = userChat.userId;
     let listMessages = userChat.chat.messages.map(messages => {
-        let elementMessage = createElement("li", "lol",
-            messages.userId == userId ? userChat.user.userName : "you");
+        let elementMessage = createElement(
+            "li",
+            "lol",
+            messages.userId == userId ? userChat.user.userName + ` ${messages.content}` : "you" + ` ${messages.content}`);
         chatHistory.appendChild(elementMessage);
         return elementMessage;
     });
 }
 
 
-interface Message {
+export const addNewMessagesToCurrentChat = (message: string, own:boolean) => {
+    let messageHtml = createElement("li", "lol", `${own?"you":"he"} ${message}`);
+    chatHistory.appendChild(messageHtml);
+}
+
+export const ChangeChat = (id: number): void => {
+    selectedUserId = id;
+}
+
+export interface Message {
     id: number,
     chatId: number,
     userId: number,
@@ -46,7 +57,7 @@ interface Message {
     chat: Chat | null
 }
 
-interface User {
+export interface User {
     id: number,
     userName: string,
     email: string,
@@ -55,14 +66,14 @@ interface User {
     usersChats: UsersChats[] | null,
 }
 
-interface Chat {
+export interface Chat {
     chatId: number,
     messages: Message[] | null,
     usersChats: UsersChats[] | null,
     users: User[] | null
 }
 
-interface UsersChats {
+export interface UsersChats {
     id: number,
     chatId: number,
     userId: number,

@@ -9,10 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { request } from "./fetch.js";
 import { createElement } from "../htmlLib/htmlLib.js";
-let userChats;
-let selectedUserId = 0;
-let listOfUserChatsHtml = document.querySelector("#userChats");
-let chatHistory = document.querySelector("#chatHistory");
+export let userChats;
+export let selectedUserId = 0;
+export let listOfUserChatsHtml = document.querySelector("#userChats");
+export let chatHistory = document.querySelector("#chatHistory");
 request(webUrl + "/web/chat/user", "GET").then((data) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(data);
     userChats = yield data.json();
@@ -30,12 +30,19 @@ request(webUrl + "/web/chat/user", "GET").then((data) => __awaiter(void 0, void 
     });
     Messages(userChats[0]);
 }));
-const Messages = (userChat) => {
+export const Messages = (userChat) => {
     let userId = userChat.userId;
     let listMessages = userChat.chat.messages.map(messages => {
-        let elementMessage = createElement("li", "lol", messages.userId == userId ? userChat.user.userName : "you");
+        let elementMessage = createElement("li", "lol", messages.userId == userId ? userChat.user.userName + ` ${messages.content}` : "you" + ` ${messages.content}`);
         chatHistory.appendChild(elementMessage);
         return elementMessage;
     });
+};
+export const addNewMessagesToCurrentChat = (message, own) => {
+    let messageHtml = createElement("li", "lol", `${own ? "you" : "he"} ${message}`);
+    chatHistory.appendChild(messageHtml);
+};
+export const ChangeChat = (id) => {
+    selectedUserId = id;
 };
 //# sourceMappingURL=fetchUsersChat.js.map
