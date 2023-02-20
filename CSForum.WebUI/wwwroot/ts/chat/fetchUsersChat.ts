@@ -2,12 +2,17 @@ import {request} from "./fetch.js";
 import {createElement} from "../htmlLib/htmlLib.js";
 
 let userChats: UsersChats[];
+let selectedUserId = 0;
 let listOfUserChatsHtml = document.querySelector("#userChats");
+let chatHistory = document.querySelector("#chatHistory");
 
 request(webUrl + "/web/chat/user", "GET").then(async (data) => {
     console.log(data);
     userChats = await data.json();
     console.log(userChats);
+    selectedUserId = userChats[0].userId;
+
+    console.log(selectedUserId);
     userChats.map(userChat => {
         let chatElement = createElement("li", "clearfix", "");
         let contentChat = createElement("div", "about", "");
@@ -15,8 +20,20 @@ request(webUrl + "/web/chat/user", "GET").then(async (data) => {
         contentChat.appendChild(nameUser);
         chatElement.appendChild(contentChat);
         listOfUserChatsHtml.appendChild(chatElement);
+        return userChat;
     });
+    Messages(userChats[0]);
 });
+
+const Messages = (userChat: UsersChats) => {
+    let userId = userChat.userId;
+    let listMessages = userChat.chat.messages.map(messages => {
+        let elementMessage = createElement("li", "lol",
+            messages.userId == userId ? userChat.user.userName : "you");
+        chatHistory.appendChild(elementMessage);
+        return elementMessage;
+    });
+}
 
 
 interface Message {

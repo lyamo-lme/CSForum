@@ -50,7 +50,7 @@ namespace CSForum.WebUI.SignalR
         {
             try
             {
-               return  base.OnConnectedAsync();
+               return  base.OnConnectedAsync(); 
             }
             catch (Exception e)
             {

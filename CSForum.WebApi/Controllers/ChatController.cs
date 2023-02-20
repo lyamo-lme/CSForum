@@ -3,6 +3,7 @@ using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Core.Service;
 using CSForum.Infrastructure.MapperConfigurations;
+using CSForum.Services.Extensions;
 using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -33,17 +34,8 @@ public class ChatController : Controller
     {
         try
         {
-            var signedUser = _userManager.GetUserId(User);
-            var userChats =
-                await _uofRepository.UserChats.GetAsync(x => x.UserId == int.Parse(signedUser),
-                    includeProperties: "User");
-
-            foreach (var userChat in userChats)
-            {
-                userChat.Chat = await _uofRepository.Chats.FindAsync(x => x.ChatId == userChat.ChatId);
-                userChat.Chat.Messages =
-                    await _uofRepository.Messages.GetAsync(x => x.ChatId == userChat.ChatId, includeProperties: "User");
-            }
+            var signedUser = _userManager.GetId(User);
+            var userChats = await _chatService.GetUserChats(signedUser);
 
             return Ok(userChats);
         }

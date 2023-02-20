@@ -104,17 +104,25 @@ public class ChatService : IChatService
         try
         {
             var userChats =
-                await _uofRepository.UserChats.GetAsync(x => x.UserId == userId,
-                    includeProperties: "User");
-
+                await _uofRepository.UserChats.GetAsync(x => x.UserId == userId);
+            
+            var usersChats = new List<UsersChats>();
+            
             foreach (var userChat in userChats)
             {
-                userChat.Chat = await _uofRepository.Chats.FindAsync(x => x.ChatId == userChat.ChatId);
-                userChat.Chat.Messages =
-                    await _uofRepository.Messages.GetAsync(x => x.ChatId == userChat.ChatId, includeProperties: "User");
+                var newChat =
+                    await _uofRepository.UserChats.FindAsync(x => x.UserId != userId && x.ChatId == userChat.ChatId);
+                
+                newChat.Chat = await _uofRepository.Chats.FindAsync(x => x.ChatId == userChat.ChatId);
+                
+                newChat.Chat.Messages =
+                    await _uofRepository.Messages.GetAsync(x => x.ChatId == userChat.ChatId,
+                        includeProperties: "User");
+
+                usersChats.Add(newChat);
             }
 
-            return userChats;
+            return usersChats;
         }
         catch (Exception e)
         {

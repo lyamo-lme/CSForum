@@ -23,10 +23,11 @@ connection.start().then(function () {
 });
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
-    var receiverId = document.getElementById("userInput").value;
-    var message = document.getElementById("messageInput").value;
-    connection.invoke("SendMessage", receiverId, message).catch(function (err) {
-        return console.error(err.toString());
-    });
+    // var receiverId = document.getElementById("userInput").value;
+    let message = document.getElementById("messageInput").value;
+    console.log(message);
+    // connection.invoke("SendMessage", receiverId, message).catch(function (err) {
+    //     return console.error(err.toString());
+    // });
     event.preventDefault();
 });
