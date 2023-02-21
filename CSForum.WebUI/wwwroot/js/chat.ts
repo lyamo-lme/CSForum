@@ -6,7 +6,7 @@ import {selectedUserId, addNewMessage, Message, userChats} from "../ts/chat/fetc
 var connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
 
 connection.on("ReceiveMessage", function (message: Message) {
-    console.log(message);
+    console.log(message);  
     addNewMessage(message);
 });
 

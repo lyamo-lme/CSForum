@@ -4,7 +4,7 @@ import {createElement} from "../htmlLib/htmlLib.js";
 export let userChats: UsersChats[];
 export let selectedUserId = 0;
 export let selectedChatId = 0;
-export let userId =  request(webUrl+"/user/id", "GET").then(data=>{
+export let userId = request(webUrl + "/user/id", "GET").then(data => {
     console.log(data);
 });
 export let listOfUserChatsHtml = document.querySelector("#userChats");
@@ -17,16 +17,19 @@ request(webUrl + "/web/chat/user", "GET").then(async (data) => {
     if (userChats.length > 0) {
         selectedUserId = userChats[0].userId;
         selectedChatId = userChats[0].chatId;
-
+        
         userChats.map(userChat => {
             let chatElement = createElement("li", "clearfix", "");
             let contentChat = createElement("div", "about", "");
             let nameUser = createElement("div", "name", userChat.user.userName);
 
+            chatElement.addEventListener("click", () => {
+                console.log(userChat.userId, userChat.chatId)
+                ChangeChat(userChat.userId, userChat.chatId);
+            });
             contentChat.appendChild(nameUser);
             chatElement.appendChild(contentChat);
             listOfUserChatsHtml.appendChild(chatElement);
-
             return userChat;
         });
         Messages(userChats[0]);
@@ -35,6 +38,7 @@ request(webUrl + "/web/chat/user", "GET").then(async (data) => {
 
 export const Messages = (userChat: UsersChats) => {
     // let userId = userChat.userId;
+    chatHistory.innerHTML = "";
     let listMessages = userChat.chat.messages.map(messages => {
         let elementMessage = createElement(
             "li",
@@ -56,7 +60,7 @@ export const addNewMessage = (message: Message) => {
             "li",
             "lol",
             message.userId == selectedUserId ? "he" + ` ${message.content}` : "you" + ` ${message.content}`);
-        
+
         // userChats.find(x => x.userId == message.userId).chat.messages.push(message);
 
         console.log(chatHistory);
@@ -68,8 +72,11 @@ export const addNewMessage = (message: Message) => {
     }
 }
 
-export const ChangeChat = (id: number): void => {
-    selectedUserId = id;
+export const ChangeChat = (userId: number, chatId: number): void => {
+    selectedUserId = userId;
+    selectedChatId = chatId;
+
+    Messages(userChats.find(x => x.chatId == chatId));
 }
 
 export interface Message {

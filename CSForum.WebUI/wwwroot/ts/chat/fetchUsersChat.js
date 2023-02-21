@@ -28,16 +28,23 @@ request(webUrl + "/web/chat/user", "GET").then((data) => __awaiter(void 0, void 
             let chatElement = createElement("li", "clearfix", "");
             let contentChat = createElement("div", "about", "");
             let nameUser = createElement("div", "name", userChat.user.userName);
+            chatElement.addEventListener("click", () => {
+                console.log(userChat.userId, userChat.chatId);
+                ChangeChat(userChat.userId, userChat.chatId);
+            });
             contentChat.appendChild(nameUser);
             chatElement.appendChild(contentChat);
             listOfUserChatsHtml.appendChild(chatElement);
             return userChat;
         });
+        var elemt = document.querySelector("#userChats > li > div.about");
+        console.log(elemt);
         Messages(userChats[0]);
     }
 }));
 export const Messages = (userChat) => {
     // let userId = userChat.userId;
+    chatHistory.innerHTML = "";
     let listMessages = userChat.chat.messages.map(messages => {
         let elementMessage = createElement("li", "lol", messages.userId == selectedUserId ? userChat.user.userName + ` ${messages.content}` : "you" + ` ${messages.content}`);
         chatHistory.appendChild(elementMessage);
@@ -61,7 +68,9 @@ export const addNewMessage = (message) => {
         return;
     }
 };
-export const ChangeChat = (id) => {
-    selectedUserId = id;
+export const ChangeChat = (userId, chatId) => {
+    selectedUserId = userId;
+    selectedChatId = chatId;
+    Messages(userChats.find(x => x.chatId == chatId));
 };
 //# sourceMappingURL=fetchUsersChat.js.map

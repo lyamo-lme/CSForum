@@ -1,5 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
-
 $green: #86BB71;
 $blue: #94C2ED;
 $orange: #E38968;
@@ -17,7 +15,7 @@ $gray: #92959E;
 }
 
 .people-list {
-  width:260px;
+  width: 260px;
   float: left;
 
   .search {
@@ -44,10 +42,9 @@ $gray: #92959E;
     height: 770px;
 
 
-
-
     li {
       padding-bottom: 20px;
+      list-style: none ;
     }
   }
 
@@ -57,14 +54,15 @@ $gray: #92959E;
 
   .about {
     float: left;
-    margin-top: 8px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #edeeee;
+    border: 2px solid #8d8d8d;
   }
 
-  .about {
-    padding-left: 8px;
-    border-radius: 10px;
-    background-color: #96CBFE;
-    border: 2px solid red;
+  .about .active {
+    background-color: #9fe3e3;
+    border: 2px solid #29cb8a;
   }
 
   .status {
@@ -75,7 +73,7 @@ $gray: #92959E;
 
 .chat {
   width: 490px;
-  float:left;
+  float: left;
   background: #F2F5F8;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -233,6 +231,156 @@ $gray: #92959E;
 
 .float-right {
   float: right;
+}
+
+
+html {
+  font-size: 14px;
+  position: relative;
+  min-height: 100%;
+}
+
+* {
+  font-family: Sans-Serif, sans-serif;
+}
+
+.btn {
+  &:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+  }
+
+  &:active {
+    &:focus {
+      box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    }
+  }
+}
+
+.btn-link.nav-link {
+  &:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+  }
+}
+
+.form-control {
+  &:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+  }
+}
+
+.form-check-input {
+  &:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+  }
+}
+
+body {
+  margin-bottom: 60px;
+
+  header {
+    > nav.navbar.bg-black.color-lemon-orange {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+
+      div.container-fluid {
+        a {
+          color: #efc134 !important;
+          font-weight: bold;
+        }
+      }
+    }
+
+    > nav.navbar.bg-blue {
+      ul.identity {
+        li.nav-item {
+          margin: 2px;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+}
+
+.form-post {
+  font-size: 17px;
+  background-color: #2b2c2d;
+  color: #efc134;
+  border-radius: 25px;
+  padding: 50px;
+
+  .input-box {
+    border-radius: 10px;
+    padding: 2px 10px;
+    border: 2px solid #001d3a;
+
+    &:focus-visible {
+      outline: 2px solid #efc134;
+    }
+  }
+}
+
+.border-radius-ckeditor {
+  border-radius: 25px;
+}
+
+.selected-tag {
+  display: flex;
+
+  > * {
+    background-color: #2b2c2d;
+    border: 2px solid #efc134;
+    border-radius: 5px;
+    padding: 5px;
+    color: #efc134;
+    margin-left: 2px;
+  }
+}
+
+ul.user-manage.nav.nav-pills.flex-column {
+  > li.nav-item {
+    background-color: black;
+    margin: 1px;
+    border-radius: 5px;
+
+    > a.nav-link {
+      color: #efc134;
+    }
+
+    > a.nav-link.active {
+      background-color: #efc134;
+      color: black;
+    }
+  }
+}
+
+button.post.btn-dark {
+  color: #efc134;
+  padding: 5px;
+  background: black;
+  border-radius: 10px;
+  border: none;
+}
+
+.line-yellow {
+  background-color: #efc134;
+  height: 1px;
+  padding: 1px;
+}
+
+.recent-posts {
+  > .element {
+    border-bottom: 2px solid #efc134;
+  }
+}
+
+ul.recent-posts {
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
 }
 
 
