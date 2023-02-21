@@ -24,15 +24,14 @@ public class PostController : Controller
     private readonly IMapper _mapper;
     private readonly ApiHttpClientBase _forumClient; 
     private readonly UserManager<User> _userManager;
-    private readonly IUnitOfWorkRepository _uofRepository;
+
 
     public PostController(ApiHttpClientBase client,
-        UserManager<User> userManager, IUnitOfWorkRepository uofRepository)
+        UserManager<User> userManager)
     {
         _forumClient = client;
         _mapper = MapperFactory.CreateMapper<DtoMapper>();
         _userManager = userManager;
-        _uofRepository = uofRepository;
     }
 
     [HttpGet, Route("create"), Authorize]

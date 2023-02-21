@@ -46,6 +46,9 @@
 }
 .people-list .about {
   padding-left: 8px;
+  border-radius: 10px;
+  background-color: #96CBFE;
+  border: 2px solid red;
 }
 .people-list .status {
   color: #92959E;

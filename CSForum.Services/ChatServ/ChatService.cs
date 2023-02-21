@@ -28,7 +28,7 @@ public class ChatService : IChatService
 
             model.ChatId = userChat.ChatId;
             var message = await _uofRepository.Messages.CreateAsync(model);
-            _uofRepository.SaveAsync();
+            await _uofRepository.SaveAsync();
             return message;
         }
         catch (Exception e)
