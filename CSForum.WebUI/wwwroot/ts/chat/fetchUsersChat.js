@@ -37,8 +37,6 @@ request(webUrl + "/web/chat/user", "GET").then((data) => __awaiter(void 0, void 
             listOfUserChatsHtml.appendChild(chatElement);
             return userChat;
         });
-        var elemt = document.querySelector("#userChats > li > div.about");
-        console.log(elemt);
         Messages(userChats[0]);
     }
 }));

@@ -1,43 +1,33 @@
 @model CSForum.IdentityServer.Models.LoginViewModel
 @* @using Microsoft.AspNetCore.Mvc.Localization *@
 @* @inject IViewLocalizer ViewLocalizer *@
-<!DOCTYPE html>
 
-<html>
-<head>
-    <title>Login</title>
-    <link href="~/css/site.css" rel="stylesheet">
-</head>
-<body>
 
-    <form class="login" asp-controller="Auth" asp-action="Login" method="post">
-        <input type="hidden" id="ReturnUrl" name="ReturnUrl" value="@Model.ReturnUrl" />
+<form class="login" asp-controller="Auth" asp-action="Login" method="post">
+    <input type="hidden" id="ReturnUrl" name="ReturnUrl" value="@Model.ReturnUrl"/>
 
-        <h3>Login Here</h3>
+    <h3>Login Here</h3>
 
-        <label>Username</label>
-        <input name="Username" id="Username" type="text" placeholder="Email or Phone">
+    <label>Username</label>
+    <input name="Username" id="Username" type="text" placeholder="Email or Phone">
 
-        <label>Password</label>
-        <input name="Password" id="Password" type="password" placeholder="Password">
-        <div class="buttons" style="display: flex">
-            <button type="submit">Log In</button>
-            <div>
-                <a asp-action="Register" asp-route-ReturnUrl="@Model.ReturnUrl">Register</a>
-            </div>
+    <label>Password</label>
+    <input name="Password" id="Password" type="password" placeholder="Password">
+    <div class="buttons" style="display: flex">
+        <button type="submit">Log In</button>
+        <div>
+            <a asp-action="Register" asp-route-ReturnUrl="@Model.ReturnUrl">Register</a>
         </div>
+    </div>
 
-    </form>
-    <form asp-controller="Auth" asp-action="ExternalProvider" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-        <div class="social">
-            @foreach (var extProv in @Model.ExternalProviders)
-            {
-                <button type="submit" name="provider" value="@extProv.Name" class="go">
-                    @extProv.Name
-                </button>
-            }
-
-        </div>
-    </form>
-</body>
-</html>
+</form>
+<form asp-controller="Auth" asp-action="ExternalProvider" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <div class="social">
+        @foreach (var extProv in @Model.ExternalProviders)
+        {
+            <button type="submit" name="provider" value="@extProv.Name" class="go">
+                @extProv.Name
+            </button>
+        }
+    </div>
+</form>
