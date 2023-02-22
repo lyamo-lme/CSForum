@@ -20,7 +20,7 @@ public class AnswerController:Controller
         _uofRepository = uofRepository;
         _dtoMapper = MapperFactory.CreateMapper<DtoMapper>();
     }
-    [HttpPost, Route("create")]
+    [HttpPost, Route("")]
     public async Task<ActionResult<Answer>> CreateAnswer([FromBody] CreateAnswerDto model)
     {
         try

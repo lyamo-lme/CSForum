@@ -32,12 +32,27 @@ namespace CSForum.Data.Repositories
         public IRepository<Chat> Chats => _chatRepository ?? (_chatRepository = new GenericRepository<Chat>(_forumDbContext));
         public IRepository<Message> Messages => _messageRepository ?? (_messageRepository = new GenericRepository<Message>(_forumDbContext));
         public IRepository<UsersChats> UserChats => _usersChatRepository ?? (_usersChatRepository = new GenericRepository<UsersChats>(_forumDbContext));
-
+        
+        // private Dictionary<string, object> _repositories;
+        
         public UowRepository(ForumDbContext forumDbContext, ILogger<UowRepository> logger)
         {
             _forumDbContext = forumDbContext;
             _logger = logger;
         }
+        // public GenericRepository<T> GenericRepository<T>() where T : class
+        // {
+        //     if (_repositories == null)
+        //         _repositories = new Dictionary<string, object>();
+        //     var type = typeof(T).Name;
+        //     if (!_repositories.ContainsKey(type))
+        //     {
+        //         var repositoryType = typeof(GenericRepository<T>);
+        //         var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), _forumDbContext);
+        //         _repositories.Add(type, repositoryInstance);
+        //     }
+        //     return (GenericRepository<T>)_repositories[type];
+        // } 
 
         public Task SaveAsync()
         {

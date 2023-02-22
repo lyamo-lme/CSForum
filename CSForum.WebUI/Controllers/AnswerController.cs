@@ -34,7 +34,7 @@ public class AnswerController:Controller
             var user = await _userManager.GetUserAsync(User);
             var answerDto = _mapper.Map<CreateAnswerDto>(model);
             answerDto.UserId = user.Id;        
-            var answer = await _forumClient.PostAsync<CreateAnswerDto, Answer>(answerDto, "api/answers/create");
+            var answer = await _forumClient.PostAsync<CreateAnswerDto, Answer>(answerDto, "api/answers");
             return Redirect($"/post/{answer.PostId}");
         }
         catch(Exception e)

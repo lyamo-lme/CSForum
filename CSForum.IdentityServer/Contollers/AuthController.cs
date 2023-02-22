@@ -39,12 +39,17 @@ public class AuthController : Controller
     {
         try
         {
-            var externalProviders = await _signInManager.GetExternalAuthenticationSchemesAsync();
-            return View("LoginPage", new LoginViewModel()
+            if (Url.IsLocalUrl(returnUrl))
             {
-                ReturnUrl = returnUrl,
-                ExternalProviders = externalProviders
-            });
+                var externalProviders = await _signInManager.GetExternalAuthenticationSchemesAsync();
+                return View("LoginPage", new LoginViewModel()
+                {
+                    ReturnUrl = returnUrl,
+                    ExternalProviders = externalProviders
+                });
+            }
+
+            return View("LoginPage");
         }
         catch (Exception e)
         {
@@ -58,10 +63,15 @@ public class AuthController : Controller
     {
         try
         {
-            return View("RegisterPage", new RegisterViewModel()
+            if (Url.IsLocalUrl(returnUrl))
             {
-                ReturnUrl = returnUrl
-            });
+                return View("RegisterPage", new RegisterViewModel()
+                {
+                    ReturnUrl = returnUrl
+                });
+            }
+
+            return View("RegisterPage");
         }
         catch (Exception e)
         {
@@ -75,6 +85,10 @@ public class AuthController : Controller
     {
         try
         {
+            if (!Url.IsLocalUrl(model.ReturnUrl))
+            {
+                return View("RegisterPage");
+            }
             if (!model.Password.Equals(model.ConfirmPassword) && !ModelState.IsValid)
             {
                 return View("RegisterPage", model);
@@ -110,6 +124,11 @@ public class AuthController : Controller
     {
         try
         {
+            if (!Url.IsLocalUrl(model.ReturnUrl))
+            {
+                return View("LoginPage");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View("LoginPage", new LoginViewModel()
@@ -155,6 +174,10 @@ public class AuthController : Controller
     {
         try
         {
+            if (!Url.IsLocalUrl(returnUrl))
+            {
+                return View("LoginPage");
+            }
             var redirect = Url.Action(nameof(ExternalLoginCallback), "Auth", new
             {
                 returnUrl
@@ -174,6 +197,7 @@ public class AuthController : Controller
     {
         try
         {
+            
             var email = info.Principal.FindFirst(ClaimTypes.Email).Value;
             var userName = info.Principal.FindFirst(ClaimTypes.GivenName).Value;
 
@@ -207,6 +231,10 @@ public class AuthController : Controller
     {
         try
         {
+            if (!Url.IsLocalUrl(returnUrl))
+            {
+                return View("LoginPage");
+            }
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
