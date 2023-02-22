@@ -29,6 +29,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\CSForum.Core\CSForum.Core.csproj" />
       <ProjectReference Include="..\..\CSForum.Data\CSForum.Data.csproj" />
+      <ProjectReference Include="..\TestLibrary\TestLibrary.csproj" />
     </ItemGroup>
 
 </Project>
