@@ -26,7 +26,7 @@ public class AnswerController:Controller
         try
         {
             var mappedPost = _dtoMapper.Map<Answer>(model);
-            var post = await _uofRepository.Answers.CreateAsync(mappedPost);
+            var post = await _uofRepository.GenericRepository<Answer>().CreateAsync(mappedPost);
             await _uofRepository.SaveAsync();
             return Ok(post);
         }

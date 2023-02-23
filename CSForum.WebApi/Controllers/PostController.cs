@@ -33,7 +33,7 @@ namespace CSForum.WebApi.Controllers
             {
                 
                 var mappedPost = _dtoMapper.Map<Post>(model);
-                var post = await _uofRepository.Posts.CreateAsync(mappedPost);
+                var post = await _uofRepository.GenericRepository<Post>().CreateAsync(mappedPost);
                 await _uofRepository.SaveAsync();
                 return Ok(post);
             }
@@ -50,7 +50,7 @@ namespace CSForum.WebApi.Controllers
             try
             {
                 var mappedPost = _dtoMapper.Map<Post>(model);
-                var post = await _uofRepository.Posts.UpdateAsync(mappedPost);
+                var post = await _uofRepository.GenericRepository<Post>().UpdateAsync(mappedPost);
                 _uofRepository.SaveAsync();
                 return Ok(post);
             }
@@ -66,14 +66,14 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                var postResult = await _uofRepository.Posts.FindAsync(post => post.Id == postId);
+                var postResult = await _uofRepository.GenericRepository<Post>().FindAsync(post => post.Id == postId);
 
-                postResult.PostTags = await _uofRepository.PostTags.GetAsync(postTag => postTag.PostId == postResult.Id,
+                postResult.PostTags = await _uofRepository.GenericRepository<PostTag>().GetAsync(postTag => postTag.PostId == postResult.Id,
                     null, null, null, "Tag");
 
-                postResult.PostCreator = await _uofRepository.Users.FindAsync(user => user.Id == postResult.UserId);
+                postResult.PostCreator = await _uofRepository.GenericRepository<User>().FindAsync(user => user.Id == postResult.UserId);
 
-                postResult.Answers = await _uofRepository.Answers.GetAsync(answer => answer.PostId == postResult.Id,
+                postResult.Answers = await _uofRepository.GenericRepository<Answer>().GetAsync(answer => answer.PostId == postResult.Id,
                     null, null, null, "AnswerCreator");
 
                 return Ok(postResult);
@@ -86,12 +86,11 @@ namespace CSForum.WebApi.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<Post>> GetPosts()
         {
             try
             {
-                return Ok(await _uofRepository.Posts.GetAsync());
+                return Ok(await _uofRepository.GenericRepository<Post>().GetAsync());
             }
             catch (Exception e)
             {
@@ -105,7 +104,7 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                return Ok(await _uofRepository.Posts.GetAsync(
+                return Ok(await _uofRepository.GenericRepository<Post>().GetAsync(
                     null,
                     orderBy: post => post.OrderByDescending(obj => obj.DateCreate)
                 ));
@@ -122,12 +121,12 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                if (await _uofRepository.Posts.FindAsync(post => post.Id == postId) == null)
+                if (await _uofRepository.GenericRepository<Post>().FindAsync(post => post.Id == postId) == null)
                 {
                     return BadRequest("id failed");
                 }
 
-                var state = await _uofRepository.Posts.DeleteAsync(new Post()
+                var state = await _uofRepository.GenericRepository<Post>().DeleteAsync(new Post()
                 {
                     Id = postId
                 });

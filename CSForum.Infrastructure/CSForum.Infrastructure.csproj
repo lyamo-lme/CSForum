@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CSForum.Core\CSForum.Core.csproj" />
+      <ProjectReference Include="..\CSForum.Data\CSForum.Data.csproj" />
       <ProjectReference Include="..\CSForum.Shared\CSForum.Shared.csproj" />
     </ItemGroup>
 

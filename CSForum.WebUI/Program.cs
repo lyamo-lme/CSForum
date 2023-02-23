@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 using CSForum.Core;
+using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Core.Service;
 using CSForum.Data;
 using CSForum.Data.Context;
+using CSForum.Infrastructure.Repository;
 using CSForum.Services.ChatServ;
 using CSForum.Services.EmailService;
 using CSForum.Services.Http;
@@ -59,6 +61,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<ApiHttpClientBase>();
 
 builder.Services.AddTransient<IChatService, ChatService>();
+builder.Services.AddTransient<IRepositoryFactory, RepositoryFactory>();
 builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddScoped<IHttpAuthorization, HttpAuthorization>();
 

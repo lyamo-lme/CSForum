@@ -28,7 +28,7 @@ namespace CSForum.WebApi.Controllers
             try
             {
                 var mappedPost = _dtoMapper.Map<Tag>(model);
-                var tag = await _uofRepository.Tags.CreateAsync(mappedPost);
+                var tag = await _uofRepository.GenericRepository<Tag>().CreateAsync(mappedPost);
                 _uofRepository.SaveAsync();
                 return Ok(tag);
             }
@@ -43,7 +43,7 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                var tag = await _uofRepository.Tags.UpdateAsync(_dtoMapper.Map<Tag>(model));
+                var tag = await _uofRepository.GenericRepository<Tag>().UpdateAsync(_dtoMapper.Map<Tag>(model));
                 _uofRepository.SaveAsync();
                 return Ok(tag);
             }
@@ -58,7 +58,7 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                return Ok(await _uofRepository.Tags.FindAsync(x => x.Id == tagId));
+                return Ok(await _uofRepository.GenericRepository<Tag>().FindAsync(x => x.Id == tagId));
             }
             catch (Exception e)
             {
@@ -71,7 +71,7 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                return Ok(await _uofRepository.Tags.GetAsync(x=>x.Name.Contains(name)));
+                return Ok(await _uofRepository.GenericRepository<Tag>().GetAsync(x=>x.Name.Contains(name)));
             }
             catch (Exception e)
             {
@@ -84,7 +84,7 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                var state = await _uofRepository.Tags.DeleteAsync(new Tag()
+                var state = await _uofRepository.GenericRepository<Tag>().DeleteAsync(new Tag()
                 {
                     Id = tagId
                 });
@@ -102,7 +102,7 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                return Ok(await _uofRepository.Tags.GetAsync());
+                return Ok(await _uofRepository.GenericRepository<Tag>().GetAsync());
             }
             catch (Exception e)
             {

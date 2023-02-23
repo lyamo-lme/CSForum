@@ -9,14 +9,7 @@ namespace CSForum.Core.IRepositories
 {
     public interface IUnitOfWorkRepository
     {
-        IRepository<Tag> Tags { get; }
-        IRepository<Post> Posts { get; }
-        IRepository<User> Users { get; }
-        IRepository<Answer> Answers { get; }
-        IRepository<PostTag> PostTags { get; }
-        IRepository<Chat> Chats { get; }
-        IRepository<Message> Messages { get; }
-        IRepository<UsersChats> UserChats { get; }
+        public IRepository<T> GenericRepository<T>() where T : class;
         // public IRepository<T> Repository<T>() where T : class;
         Task SaveAsync();
     }

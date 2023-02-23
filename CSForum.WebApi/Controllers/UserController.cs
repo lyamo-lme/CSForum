@@ -24,7 +24,7 @@ public class UserController : Controller
     {
         try
         {
-            return await _uofRepository.Users.GetAsync();
+            return await _uofRepository.GenericRepository<User>().GetAsync();
         }
         catch (Exception e )
         {
@@ -36,7 +36,7 @@ public class UserController : Controller
     {
         try
         {
-            return await _uofRepository.Users.FindAsync(x => x.Id == id);
+            return await _uofRepository.GenericRepository<User>().FindAsync(x => x.Id == id);
         }
         catch (Exception e )
         {
@@ -48,7 +48,7 @@ public class UserController : Controller
     {
         try
         {
-            var user = await _uofRepository.Users.CreateAsync(model);
+            var user = await _uofRepository.GenericRepository<User>().CreateAsync(model);
             _uofRepository.SaveAsync();
             return user;
         }
@@ -62,7 +62,7 @@ public class UserController : Controller
     {
         try
         {
-            var user = await  _uofRepository.Users.UpdateAsync(model);
+            var user = await  _uofRepository.GenericRepository<User>().UpdateAsync(model);
             _uofRepository.SaveAsync();
             return user;
         }
@@ -76,7 +76,7 @@ public class UserController : Controller
     {
         try
         {
-            var result = await _uofRepository.Users.DeleteAsync(new User
+            var result = await _uofRepository.GenericRepository<User>().DeleteAsync(new User
             {
                 Id = userId
             });
