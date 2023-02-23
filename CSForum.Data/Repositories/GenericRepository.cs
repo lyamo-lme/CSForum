@@ -16,6 +16,7 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
         this._context = context;
         _entity = context.Set<TEntity>();
     }
+    
 
     public async Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, int? take = null, int? skip = null,

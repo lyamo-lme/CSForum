@@ -58,12 +58,12 @@ builder.Services.AddSignalR();
 
 builder.Services.AddHttpClient();
 
-builder.Services.AddScoped<ApiHttpClientBase>();
+builder.Services.AddTransient<ApiHttpClientBase>();
 
 builder.Services.AddTransient<IChatService, ChatService>();
 builder.Services.AddTransient<IRepositoryFactory, RepositoryFactory>();
 builder.Services.AddTransient<ITokenService, TokenService>();
-builder.Services.AddScoped<IHttpAuthorization, HttpAuthorization>();
+builder.Services.AddTransient<IHttpAuthorization, HttpAuthorization>();
 
 //email service di
 var password = builder.Configuration["emailPassword"];

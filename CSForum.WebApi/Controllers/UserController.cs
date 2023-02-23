@@ -32,7 +32,7 @@ public class UserController : Controller
         }
     }
     [HttpGet, Route("{id}")]
-    public async Task<User> GetUser(int id)
+    public async Task<User?> GetUser(int id)
     {
         try
         {
@@ -49,7 +49,7 @@ public class UserController : Controller
         try
         {
             var user = await _uofRepository.GenericRepository<User>().CreateAsync(model);
-            _uofRepository.SaveAsync();
+            await _uofRepository.SaveAsync();
             return user;
         }
         catch (Exception e )
@@ -63,7 +63,7 @@ public class UserController : Controller
         try
         {
             var user = await  _uofRepository.GenericRepository<User>().UpdateAsync(model);
-            _uofRepository.SaveAsync();
+            await _uofRepository.SaveAsync();
             return user;
         }
         catch (Exception e )
@@ -80,7 +80,7 @@ public class UserController : Controller
             {
                 Id = userId
             });
-             _uofRepository.SaveAsync();
+            await _uofRepository.SaveAsync();
             return result;
         }
         catch (Exception e )

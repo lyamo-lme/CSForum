@@ -68,7 +68,20 @@ public class ApiHttpClientBase : ApiClientBase
             throw;
         }
     }
-
+    public async Task<TOut> PutAsync<TDto, TOut>(TDto model, string? path = null) where TOut : class
+    {
+        try
+        {
+            JsonContent content = JsonContent.Create(model);
+            return await _retryPolicy.ExecuteAsync(async () =>
+                await ExecuteRequestAsync<TOut>(HttpMethod.Put, path, content));
+        }
+        catch (Exception e)
+        {
+            _logger.Log(LogLevel.Error, e, e.Message);
+            throw;
+        }
+    }
 
     public async Task<TOut> PostAsync<TDto, TOut>(TDto model, string? path = null) where TOut : class
     {

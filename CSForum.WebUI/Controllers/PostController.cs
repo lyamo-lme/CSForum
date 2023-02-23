@@ -3,6 +3,7 @@ using AutoMapper;
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Infrastructure.MapperConfigurations;
+using CSForum.Services.Extensions;
 using CSForum.Services.Http;
 using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models;
@@ -22,7 +23,7 @@ namespace CSForum.WebUI.Controllers;
 public class PostController : Controller
 {
     private readonly IMapper _mapper;
-    private readonly ApiHttpClientBase _forumClient; 
+    private readonly ApiHttpClientBase _forumClient;
     private readonly UserManager<User> _userManager;
 
 
@@ -40,9 +41,9 @@ public class PostController : Controller
         return View("FormPost");
     }
 
-    [HttpPost,Route("create")]
+    [HttpPost, Route("create")]
     [Authorize]
-    public async Task<IActionResult> CreatePost([FromBody]CreatePostView model)
+    public async Task<IActionResult> CreatePost([FromBody] CreatePostView model)
     {
         try
         {
@@ -58,8 +59,8 @@ public class PostController : Controller
         }
     }
 
-    [HttpGet,Route("{postId}")]
-    public  async Task<ViewResult> Post(int postId)
+    [HttpGet, Route("{postId}")]
+    public async Task<ViewResult> Post(int postId)
     {
         try
         {
@@ -71,13 +72,40 @@ public class PostController : Controller
             throw;
         }
     }
+
     [HttpGet, Route("recent/{take}")]
-    public async Task<IActionResult> GetRecentPosts(int? take=null)
+    public async Task<IActionResult> GetRecentPosts(int? take = 10)
     {
         try
         {
-            var recentPosts =  await _forumClient.GetAsync<List<Post>>($"api/posts/recent/{take}");
+            var recentPosts = await _forumClient.GetAsync<List<Post>>($"api/posts/recent/{take}");
             return View("PostsView", _mapper.Map<List<PostViewModel>>(recentPosts));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    [HttpGet, Authorize, Route("state/{postId}")]
+    public async Task<IActionResult> UpdatePostState(int? postId)
+    {
+        try
+        {
+            var post = await _forumClient.GetAsync<Post>($"api/posts/id/{postId}");
+            if (post.UserId != _userManager.GetId(User))
+            {
+                return Redirect($"/post/{post.Id}");
+            }
+
+            post.Solved = !post.Solved;
+
+            var postDto = _mapper.Map<EditPostDto>(post);
+            await _forumClient.SetBearerTokenAsync();
+            await _forumClient.PutAsync<EditPostDto, Post>(postDto, $"api/posts");
+
+            return Redirect($"/post/{post.Id}");
         }
         catch (Exception e)
         {

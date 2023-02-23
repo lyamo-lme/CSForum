@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using CSForum.Core.Models;
 using CSForum.Data.Context;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -33,13 +34,7 @@ public static class WebUiExtensions
             });
 
 
-        return services.AddIdentityCore<TUser>(o =>
-            {
-                o.Stores.MaxLengthForKeys = 128;
-                configureOptions?.Invoke(o);
-            })
-            .AddDefaultUI()
-            .AddEntityFrameworkStores<ForumDbContext>();
+        return services.AddCoreIdentity<User>(_ => { });
     }
     public static IdentityBuilder AddCoreIdentity<TUser>(this IServiceCollection services,
         Action<IdentityOptions> configureOptions) where TUser : class

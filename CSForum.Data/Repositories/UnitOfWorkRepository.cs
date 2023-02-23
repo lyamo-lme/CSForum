@@ -8,10 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CSForum.Data.Repositories
 {
-    public class UowRepository:IUnitOfWorkRepository
+    public class UowRepository:IUnitOfWorkRepository, IDisposable
     {
         private readonly ILogger<UowRepository> _logger;
         private readonly ForumDbContext _forumDbContext;
@@ -19,12 +20,18 @@ namespace CSForum.Data.Repositories
         private Dictionary<string, object>? _repositories;
         
         //need to inject service collection and refactor repositories
-        public UowRepository(ForumDbContext forumDbContext, ILogger<UowRepository> logger, IServiceProvider serviceProvider, IRepositoryFactory repositoryFactory)
+        public UowRepository(IServiceProvider serviceProvider,  ILogger<UowRepository> logger, IRepositoryFactory repositoryFactory)
         {
-            _forumDbContext = forumDbContext;
+            _forumDbContext = serviceProvider.GetService<ForumDbContext>();
             _logger = logger;
             _repositoryFactory = repositoryFactory;
         }
+
+        public void Dispose()
+        {
+                _forumDbContext.Dispose();  
+        }
+
         public IRepository<T> GenericRepository<T>() where T : class
         {
             if (_repositories == null)
@@ -53,5 +60,7 @@ namespace CSForum.Data.Repositories
                 throw;
             }
         }
+
+
     }
 }

@@ -22,6 +22,7 @@ public class DtoMapper:Profile
         CreateMap<Post, EditPostDto>().ReverseMap();
         CreateMap<Post, PostViewModel>().ReverseMap();
         CreateMap<CreatePostView, CreatePostDto>().ReverseMap();
+        CreateMap<UpdateStatePost, Post>().ReverseMap();
 
         //answers
         CreateMap<Answer, CreateAnswerDto>().ReverseMap();

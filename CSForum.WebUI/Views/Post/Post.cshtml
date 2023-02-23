@@ -1,4 +1,6 @@
 @model PostViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer ViewLocalizer
 
 @{
     ViewBag.Title = "title";
@@ -17,6 +19,11 @@
                 by @Model.PostCreator.UserName
             </a>
         </p>
+        <button>
+            <a asp-controller="Post" asp-action="UpdatePostState" asp-route-postId="@Model.Id">
+                @ViewLocalizer[@Model.Solved?"MarkSolveFalse":"MarkSolveTrue"]
+            </a>
+        </button>
     </div>
     <div class="post-content">
         @Html.Raw(@Model.Content)
@@ -29,7 +36,7 @@
                 <div>@postTag.Tag.Name</div>
             }
         }
-</div>
+    </div>
 </div>
 <div class="line-yellow"></div>
 <div>

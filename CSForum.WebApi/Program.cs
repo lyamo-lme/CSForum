@@ -46,7 +46,7 @@ builder.Services.AddDbForumContext(
 
 builder.Services.AddCoreIdentity<User>(_ => { });
 
-builder.Services.AddTransient<IRepositoryFactory, RepositoryFactory>();
+builder.Services.AddScoped<IRepositoryFactory, RepositoryFactory>();
 
 builder.Services.AddForumDbContext();
 builder.Services.AddTransient<IChatService, ChatService>();

@@ -112,6 +112,8 @@ public class ChatService : IChatService
             {
                 var newChat =
                     await _uofRepository.GenericRepository<UsersChats>().FindAsync(x => x.UserId != userId && x.ChatId == userChat.ChatId);
+
+                newChat.User = await _uofRepository.GenericRepository<User>().FindAsync(x=>x.Id==newChat.UserId);
                 
                 newChat.Chat = await _uofRepository.GenericRepository<Chat>().FindAsync(x => x.ChatId == userChat.ChatId);
                 

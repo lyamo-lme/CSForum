@@ -3,10 +3,12 @@ using AutoMapper;
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Infrastructure.MapperConfigurations;
+using CSForum.Services.Extensions;
 using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models.dtoModels;
 using CSForum.Shared.Models.dtoModels.Posts;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CSForum.WebApi.Controllers
@@ -17,13 +19,16 @@ namespace CSForum.WebApi.Controllers
     {
         private readonly IUnitOfWorkRepository _uofRepository;
         private readonly IMapper _dtoMapper;
+        private readonly UserManager<User> _userManager;
         private readonly ILogger<PostController> _logger;
 
-        public PostController(IUnitOfWorkRepository uofRepository, ILogger<PostController> logger)
+        public PostController(IUnitOfWorkRepository uofRepository, ILogger<PostController> logger,
+            UserManager<User> userManager)
         {
             _dtoMapper = MapperFactory.CreateMapper<DtoMapper>();
             _uofRepository = uofRepository;
             _logger = logger;
+            _userManager = userManager;
         }
 
         [HttpPost, Route("")]
@@ -31,7 +36,6 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                
                 var mappedPost = _dtoMapper.Map<Post>(model);
                 var post = await _uofRepository.GenericRepository<Post>().CreateAsync(mappedPost);
                 await _uofRepository.SaveAsync();
@@ -44,20 +48,21 @@ namespace CSForum.WebApi.Controllers
             }
         }
 
-        [HttpPut, Route("")]
+        [HttpPut, Authorize, Route("")]
         public async Task<ActionResult<Post>> EditPost([FromBody] EditPostDto model)
         {
             try
             {
+                var repository = _uofRepository.GenericRepository<Post>();
                 var mappedPost = _dtoMapper.Map<Post>(model);
-                var post = await _uofRepository.GenericRepository<Post>().UpdateAsync(mappedPost);
-                _uofRepository.SaveAsync();
+                var post = await repository.UpdateAsync(mappedPost);
+                await _uofRepository.SaveAsync();
                 return Ok(post);
             }
             catch (Exception e)
             {
                 _logger.Log(LogLevel.Error, e, e.Message);
-                throw;
+                return BadRequest(e.Message);
             }
         }
 
@@ -68,12 +73,15 @@ namespace CSForum.WebApi.Controllers
             {
                 var postResult = await _uofRepository.GenericRepository<Post>().FindAsync(post => post.Id == postId);
 
-                postResult.PostTags = await _uofRepository.GenericRepository<PostTag>().GetAsync(postTag => postTag.PostId == postResult.Id,
+                postResult.PostTags = await _uofRepository.GenericRepository<PostTag>().GetAsync(
+                    postTag => postTag.PostId == postResult.Id,
                     null, null, null, "Tag");
 
-                postResult.PostCreator = await _uofRepository.GenericRepository<User>().FindAsync(user => user.Id == postResult.UserId);
+                postResult.PostCreator = await _uofRepository.GenericRepository<User>()
+                    .FindAsync(user => user.Id == postResult.UserId);
 
-                postResult.Answers = await _uofRepository.GenericRepository<Answer>().GetAsync(answer => answer.PostId == postResult.Id,
+                postResult.Answers = await _uofRepository.GenericRepository<Answer>().GetAsync(
+                    answer => answer.PostId == postResult.Id,
                     null, null, null, "AnswerCreator");
 
                 return Ok(postResult);
@@ -130,7 +138,7 @@ namespace CSForum.WebApi.Controllers
                 {
                     Id = postId
                 });
-                _uofRepository.SaveAsync();
+                await _uofRepository.SaveAsync();
                 return Ok(state);
             }
             catch (Exception e)

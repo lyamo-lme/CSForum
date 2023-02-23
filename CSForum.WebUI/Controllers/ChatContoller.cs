@@ -32,11 +32,11 @@ public class ChatController : Controller
     }
 
     [Authorize, HttpGet, Route("")]
-    public async Task<IActionResult> Chat()
+    public  Task<ViewResult> Chat()
     {
         try
         {
-            return View("Chat");
+            return Task.FromResult(View("Chat"));
         }
         catch (Exception e)
         {

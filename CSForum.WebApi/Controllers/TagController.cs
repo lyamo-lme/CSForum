@@ -29,7 +29,7 @@ namespace CSForum.WebApi.Controllers
             {
                 var mappedPost = _dtoMapper.Map<Tag>(model);
                 var tag = await _uofRepository.GenericRepository<Tag>().CreateAsync(mappedPost);
-                _uofRepository.SaveAsync();
+                await _uofRepository.SaveAsync();
                 return Ok(tag);
             }
             catch (Exception e)
@@ -44,7 +44,7 @@ namespace CSForum.WebApi.Controllers
             try
             {
                 var tag = await _uofRepository.GenericRepository<Tag>().UpdateAsync(_dtoMapper.Map<Tag>(model));
-                _uofRepository.SaveAsync();
+                await _uofRepository.SaveAsync();
                 return Ok(tag);
             }
             catch (Exception e)
@@ -88,7 +88,7 @@ namespace CSForum.WebApi.Controllers
                 {
                     Id = tagId
                 });
-                _uofRepository.SaveAsync();
+                await _uofRepository.SaveAsync();
                 return Ok(state);
             }
             catch (Exception e)
