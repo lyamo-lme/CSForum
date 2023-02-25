@@ -14,6 +14,42 @@ $gray: #92959E;
   border-radius: 5px;
 }
 
+.st0 {
+  fill: #41AD49;
+
+}
+
+.wrap-st0 {
+  width: 20px;
+  height: 20px;
+}
+
+.post-answer{
+  display: flex;
+  .accept{
+    flex-grow: 1;
+  }
+  .content{
+    flex: 9;
+    .container-info{
+      display: flex;
+      justify-content: space-between;
+      .user{
+        
+      }
+      .state{
+        
+      }
+    }
+  }
+}
+
+.solved{
+  border: 2px solid $green;
+  color: $green;
+  width: min-content;
+}
+
 .people-list {
   width: 260px;
   float: left;
@@ -44,7 +80,7 @@ $gray: #92959E;
 
     li {
       padding-bottom: 20px;
-      list-style: none ;
+      list-style: none;
     }
   }
 
@@ -381,7 +417,23 @@ ul.recent-posts {
   html {
     font-size: 16px;
   }
-  
 }
 
-
+.post-info{
+  .title{
+    display: flex;
+    .title-text{
+      flex-grow: 9;
+    }
+    div.solved{
+      border: none;
+      flex-grow: 1;
+    }
+  }
+  .info-container{
+    display: flex;
+    > * {
+      padding-left: 3px;
+    }
+  }
+}

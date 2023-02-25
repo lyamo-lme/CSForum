@@ -14,19 +14,34 @@
 
 @{
     var ownPost = @Model.UserId == UserManager.GetId(User);
+    var solved = @Model.Solved;
 }
-<h2>@Model.Title</h2>
 
 <div class="post-block">
     <div class="post-info">
-        <p>
-            <b>Created: </b>@Model.DateCreate
-        </p>
-        <p>
-            <a asp-controller="User" asp-action="GetUserById" asp-route-id="@Model.PostCreator.Id">
-                by @Model.PostCreator.UserName
-            </a>
-        </p>
+        <div class="title">
+            <h2 class="title-text">@Model.Title</h2>
+
+            @if (solved)
+            {
+                <div class="solved">
+                    <p class="solved">
+                        Solved
+                    </p>
+                </div>
+            }
+        </div>
+        <div class="info-container">
+            <p>
+                <b>Created: </b>@Model.DateCreate
+            </p>
+            <p>
+                <a asp-controller="User" asp-action="GetUserById" asp-route-id="@Model.PostCreator.Id">
+                    by @Model.PostCreator.UserName
+                </a>
+            </p>
+        </div>
+
         @if (ownPost)
         {
             <button>
@@ -53,21 +68,37 @@
 <div>
     @if (@Model.Answers != null)
     {
-        @foreach (var answers in @Model.Answers)
+        @foreach (var @answer in @Model.Answers)
         {
-            <div>
-                <div>
-                    @if (!@answers.Accepted && ownPost)
+            <div class="post-answer">
+                <div class="accept">
+                    @if (@answer.Accepted)
                     {
-                        <form asp-controller="Answer" asp-action="" method="post">
-                            <button name="answerId" value="@answers.Id"></button>
-                        </form>
+                        <svg class="wrap-st0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+
+                            <g>
+                                <polygon class="st0" points="434.8,49 174.2,309.7 76.8,212.3 0,289.2 174.1,463.3 196.6,440.9 196.6,440.9 511.7,125.8 434.8,49     "/>
+                            </g>
+                        </svg>
                     }
                 </div>
-                <p>
-                    <a asp-controller="User" asp-action="GetUserById" asp-route-id="@answers.AnswerCreator.Id">@answers.AnswerCreator.UserName</a>
-                </p>
-                <p>@Html.Raw(@answers.ContentBody)</p>
+                <div class="content">
+                    <div class="container-info">
+                        <p class="user">
+                            <a asp-controller="User" asp-action="GetUserById" asp-route-id="@@answer.AnswerCreator.Id">@@answer.AnswerCreator.UserName</a>
+                        </p>
+                        @if (ownPost)
+                        {
+                            <form class="state" asp-controller="Answer" asp-action="UpdateState" method="post">
+                                <button name="answerId" value="@@answer.Id">
+                                    @ViewLocalize[@answer.Accepted ? "Reject" : "Accept"]
+                                </button>
+                            </form>
+                        }
+                    </div>
+
+                    <p>@Html.Raw(@answer.ContentBody)</p>
+                </div>
             </div>
         }
     }

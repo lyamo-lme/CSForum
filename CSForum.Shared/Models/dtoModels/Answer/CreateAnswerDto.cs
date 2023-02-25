@@ -1,4 +1,4 @@
-namespace CSForum.Shared.Models.dtoModels;
+namespace CSForum.Shared.Models.dtoModels.Answer;
 
 public class CreateAnswerDto
 {
@@ -7,5 +7,5 @@ public class CreateAnswerDto
     public int UserId { get; set; }
     public bool Accepted { get; set; }
     public DateTime DateCreate { get; set; }  = DateTime.Now;
-    public string ContentBody { get; set; }
+    public string ContentBody { get; set; } = "";
 }

@@ -24,4 +24,10 @@
     <data name="MarkSolveTrue" xml:space="preserve">
         <value>Помітити як вирішене</value>
     </data>
+    <data name="Reject" xml:space="preserve">
+        <value>Відхилити</value>
+    </data>
+    <data name="Accept" xml:space="preserve">
+        <value>Прийняти</value>
+    </data>
 </root>

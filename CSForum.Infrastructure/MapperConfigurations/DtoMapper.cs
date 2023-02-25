@@ -1,6 +1,7 @@
 using AutoMapper;
 using CSForum.Core.Models;
 using CSForum.Shared.Models.dtoModels;
+using CSForum.Shared.Models.dtoModels.Answer;
 using CSForum.Shared.Models.dtoModels.Posts;
 using CSForum.Shared.Models.dtoModels.Tags;
 using CSForum.Shared.Models.ViewModels;
@@ -26,6 +27,7 @@ public class DtoMapper:Profile
 
         //answers
         CreateMap<Answer, CreateAnswerDto>().ReverseMap();
+        CreateMap<Answer, EditAnswerDto>().ReverseMap();
         CreateMap<Answer, AnswerViewModel>().ReverseMap();
         CreateMap<CreateAnswerViewModel,CreateAnswerDto>().ReverseMap();
         

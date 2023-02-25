@@ -45,7 +45,7 @@ namespace CSForum.WebApi.Controllers
             catch (Exception e)
             {
                 _logger.Log(LogLevel.Error, e, e.Message);
-                throw;
+                return BadRequest();
             }
         }
 
@@ -55,7 +55,6 @@ namespace CSForum.WebApi.Controllers
             try
             {
                 var repository = _uofRepository.GenericRepository<Post>();
-                var postForTest = await repository.FindAsync(x=>x.Id==model.Id);
                 var mappedPost = _dtoMapper.Map<Post>(model);
                 var post = await repository.UpdateAsync(mappedPost);
                 await _uofRepository.SaveAsync();
@@ -74,7 +73,7 @@ namespace CSForum.WebApi.Controllers
             try
             {
                 var postResult = await _uofRepository.GenericRepository<Post>().FindAsync(post => post.Id == postId);
-
+                
                 postResult.PostTags = await _uofRepository.GenericRepository<PostTag>().GetAsync(
                     postTag => postTag.PostId == postResult.Id,
                     null, null, null, "Tag");
@@ -146,7 +145,7 @@ namespace CSForum.WebApi.Controllers
             catch (Exception e)
             {
                 _logger.Log(LogLevel.Error, e, e.Message);
-                throw;
+                return BadRequest();
             }
         }
     }

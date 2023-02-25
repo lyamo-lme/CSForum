@@ -9,6 +9,34 @@
   border-radius: 5px;
 }
 
+.st0 {
+  fill: #41AD49;
+}
+
+.wrap-st0 {
+  width: 20px;
+  height: 20px;
+}
+
+.post-answer {
+  display: flex;
+}
+.post-answer .accept {
+  flex-grow: 1;
+}
+.post-answer .content {
+  flex: 9;
+}
+.post-answer .content .container-info {
+  display: flex;
+  justify-content: space-between;
+}
+.solved {
+  border: 2px solid #86BB71;
+  color: #86BB71;
+  width: min-content;
+}
+
 .people-list {
   width: 260px;
   float: left;
@@ -310,6 +338,22 @@ ul.recent-posts {
   html {
     font-size: 16px;
   }
+}
+.post-info .title {
+  display: flex;
+}
+.post-info .title .title-text {
+  flex-grow: 9;
+}
+.post-info .title div.solved {
+  border: none;
+  flex-grow: 1;
+}
+.post-info .info-container {
+  display: flex;
+}
+.post-info .info-container > * {
+  padding-left: 3px;
 }
 
 /*# sourceMappingURL=styles.css.map */

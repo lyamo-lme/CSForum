@@ -24,4 +24,10 @@
     <data name="MarkSolveFalse" xml:space="preserve">
         <value>Mark as not solved</value>
     </data>
+    <data name="Accept" xml:space="preserve">
+        <value>Accept</value>
+    </data>
+    <data name="Reject" xml:space="preserve">
+        <value>Reject</value>
+    </data>
 </root>
