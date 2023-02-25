@@ -8,8 +8,8 @@ public class PostConfiguration:IEntityTypeConfiguration<Post>
 {
     public void Configure(EntityTypeBuilder<Post> builder)
     {
-        builder.HasKey(prop=>prop.Id);
-        builder.HasIndex(prop=>prop.Id);
+        builder.HasKey(prop => prop.Id);
+
 
         //fields
         builder.Property(prop => prop.UserId).IsRequired();

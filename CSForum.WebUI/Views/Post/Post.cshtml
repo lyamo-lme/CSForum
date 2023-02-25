@@ -1,12 +1,20 @@
 @model PostViewModel
 @using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer ViewLocalizer
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using CSForum.Core.Models
+@using CSForum.Services.Extensions
+@inject IViewLocalizer ViewLocalize
+@inject UserManager<User> UserManager
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
 
+@{
+    var ownPost = @Model.UserId == UserManager.GetId(User);
+}
 <h2>@Model.Title</h2>
 
 <div class="post-block">
@@ -19,11 +27,14 @@
                 by @Model.PostCreator.UserName
             </a>
         </p>
-        <button>
-            <a asp-controller="Post" asp-action="UpdatePostState" asp-route-postId="@Model.Id">
-                @ViewLocalizer[@Model.Solved?"MarkSolveFalse":"MarkSolveTrue"]
-            </a>
-        </button>
+        @if (ownPost)
+        {
+            <button>
+                <a asp-controller="Post" asp-action="UpdatePostState" asp-route-postId="@Model.Id">
+                    @ViewLocalize[@Model.Solved ? "MarkSolveFalse" : "MarkSolveTrue"]
+                </a>
+            </button>
+        }
     </div>
     <div class="post-content">
         @Html.Raw(@Model.Content)
@@ -45,6 +56,14 @@
         @foreach (var answers in @Model.Answers)
         {
             <div>
+                <div>
+                    @if (!@answers.Accepted && ownPost)
+                    {
+                        <form asp-controller="Answer" asp-action="" method="post">
+                            <button name="answerId" value="@answers.Id"></button>
+                        </form>
+                    }
+                </div>
                 <p>
                     <a asp-controller="User" asp-action="GetUserById" asp-route-id="@answers.AnswerCreator.Id">@answers.AnswerCreator.UserName</a>
                 </p>

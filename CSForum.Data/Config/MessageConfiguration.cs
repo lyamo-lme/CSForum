@@ -8,7 +8,8 @@ public class MessageConfiguration:IEntityTypeConfiguration<Message>
 {
     public void Configure(EntityTypeBuilder<Message> builder)
     {
-        builder.HasIndex(prop => prop.Id);
+        builder.HasKey(prop => prop.Id);
+
 
         builder.Property(prop=>prop.Content).IsRequired()
             .HasMaxLength(100);

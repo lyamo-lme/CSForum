@@ -1,6 +1,7 @@
 using AutoMapper;
 using CSForum.Core.Models;
 using CSForum.Infrastructure.MapperConfigurations;
+using CSForum.Services.Extensions;
 using CSForum.Services.Http;
 using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models.dtoModels;
@@ -43,4 +44,20 @@ public class AnswerController:Controller
             throw ;
         }
     }
+    // [HttpPost,Route("state")]
+    // [Authorize]
+    // public async Task<ActionResult> UpdateState([FromBody]int answerId)
+    // {
+    //     try
+    //     {
+    //         var userId =  _userManager.GetId(User);
+    //         var result = _forumClient.
+    //         return Redirect($"/post/{answer.PostId}");
+    //     }
+    //     catch(Exception e)
+    //     {
+    //         _logger.Log(LogLevel.Error,e, e.Message);
+    //         throw ;
+    //     }
+    // }
 }

@@ -10,7 +10,6 @@ namespace CSForum.Core.IRepositories
     public interface IUnitOfWorkRepository
     {
         public IRepository<T> GenericRepository<T>() where T : class;
-        // public IRepository<T> Repository<T>() where T : class;
         Task SaveAsync();
     }
 }

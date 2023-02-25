@@ -35,4 +35,19 @@ public class AnswerController:Controller
             throw;
         }
     }
+    // [HttpPost, Route("state")]
+    // public async Task<ActionResult<Answer>> UpdateState([FromBody]EditAn)
+    // {
+    //     try
+    //     {
+    //         var mappedPost = _dtoMapper.Map<Answer>(model);
+    //         var post = await _uofRepository.GenericRepository<Answer>().CreateAsync(mappedPost);
+    //         await _uofRepository.SaveAsync();
+    //         return Ok(post);
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         throw;
+    //     }
+    // }
 }

@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using System.Runtime.Intrinsics.X86;
 using AutoMapper;
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
@@ -54,6 +55,7 @@ namespace CSForum.WebApi.Controllers
             try
             {
                 var repository = _uofRepository.GenericRepository<Post>();
+                var postForTest = await repository.FindAsync(x=>x.Id==model.Id);
                 var mappedPost = _dtoMapper.Map<Post>(model);
                 var post = await repository.UpdateAsync(mappedPost);
                 await _uofRepository.SaveAsync();

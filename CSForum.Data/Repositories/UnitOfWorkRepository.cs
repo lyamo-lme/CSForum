@@ -12,24 +12,25 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CSForum.Data.Repositories
 {
-    public class UowRepository:IUnitOfWorkRepository, IDisposable
+    public class UowRepository : IUnitOfWorkRepository, IDisposable
     {
         private readonly ILogger<UowRepository> _logger;
         private readonly ForumDbContext _forumDbContext;
         private readonly IRepositoryFactory _repositoryFactory;
         private Dictionary<string, object>? _repositories;
-        
+
         //need to inject service collection and refactor repositories
-        public UowRepository(IServiceProvider serviceProvider,  ILogger<UowRepository> logger, IRepositoryFactory repositoryFactory)
+        public UowRepository(ILogger<UowRepository> logger, IRepositoryFactory repositoryFactory,
+            ForumDbContext forumDbContext)
         {
-            _forumDbContext = serviceProvider.GetService<ForumDbContext>();
             _logger = logger;
             _repositoryFactory = repositoryFactory;
+            _forumDbContext = forumDbContext;
         }
 
         public void Dispose()
         {
-                _forumDbContext.Dispose();  
+            _forumDbContext.Dispose();
         }
 
         public IRepository<T> GenericRepository<T>() where T : class
@@ -43,24 +44,23 @@ namespace CSForum.Data.Repositories
             if (!_repositories.ContainsKey(type))
             {
                 var repository = _repositoryFactory.Instance<T>(_forumDbContext);
-               _repositories.Add(type, repository);
+                _repositories.Add(type, repository);
             }
+
             return (IRepository<T>)_repositories[type];
-        } 
+        }
 
         public Task SaveAsync()
         {
             try
             {
-               return _forumDbContext.SaveChangesAsync();
+                return _forumDbContext.SaveChangesAsync();
             }
             catch (Exception e)
             {
-                _logger.Log(LogLevel.Critical,e,e.Message);
+                _logger.Log(LogLevel.Critical, e, e.Message);
                 throw;
             }
         }
-
-
     }
 }
