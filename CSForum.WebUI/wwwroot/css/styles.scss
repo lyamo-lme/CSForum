@@ -16,30 +16,46 @@ $gray: #92959E;
 
 .st0 {
   fill: #41AD49;
-
 }
 
 .wrap-st0 {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
 }
 
 .post-answer{
   display: flex;
+  border-bottom: 1px solid grey;
+  margin: 10px 0 10px 0;
   .accept{
-    flex-grow: 1;
+    flex-basis: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .content{
     flex: 9;
     .container-info{
       display: flex;
       justify-content: space-between;
+      height: min-content;
       .user{
-        
+        padding: 0;
+        margin: 0;
+         a{
+           font-weight: bold;
+           color: black;
+           text-transform: uppercase;
+           text-decoration: none;
+         }
       }
       .state{
-        
+        padding: 0;
+        margin: 0;
       }
+    }
+    .content-fill{
+      
     }
   }
 }
@@ -47,7 +63,9 @@ $gray: #92959E;
 .solved{
   border: 2px solid $green;
   color: $green;
-  width: min-content;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
 }
 
 .people-list {

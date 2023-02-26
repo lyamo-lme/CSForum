@@ -15,21 +15,31 @@
 @{
     var ownPost = @Model.UserId == UserManager.GetId(User);
     var solved = @Model.Solved;
+    var auth = User.Identity.IsAuthenticated;
 }
 
 <div class="post-block">
     <div class="post-info">
         <div class="title">
             <h2 class="title-text">@Model.Title</h2>
-
-            @if (solved)
-            {
-                <div class="solved">
+            <div class="solved">
+                @if (solved)
+                {
                     <p class="solved">
                         Solved
                     </p>
-                </div>
-            }
+                }
+
+                @if (ownPost)
+                {
+                    <button>
+                        <a asp-controller="Post" asp-action="UpdatePostState" asp-route-postId="@Model.Id">
+                            @ViewLocalize[@Model.Solved ? "MarkSolveFalse" : "MarkSolveTrue"]
+                        </a>
+                    </button>
+                }
+            </div>
+
         </div>
         <div class="info-container">
             <p>
@@ -41,15 +51,6 @@
                 </a>
             </p>
         </div>
-
-        @if (ownPost)
-        {
-            <button>
-                <a asp-controller="Post" asp-action="UpdatePostState" asp-route-postId="@Model.Id">
-                    @ViewLocalize[@Model.Solved ? "MarkSolveFalse" : "MarkSolveTrue"]
-                </a>
-            </button>
-        }
     </div>
     <div class="post-content">
         @Html.Raw(@Model.Content)
@@ -66,6 +67,9 @@
 </div>
 <div class="line-yellow"></div>
 <div>
+    <h3>
+        @Model.Answers.Count  @ViewLocalize["CountAnswers"]
+    </h3>
     @if (@Model.Answers != null)
     {
         @foreach (var @answer in @Model.Answers)
@@ -85,41 +89,28 @@
                 <div class="content">
                     <div class="container-info">
                         <p class="user">
-                            <a asp-controller="User" asp-action="GetUserById" asp-route-id="@@answer.AnswerCreator.Id">@@answer.AnswerCreator.UserName</a>
+                            <a asp-controller="User" asp-action="GetUserById" asp-route-id="@answer.AnswerCreator.Id">@answer.AnswerCreator.UserName</a>
                         </p>
                         @if (ownPost)
                         {
                             <form class="state" asp-controller="Answer" asp-action="UpdateState" method="post">
-                                <button name="answerId" value="@@answer.Id">
+                                <button name="answerId" value="@answer.Id">
                                     @ViewLocalize[@answer.Accepted ? "Reject" : "Accept"]
                                 </button>
                             </form>
                         }
                     </div>
-
-                    <p>@Html.Raw(@answer.ContentBody)</p>
+                    <div class="content-fill">@Html.Raw(@answer.ContentBody)</div>
                 </div>
             </div>
         }
     }
 </div>
 
-@if (User.Identity.IsAuthenticated)
+@if (auth)
 {
-    <div style="display: flex;justify-content: flex-end;">
-        <button onclick="showAnswerForm()" class="post btn-dark">Give Answer</button>
+    <div>
+        <h2>Your answer</h2>
+        @await Html.PartialAsync("AnswerFormPartialView", new CreateAnswerViewModel { PostId = @Model.Id })
     </div>
-    @await Html.PartialAsync("AnswerFormPartialView", new CreateAnswerViewModel
-           {
-               PostId = @Model.Id
-           })
 }
-<script>
- let answerForm = document.querySelector("#answerForm");
- 
-function showAnswerForm(){
-   answerForm.style.display=="none"?
-    answerForm.style.display="block":
-     answerForm.style.display="none";
-}
- </script>

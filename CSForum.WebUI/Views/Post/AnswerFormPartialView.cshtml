@@ -1,7 +1,7 @@
 @model CreateAnswerViewModel
 @if (User.Identity.IsAuthenticated)
 {
-    <form style="display: none" id="answerForm"
+    <form  id="answerForm"
           asp-controller="Answer" asp-action="CreateAnswer" method="post">
         <input asp-for="PostId" hidden="hidden" value="@Model.PostId">
         <link rel="stylesheet" href="~/skeditorscript/ckeditor4/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css">

@@ -30,4 +30,7 @@
     <data name="Reject" xml:space="preserve">
         <value>Reject</value>
     </data>
+    <data name="CountAnswers" xml:space="preserve">
+        <value>Answers</value>
+    </data>
 </root>
