@@ -1,9 +1,17 @@
+using CSForum.Core;
 using CSForum.Core.Models;
 using CSForum.Core.Service;
 using CSForum.Data.Context;
 using CSForum.IdentityServer;
 using CSForum.IdentityServer.Identity;
 using CSForum.Services.EmailService;
+using CSForum.Services.Http;
+using CSForum.Services.TokenService;
+using CSForum.Shared;
+using CSForum.Shared.Models;
+using CSForum.WebUI;
+using CSForum.WebUI.Services.HttpClients;
+using CSForum.WebUI.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +27,18 @@ builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.Configure<ApiSettingConfig>(
+    builder.Configuration.GetSection("DevelopmentApiSettings"));
+builder.Services.Configure<IdentityServerSettings>(
+    builder.Configuration.GetSection("IdentityServerSettings"));
+builder.Services.AddHttpClient();
+builder.Services.AddTransient<ApiHttpClientBase>();
+builder.Services.AddTransient<ITokenService, TokenService>();
+builder.Services.AddTransient<IHttpAuthorization, HttpAuthorization>();
+
+
+builder.Services.AddCoreIdentity<User>(_ => { });
+
 builder.Services.AddDbContext<ForumDbContext>(options =>
     options.UseSqlServer(defaultConnString,
         b => b.MigrationsAssembly(assembly)));
@@ -26,6 +46,7 @@ builder.Services.AddDbContext<ForumDbContext>(options =>
 builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
     {
         options.User.AllowedUserNameCharacters = string.Empty;
+        options.SignIn.RequireConfirmedEmail = false;
     })
     .AddEntityFrameworkStores<ForumDbContext>()
     .AddDefaultTokenProviders()
@@ -34,8 +55,8 @@ builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
 builder.Services.ConfigureApplicationCookie(config =>
 {
     config.Cookie.Name = "IdentityServer.Cookie";
-    config.LoginPath = "/Auth/Login";
-    config.LogoutPath = "/Auth/Logout";
+    config.LoginPath = "/AuthCS/Login";
+    config.LogoutPath = "/AuthCS/Logout";
 });
 
 builder.Services.AddIdentityServer()
@@ -75,11 +96,11 @@ app.UseRouting();
 app.UseIdentityServer();
 app.UseAuthorization();
 
-
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapDefaultControllerRoute();
 });
+app.MapRazorPages();
+
 
 app.Run();

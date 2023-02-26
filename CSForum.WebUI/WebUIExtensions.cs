@@ -26,9 +26,9 @@ public static class WebUiExtensions
                 config.SaveTokens = true;
                 config.ResponseType = "code";
                 config.GetClaimsFromUserInfoEndpoint = true;
-                
+
                 config.ClaimActions.MapUniqueJsonKey(ClaimTypes.NameIdentifier, ClaimTypes.NameIdentifier);
-                
+
                 config.Scope.Add("UserClaims");
                 config.Scope.Add("offline_access");
             });
@@ -36,8 +36,8 @@ public static class WebUiExtensions
 
         return services.AddCoreIdentity<User>(_ => { });
     }
-    public static IdentityBuilder AddCoreIdentity<TUser>(this IServiceCollection services,
-        Action<IdentityOptions> configureOptions) where TUser : class
+
+    public static IdentityBuilder AddCoreIdentity<TUser>(this IServiceCollection services, Action<IdentityOptions> configureOptions) where TUser : class
     {
         return services.AddIdentityCore<TUser>(o =>
             {
@@ -47,5 +47,4 @@ public static class WebUiExtensions
             .AddDefaultUI()
             .AddEntityFrameworkStores<ForumDbContext>();
     }
-    
 }

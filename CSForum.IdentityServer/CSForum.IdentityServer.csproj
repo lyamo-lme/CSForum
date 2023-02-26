@@ -6,8 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>29c35c77-ed08-462d-ab15-a40978f9d88f</UserSecretsId>
   </PropertyGroup>
-
-
+  
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="IdentityServer4" Version="4.1.2" />
@@ -29,10 +28,33 @@
     <ProjectReference Include="..\CSForum.Data\CSForum.Data.csproj" />
     <ProjectReference Include="..\CSForum.Infrastructure\CSForum.Infrastructure.csproj" />
     <ProjectReference Include="..\CSForum.Services\CSForum.Services.csproj" />
+    <ProjectReference Include="..\CSForum.WebUI\CSForum.WebUI.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="Areas\Identity\Pages\_ViewStart.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Shared\Error.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Shared\_Layout.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Shared\_LoginPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Shared\_ValidationScriptsPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Auth\LoginPage.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Auth\RegisterPage.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Home\Privacy.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\_Layout.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\_LoginPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\_ViewImports.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\_ViewStart.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AdditionalFiles Include="Views\AuthCS\LoginPage.cshtml" />
+    <AdditionalFiles Include="Views\AuthCS\RegisterPage.cshtml" />
+    <AdditionalFiles Include="Views\Home\Index.cshtml" />
+    <AdditionalFiles Include="Views\Shared\_Layout.cshtml" />
+    <AdditionalFiles Include="Views\Shared\_LoginPartial.cshtml" />
+    <AdditionalFiles Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <AdditionalFiles Include="Views\_ViewImports.cshtml" />
+    <AdditionalFiles Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
 </Project>

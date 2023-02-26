@@ -37,6 +37,7 @@ builder.Services.AddForumDbContext();
 
 builder.Services.AddAppIdentity<User>(_ => { });
 
+
 //identity 
 // builder.Services.AddDefaultIdentity<User>(options =>
 //     {
@@ -59,11 +60,11 @@ builder.Services.AddSignalR();
 builder.Services.AddHttpClient();
 
 builder.Services.AddTransient<ApiHttpClientBase>();
+builder.Services.AddTransient<ITokenService, TokenService>();
+builder.Services.AddTransient<IHttpAuthorization, HttpAuthorization>();
 
 builder.Services.AddTransient<IChatService, ChatService>();
 builder.Services.AddTransient<IRepositoryFactory, RepositoryFactory>();
-builder.Services.AddTransient<ITokenService, TokenService>();
-builder.Services.AddTransient<IHttpAuthorization, HttpAuthorization>();
 
 //email service di
 var password = builder.Configuration["emailPassword"];

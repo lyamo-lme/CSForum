@@ -12,21 +12,21 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CSForum.IdentityServer.Contollers;
+namespace CSForum.IdentityServer.Controllers;
 
-public class AuthController : Controller
+public class AuthCSController : Controller
 {
     private readonly IEmailService _emailSender;
-    private readonly ILogger<AuthController> _logger;
+    private readonly ILogger<AuthCSController> _logger;
     private readonly SignInManager<User> _signInManager;
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
     private readonly IIdentityServerInteractionService _interactionService;
 
-    public AuthController(SignInManager<User> signInManager, UserManager<User> userManager,
-        IIdentityServerInteractionService interactionService, IEmailService emailSender, ILogger<AuthController> logger)
+    public AuthCSController(SignInManager<User> signInManager, UserManager<User> userManager,
+        IIdentityServerInteractionService interactionService, IEmailService emailSender, ILogger<AuthCSController> logger)
     {
-        this._signInManager = signInManager;
+        _signInManager = signInManager;
         _userManager = userManager;
         _interactionService = interactionService;
         _emailSender = emailSender;
@@ -35,13 +35,14 @@ public class AuthController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Login(string returnUrl)
+    public async Task<IActionResult> Login(string? returnUrl = null)
     {
         try
         {
+            var externalProviders = await _signInManager.GetExternalAuthenticationSchemesAsync();
+
             if (Url.IsLocalUrl(returnUrl))
             {
-                var externalProviders = await _signInManager.GetExternalAuthenticationSchemesAsync();
                 return View("LoginPage", new LoginViewModel()
                 {
                     ReturnUrl = returnUrl,
@@ -49,7 +50,11 @@ public class AuthController : Controller
                 });
             }
 
-            return View("LoginPage");
+            return View("LoginPage", new LoginViewModel()
+            {
+                ReturnUrl = "",
+                ExternalProviders = externalProviders
+            });
         }
         catch (Exception e)
         {
@@ -59,7 +64,7 @@ public class AuthController : Controller
     }
 
     [HttpGet]
-    public IActionResult Register(string returnUrl)
+    public IActionResult Register(string? returnUrl = null)
     {
         try
         {
@@ -89,6 +94,7 @@ public class AuthController : Controller
             {
                 return View("RegisterPage");
             }
+
             if (!model.Password.Equals(model.ConfirmPassword) && !ModelState.IsValid)
             {
                 return View("RegisterPage", model);
@@ -109,8 +115,12 @@ public class AuthController : Controller
             //                htmlContent = $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
             //                subject = "Confirming registration"
             //            });
+            if (model.ReturnUrl != null)
+            {
+                return Redirect($"Login?ReturnUrl={model.ReturnUrl}");
+            }
 
-            return Redirect($"Login?ReturnUrl={model.ReturnUrl}");
+            return Redirect("Home/Index");
         }
         catch (Exception e)
         {
@@ -178,7 +188,8 @@ public class AuthController : Controller
             {
                 return View("LoginPage");
             }
-            var redirect = Url.Action(nameof(ExternalLoginCallback), "Auth", new
+
+            var redirect = Url.Action(nameof(ExternalLoginCallback), "AuthCS", new
             {
                 returnUrl
             });
@@ -197,7 +208,6 @@ public class AuthController : Controller
     {
         try
         {
-            
             var email = info.Principal.FindFirst(ClaimTypes.Email).Value;
             var userName = info.Principal.FindFirst(ClaimTypes.GivenName).Value;
 
@@ -235,6 +245,7 @@ public class AuthController : Controller
             {
                 return View("LoginPage");
             }
+
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {

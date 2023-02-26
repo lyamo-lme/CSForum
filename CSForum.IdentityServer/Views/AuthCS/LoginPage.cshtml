@@ -3,7 +3,7 @@
 @* @inject IViewLocalizer ViewLocalizer *@
 
 
-<form class="login" asp-controller="Auth" asp-action="Login" method="post">
+<form class="login" asp-controller="AuthCS" asp-action="Login" method="post">
     <input type="hidden" id="ReturnUrl" name="ReturnUrl" value="@Model.ReturnUrl"/>
     <h3>Login Here</h3>
     <label>Username</label>
@@ -18,7 +18,7 @@
     </div>
 
 </form>
-<form asp-controller="Auth" asp-action="ExternalProvider" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+<form asp-controller="AuthCS" asp-action="ExternalProvider" asp-route-returnUrl="@Model.ReturnUrl" method="post">
     <div class="social">
         @foreach (var extProv in @Model.ExternalProviders)
         {
