@@ -49,7 +49,6 @@
       <Folder Include="Resources\Views\User" />
       <Folder Include="Views\Chat\" />
       <Folder Include="Views\User\" />
-      <Folder Include="wwwroot\scss" />
       <Folder Include="wwwroot\skeditorscript" />
     </ItemGroup>
 

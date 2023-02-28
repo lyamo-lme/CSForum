@@ -3,10 +3,10 @@
 }
 
 .chat-container {
-  margin: 0 auto;
-  width: 750px;
-  background: #444753;
-  border-radius: 5px;
+  display: flex;
+  background-color: #212529;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .st0 {
@@ -80,22 +80,20 @@
   left: -25px;
 }
 .people-list ul {
-  padding: 20px;
-  height: 770px;
+  padding: 0;
 }
 .people-list ul li {
-  padding-bottom: 20px;
   list-style: none;
 }
 .people-list img {
   float: left;
 }
 .people-list .about {
-  float: left;
-  padding: 15px;
-  border-radius: 10px;
-  background-color: #edeeee;
-  border: 2px solid #8d8d8d;
+  padding: 5px 14px;
+  cursor: pointer;
+  color: #efc134;
+  font-weight: bold;
+  border-bottom: 2px solid #efc134;
 }
 .people-list .about .active {
   background-color: #9fe3e3;
@@ -107,8 +105,8 @@
 
 .chat {
   width: 490px;
-  float: left;
-  background: #F2F5F8;
+  flex-grow: 2;
+  background-color: #c9c6c6;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   color: #434651;
@@ -139,10 +137,40 @@
   margin-top: 12px;
 }
 .chat .chat-history {
-  padding: 30px 30px 20px;
   border-bottom: 2px solid white;
   overflow-y: scroll;
   height: 575px;
+}
+.chat .chat-history ul li {
+  background-color: #212529;
+  display: flex;
+  list-style: none;
+  flex-direction: column;
+  margin-bottom: 2px;
+  border-radius: 10px;
+  padding: 10px;
+}
+.chat .chat-history ul li .user {
+  width: min-content;
+  padding: 0;
+  margin: 0;
+  color: #efc134;
+  position: relative;
+}
+.chat .chat-history ul li.own {
+  align-items: flex-end;
+}
+.chat .chat-history ul li.own .user {
+  right: 0;
+}
+.chat .chat-history ul li.not-own {
+  align-items: flex-start;
+}
+.chat .chat-history ul li.not-own .user {
+  left: 0;
+}
+.chat .chat-history .content {
+  color: white;
 }
 .chat .chat-history .message-data {
   margin-bottom: 15px;

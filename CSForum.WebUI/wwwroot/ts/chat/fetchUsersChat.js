@@ -44,7 +44,11 @@ export const Messages = (userChat) => {
     // let userId = userChat.userId;
     chatHistory.innerHTML = "";
     let listMessages = userChat.chat.messages.map(messages => {
-        let elementMessage = createElement("li", "lol", messages.userId == selectedUserId ? userChat.user.userName + ` ${messages.content}` : "you" + ` ${messages.content}`);
+        let elementMessage = createElement("li", messages.userId == selectedUserId ? "not-own" : "own", "");
+        let messageOwner = createElement("p", "user", messages.userId == selectedUserId ? userChat.user.userName : "you");
+        let contentMessaage = createElement("div", "content", messages.content);
+        elementMessage.appendChild(messageOwner);
+        elementMessage.appendChild(contentMessaage);
         chatHistory.appendChild(elementMessage);
         return elementMessage;
     });

@@ -17,7 +17,7 @@ request(webUrl + "/web/chat/user", "GET").then(async (data) => {
     if (userChats.length > 0) {
         selectedUserId = userChats[0].userId;
         selectedChatId = userChats[0].chatId;
-        
+
         userChats.map(userChat => {
             let chatElement = createElement("li", "clearfix", "");
             let contentChat = createElement("div", "about", "");
@@ -41,9 +41,11 @@ export const Messages = (userChat: UsersChats) => {
     chatHistory.innerHTML = "";
     let listMessages = userChat.chat.messages.map(messages => {
         let elementMessage = createElement(
-            "li",
-            "lol",
-            messages.userId == selectedUserId ? userChat.user.userName + ` ${messages.content}` : "you" + ` ${messages.content}`);
+            "li",  messages.userId == selectedUserId ? "not-own" : "own", "");
+        let messageOwner = createElement("p", "user", messages.userId == selectedUserId ? userChat.user.userName : "you")
+        let contentMessaage = createElement("div", "content", messages.content);
+        elementMessage.appendChild(messageOwner);
+        elementMessage.appendChild(contentMessaage);
         chatHistory.appendChild(elementMessage);
         return elementMessage;
     });
