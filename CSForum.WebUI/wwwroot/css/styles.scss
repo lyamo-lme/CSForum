@@ -25,44 +25,51 @@ $black: #212529;
   height: 30px;
 }
 
-.post-answer{
+.post-answer {
   display: flex;
   border-bottom: 1px solid grey;
   margin: 10px 0 10px 0;
-  .accept{
+
+  .accept {
     flex-basis: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  .content{
+
+  .content {
     flex: 9;
-    .container-info{
+
+    .container-info {
       display: flex;
       justify-content: space-between;
       height: min-content;
-      .user{
+
+      .user {
         padding: 0;
         margin: 0;
-         a{
-           font-weight: bold;
-           color: black;
-           text-transform: uppercase;
-           text-decoration: none;
-         }
+
+        a {
+          font-weight: bold;
+          color: black;
+          text-transform: uppercase;
+          text-decoration: none;
+        }
       }
-      .state{
+
+      .state {
         padding: 0;
         margin: 0;
       }
     }
-    .content-fill{
-      
+
+    .content-fill {
+
     }
   }
 }
 
-.solved{
+.solved {
   border: 2px solid $green;
   color: $green;
   display: flex;
@@ -95,6 +102,7 @@ $black: #212529;
 
   ul {
     padding: 0;
+
     li {
       list-style: none;
     }
@@ -167,8 +175,9 @@ $black: #212529;
     border-bottom: 2px solid white;
     overflow-y: scroll;
     height: 575px;
-    ul{
-      li{
+
+    ul {
+      li {
         background-color: $black;
         display: flex;
         list-style: none;
@@ -176,7 +185,8 @@ $black: #212529;
         margin-bottom: 2px;
         border-radius: 10px;
         padding: 10px;
-        .user{
+
+        .user {
           width: min-content;
           padding: 0;
           margin: 0;
@@ -184,23 +194,29 @@ $black: #212529;
           position: relative;
         }
       }
-      li.own{  
+
+      li.own {
         align-items: flex-end;
-        .user{
+
+        .user {
           right: 0;
         }
       }
-      li.not-own{
-        .user{
+
+      li.not-own {
+        .user {
           left: 0;
         }
+
         align-items: flex-start;
-        
+
       }
     }
-    .content{
+
+    .content {
       color: white;
     }
+
     .message-data {
       margin-bottom: 15px;
     }
@@ -467,21 +483,34 @@ ul.recent-posts {
   }
 }
 
-.post-info{
-  .title{
+.post-info {
+  .title {
     display: flex;
-    .title-text{
+
+    .title-text {
       flex-grow: 9;
     }
-    div.solved{
+
+    div.solved {
       border: none;
       flex-grow: 1;
     }
   }
-  .info-container{
+
+  .info-container {
     display: flex;
+
     > * {
       padding-left: 3px;
     }
+  }
+}
+
+.nav-user {
+  display: flex;
+  > * {
+    border-radius: 10px;
+    padding: 5px;
+    border: 2px solid #969494;
   }
 }

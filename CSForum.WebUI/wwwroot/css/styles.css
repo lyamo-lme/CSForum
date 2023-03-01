@@ -406,4 +406,13 @@ ul.recent-posts {
   padding-left: 3px;
 }
 
+.nav-user {
+  display: flex;
+}
+.nav-user > * {
+  border-radius: 10px;
+  padding: 5px;
+  border: 2px solid #969494;
+}
+
 /*# sourceMappingURL=styles.css.map */

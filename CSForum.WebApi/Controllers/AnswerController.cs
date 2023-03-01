@@ -85,4 +85,18 @@ public class AnswerController : Controller
             return BadRequest();
         }
     }
+    [HttpGet, Route("user/{userId}")]
+    public async Task<ActionResult<List<Answer>>> GetUsersAnswer(int userId)
+    {
+        try
+        {
+            var answer = await _uofRepository.GenericRepository<Answer>().GetAsync(x => x.UserId == userId);
+            return Ok(answer);
+        }
+        catch (Exception e)
+        {
+            _logger.Log(LogLevel.Error, e, e.Message);
+            return BadRequest();
+        }
+    }
 }

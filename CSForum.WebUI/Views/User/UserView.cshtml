@@ -1,8 +1,10 @@
+@using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Manage.Internal
 @model UserViewModel
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
+    var menuOption = Model.MenuOption;
 }
 
 <div class="user-block">
@@ -60,34 +62,78 @@
         </div>
         <div class="col-lg-8">
             <div class="card mb-4">
-                <div class="card-body">
-                    @* <div class="row"> *@
-                    @*   <div class="col-sm-3"> *@
-                    @*     <p class="mb-0">Full Name</p> *@
-                    @*   </div> *@
-                    @*   <div class="col-sm-9"> *@
-                    @*     <p class="text-muted mb-0">Johnatan Smith</p> *@
-                    @*   </div> *@
-                    @* </div> *@
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">Email</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0">@Model.Email</p>
-                        </div>
+                <div class="nav-user">
+                    <div>
+                        <a asp-controller="User" asp-action="GetUserPost" asp-route-id="@Model.Id">Post</a>
                     </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">Address</p>
-                        </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0">Examle Place</p>
-                        </div>
+                    <div>
+                        <a asp-controller="User" asp-action="GetUserAnswers" asp-route-id="@Model.Id">Answers</a>
+                    </div>
+                    <div>
+                        <a asp-controller="User" asp-action="GetUserById" asp-route-id="@Model.Id">Post</a>
                     </div>
                 </div>
+                @switch (menuOption)
+                {
+                    case 0:
+                    {
+                        <div class="card-body">
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Email</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">@Model.Email</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Address</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">Examle Place</p>
+                                </div>
+                            </div>
+                        </div>
+                        break;
+                    }
+                    case 1:
+                    {
+                        <div>
+                            @if (@Model.Posts != null)
+                            {
+                                foreach (var post in @Model.Posts)
+                                {
+                                    <div>
+                                        <a asp-controller="Post" asp-action="Post" asp-route-postId="@post.Id">
+                                            @post.Title
+                                        </a>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        break;
+                    }
+                    case 2:
+                    {
+                        <div>
+                            @if (@Model.Answers != null)
+                            {
+                                foreach (var answer in @Model.Answers)
+                                {
+                                    <div>
+                                        <a asp-controller="Post" asp-action="Post" asp-route-postId="@answer.PostId">
+                                            @Html.Raw(@answer.ContentBody)
+                                        </a>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        break;
+                    }
+                }
             </div>
         </div>
     </div>

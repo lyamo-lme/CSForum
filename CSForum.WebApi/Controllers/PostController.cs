@@ -107,7 +107,21 @@ namespace CSForum.WebApi.Controllers
                 throw;
             }
         }
-
+        [HttpGet]
+        [Route("user/{userId}")]
+        public async Task<ActionResult<Post>> GetPostByUserId(int userId)
+        {
+            try
+            {
+                var posts = await _uofRepository.GenericRepository<Post>().GetAsync(x => x.UserId == userId);
+                return Ok(posts);
+            }
+            catch (Exception e)
+            {
+                _logger.Log(LogLevel.Error, e, e.Message);
+                throw;
+            }
+        }
         [HttpGet, Route("recent/{count}")]
         public async Task<ActionResult<Post>> GetRecentPosts(int count = 10)
         {
