@@ -7,7 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const urlOrigin = "https://localhost:5000";
 const selectTag = document.querySelector(".selectTag");
 const selectedTags = document.querySelector("#selectedTag");
 const inputTag = document.querySelector(".tag-find");

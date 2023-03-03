@@ -9,10 +9,13 @@
 @if (@Model.Posts != null)
 {
     <div>
-    @foreach (var post in @Model.Posts)
-    {
-        <div>@post.Title</div>
-        <div>@post.Content</div>
-    }
+        @foreach (var post in @Model.Posts)
+        {
+            <div>
+                <a asp-controller="Post" asp-action="Post" asp-route-postId="@post.Id">
+                    @post.Title
+                </a>
+            </div>
+        }
     </div>
 }

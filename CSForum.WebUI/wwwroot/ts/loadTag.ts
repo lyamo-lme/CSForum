@@ -1,4 +1,3 @@
-const urlOrigin = "https://localhost:5000";
 const selectTag = document.querySelector(".selectTag");
 const selectedTags = document.querySelector("#selectedTag");
 const inputTag = document.querySelector(".tag-find");
