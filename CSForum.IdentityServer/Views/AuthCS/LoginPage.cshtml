@@ -1,30 +1,56 @@
 @model CSForum.IdentityServer.Models.LoginViewModel
-@* @using Microsoft.AspNetCore.Mvc.Localization *@
-@* @inject IViewLocalizer ViewLocalizer *@
 
+@* <div class="login-form"> *@
+@*     <form > *@
+@*         <div class="fieldset"> *@
+@*             <div class="" for="Username">Username </div> *@
+@*             <label class="image-replace email" for="Username">Username </label> *@
+@*             <input class="full-width has-padding has-border" name="Username" type="text" placeholder="Username"> *@
+@*         </div> *@
+@* *@
+@*         <div class="fieldset"> *@
+@*             <div class="" for="Password">Password</div> *@
+@*             <label class="image-replace password" for="Password">Password</label> *@
+@*             <input class="full-width has-padding has-border" name="Password" type="password" placeholder="Password"> *@
+@*             <a href="#0" class="hide-password">Show</a> *@
+@*         </div> *@
+@*         <p class="fieldset"> *@
+@*             <input class="full-width" type="submit" value="Login"> *@
+@*         </p> *@
+@* *@
+@*     </form> *@
+@* *@
+@* </div> *@
+<div class="login_form">
+    <section class="login-wrapper">
+        <form id="login" class="form" asp-controller="AuthCS" asp-action="Login" method="post">
+            <input type="hidden" id="ReturnUrl" name="ReturnUrl" value="@Model.ReturnUrl"/>
 
-<form class="login" asp-controller="AuthCS" asp-action="Login" method="post">
-    <input type="hidden" id="ReturnUrl" name="ReturnUrl" value="@Model.ReturnUrl"/>
-    <h3>Login Here</h3>
-    <label>Username</label>
-    <input name="Username" id="Username" type="text" placeholder="Email or Phone">
-    <label>Password</label>
-    <input name="Password" id="Password" type="password" placeholder="Password">
-    <div class="buttons" style="display: flex">
-        <button type="submit">Log In</button>
-        <div>
-            <a asp-action="Register" asp-route-ReturnUrl="@Model.ReturnUrl">Register</a>
-        </div>
-    </div>
+            <label>User Name</label>
+            <input name="Username" id="Username" type="text" placeholder="Username" required/>
 
-</form>
-<form asp-controller="AuthCS" asp-action="ExternalProvider" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-    <div class="social">
-        @foreach (var extProv in @Model.ExternalProviders)
-        {
-            <button type="submit" name="provider" value="@extProv.Name" class="go">
-                @extProv.Name
-            </button>
-        }
-    </div>
-</form>
+            <label for="Password">Password</label>
+            <input name="Password" id="Password" placeholder="Password" type="password" class="password"/>
+            <div class="hide-show">
+                <span>Show</span>
+            </div>
+            <div class="list-login">
+                <button type="submit">Sign In</button>
+                <button class="fieldset">
+                    <a class="full-width" asp-action="Register" asp-route-ReturnUrl="@Model.ReturnUrl">Register</a>
+                </button>
+            </div>
+        </form>
+
+        <form asp-controller="AuthCS" asp-action="ExternalProvider" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div class="social">
+                @foreach (var extProv in @Model.ExternalProviders)
+                {
+                    <button type="submit" name="provider" value="@extProv.Name" class="go">
+                        @extProv.Name
+                    </button>
+                }
+            </div>
+        </form>
+    </section>
+</div>

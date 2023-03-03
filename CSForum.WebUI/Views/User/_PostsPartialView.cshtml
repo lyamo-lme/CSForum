@@ -1,0 +1,14 @@
+@model List<PostViewModel>?
+<div>
+    @if (@Model != null)
+    {
+        foreach (var post in @Model)
+        {
+            <div>
+                <a asp-controller="Post" asp-action="Post" asp-route-postId="@post.Id">
+                    @post.Title
+                </a>
+            </div>
+        }
+    }
+</div>

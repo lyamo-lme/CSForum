@@ -1,4 +1,6 @@
 using System.Security.Claims;
+using System.Text.Encodings.Web;
+using System.Web;
 using AutoMapper;
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
@@ -65,6 +67,7 @@ public class PostController : Controller
         try
         {
             var post = await _forumClient.GetAsync<Post>($"api/posts/id/{postId}");
+            post.Content = HttpUtility.HtmlDecode(post.Content);
             return View("Post", _mapper.Map<PostViewModel>(post));
         }
         catch (Exception e)

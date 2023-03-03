@@ -36,7 +36,6 @@
     <_ContentIncludedByDefault Remove="Views\Shared\Shared\_Layout.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Shared\Shared\_LoginPartial.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Shared\Shared\_ValidationScriptsPartial.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Auth\LoginPage.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Auth\RegisterPage.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Home\Privacy.cshtml" />
@@ -48,7 +47,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="Views\AuthCS\LoginPage.cshtml" />
     <AdditionalFiles Include="Views\AuthCS\RegisterPage.cshtml" />
     <AdditionalFiles Include="Views\Home\Index.cshtml" />
     <AdditionalFiles Include="Views\Shared\_Layout.cshtml" />

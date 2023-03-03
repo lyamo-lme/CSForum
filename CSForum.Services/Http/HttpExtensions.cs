@@ -8,19 +8,13 @@ public static class HttpExtensions
     public static async Task<HttpResponseMessage> SendAuthAsync(this HttpClient client,
         HttpRequestMessage requestMessage)
     {
-        try
+        var response = await client.SendAsync(requestMessage);
+        if (response.StatusCode == HttpStatusCode.Unauthorized)
         {
-            var response = await client.SendAsync(requestMessage);
-            if (response.StatusCode == HttpStatusCode.Unauthorized)
-            {
-                throw new HttpRequestException("non auth", new Exception(response.RequestMessage.ToString()), response.StatusCode);
-            }
+            throw new HttpRequestException("non auth", new Exception(response.RequestMessage.ToString()),
+                response.StatusCode);
+        }
 
-            return response;
-        }
-        catch (HttpRequestException e)
-        {
-            throw new HttpRequestException("non auth", new Exception(e.Message), e.StatusCode);
-        }
+        return response;
     }
 }

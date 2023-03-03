@@ -1,10 +1,10 @@
 using CSForum.Core.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace CSForum.IdentityServer.Identity;
+namespace CSForum.IdentityServer.Areas.Identity.Validator;
 
 
-public class CustomUserValidator<TUser> : UserValidator<TUser>
+public sealed class CustomUserValidator<TUser> : UserValidator<TUser>
     where TUser : User
 {
     public override  Task<IdentityResult> ValidateAsync(UserManager<TUser> manager, TUser user)

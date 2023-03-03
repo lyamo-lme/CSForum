@@ -1,0 +1,14 @@
+@model List<AnswerViewModel>?
+<div>
+    @if (@Model != null)
+    {
+        foreach (var answer in @Model)
+        {
+            <div>
+                <a asp-controller="Post" asp-action="Post" asp-route-postId="@answer.PostId">
+                    @Html.Raw(@answer.ContentBody)
+                </a>
+            </div>
+        }
+    }
+</div>

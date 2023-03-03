@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using System.Runtime.Intrinsics.X86;
+using System.Web;
 using AutoMapper;
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
@@ -37,6 +38,7 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
+                model.Content = HttpUtility.HtmlEncode(model.Content);
                 var mappedPost = _dtoMapper.Map<Post>(model);
                 var post = await _uofRepository.GenericRepository<Post>().CreateAsync(mappedPost);
                 await _uofRepository.SaveAsync();
@@ -73,7 +75,7 @@ namespace CSForum.WebApi.Controllers
             try
             {
                 var postResult = await _uofRepository.GenericRepository<Post>().FindAsync(post => post.Id == postId);
-                
+
                 postResult.PostTags = await _uofRepository.GenericRepository<PostTag>().GetAsync(
                     postTag => postTag.PostId == postResult.Id,
                     null, null, null, "Tag");
@@ -107,6 +109,7 @@ namespace CSForum.WebApi.Controllers
                 throw;
             }
         }
+
         [HttpGet]
         [Route("user/{userId}")]
         public async Task<ActionResult<Post>> GetPostByUserId(int userId)
@@ -122,6 +125,7 @@ namespace CSForum.WebApi.Controllers
                 throw;
             }
         }
+
         [HttpGet, Route("recent/{count}")]
         public async Task<ActionResult<Post>> GetRecentPosts(int count = 10)
         {

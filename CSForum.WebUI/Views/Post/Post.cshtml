@@ -13,7 +13,14 @@
 }
 
 @{
-    var ownPost = @Model.UserId == UserManager.GetId(User);
+    bool ownPost = false;
+    try
+    {
+        ownPost = @Model.UserId == UserManager.GetId(User);
+    }
+    catch
+    {
+    }
     var solved = @Model.Solved;
     var auth = User.Identity.IsAuthenticated;
 }
@@ -68,7 +75,7 @@
 <div class="line-yellow"></div>
 <div>
     <h3>
-        @Model.Answers.Count  @ViewLocalize["CountAnswers"]
+        @Model.Answers.Count @ViewLocalize["CountAnswers"]
     </h3>
     @if (@Model.Answers != null)
     {

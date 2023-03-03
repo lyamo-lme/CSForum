@@ -3,7 +3,7 @@ using CSForum.Core.Models;
 using CSForum.Core.Service;
 using CSForum.Data.Context;
 using CSForum.IdentityServer;
-using CSForum.IdentityServer.Identity;
+using CSForum.IdentityServer.Areas.Identity.Validator;
 using CSForum.Services.EmailService;
 using CSForum.Services.Http;
 using CSForum.Services.TokenService;

@@ -37,15 +37,6 @@ builder.Services.AddForumDbContext();
 
 builder.Services.AddAppIdentity<User>(_ => { });
 
-
-//identity 
-// builder.Services.AddDefaultIdentity<User>(options =>
-//     {
-//         options.SignIn.RequireConfirmedAccount = true;
-//     })
-//  .AddEntityFrameworkStores<ForumDbContext>();
-
-
 //Ioptions for api settings
 builder.Services.Configure<ApiSettingConfig>(
     builder.Configuration.GetSection("DevelopmentApiSettings"));
