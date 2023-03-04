@@ -40,16 +40,19 @@ public class ApiHttpClientBase : ApiClientBase
         {
             if (exception.StatusCode == HttpStatusCode.Unauthorized)
             {
-                string refreshToken = _httpAuthorization.GetToken("refresh_token").Result;
-                var tokenResponse = _tokenService.RefreshAccessToken(refreshToken).Result;
-                _httpAuthorization.UpdateTokens(new Dictionary<string, string>()
+                Task task = new Task(async () =>
                 {
-                    { "access_token", tokenResponse.AccessToken },
-                    { "refresh_token", tokenResponse.RefreshToken }
-                }).Wait();
-                SetBearerTokenAsync().Wait();
+                    string refreshToken = await _httpAuthorization.GetToken("refresh_token");
+                    var tokenResponse = await _tokenService.RefreshAccessToken(refreshToken);
+                   await  _httpAuthorization.UpdateTokens(new Dictionary<string, string>()
+                    {
+                        { "access_token", tokenResponse.AccessToken },
+                        { "refresh_token", tokenResponse.RefreshToken }
+                    });
+                    await SetBearerTokenAsync();
+                });
+                task.RunSynchronously();
             }
-
             return true;
         }).RetryAsync(3);
     }

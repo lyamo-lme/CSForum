@@ -1,14 +1,6 @@
 ﻿using CSForum.Core.IRepositories;
-using CSForum.Core.Models;
 using CSForum.Data.Context;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace CSForum.Data.Repositories
 {
@@ -19,7 +11,6 @@ namespace CSForum.Data.Repositories
         private readonly IRepositoryFactory _repositoryFactory;
         private Dictionary<string, object>? _repositories;
 
-        //need to inject service collection and refactor repositories
         public UowRepository(ILogger<UowRepository> logger, IRepositoryFactory repositoryFactory,
             ForumDbContext forumDbContext)
         {

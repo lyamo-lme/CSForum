@@ -53,7 +53,7 @@ builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<IAnswerService, AnswerService>();
 
 builder.Services.AddRepository();
-builder.Services.AddTransient<IChatService, ChatService>();
+builder.Services.AddScoped<IChatService, ChatService>();
 
 builder.Services.AddCors(options =>
 {

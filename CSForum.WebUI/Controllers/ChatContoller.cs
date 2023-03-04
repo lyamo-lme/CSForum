@@ -54,6 +54,7 @@ public class ChatController : Controller
             return Ok(usersChat);
         }
         catch (Exception e)
+        
         {
             throw;
         }

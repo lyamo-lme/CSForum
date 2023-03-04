@@ -104,7 +104,7 @@ public class ChatService : IChatService
         try
         {
             var userChats =
-                await _uofRepository.GenericRepository<UsersChats>().GetAsync(x => x.UserId == userId);
+                (await _uofRepository.GenericRepository<UsersChats>().GetAsync(x => x.UserId == userId)).ToList();
             
             var usersChats = new List<UsersChats>();
             

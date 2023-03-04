@@ -95,7 +95,7 @@ public class AnswerController : Controller
         try
         {
             var answer = await _uofRepository.GenericRepository<Answer>().GetAsync(x => x.UserId == userId);
-            return Ok(answer);
+            return Ok(answer.ToList());
         }
         catch (Exception e)
         {
