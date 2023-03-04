@@ -1,16 +1,20 @@
 using System.Security.Claims;
+using System.Text;
 using System.Text.Encodings.Web;
 using AutoMapper;
+using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Core.Service;
 using CSForum.IdentityServer.Models;
 using CSForum.Infrastructure.MapperConfigurations;
+using CSForum.Services.Extensions;
 using CSForum.Services.MapperConfigurations;
 using IdentityModel;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace CSForum.IdentityServer.Controllers;
 
@@ -18,19 +22,22 @@ public class AuthCSController : Controller
 {
     private readonly IEmailService _emailSender;
     private readonly ILogger<AuthCSController> _logger;
+    private readonly IUnitOfWorkRepository _uof;
     private readonly SignInManager<User> _signInManager;
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
     private readonly IIdentityServerInteractionService _interactionService;
 
     public AuthCSController(SignInManager<User> signInManager, UserManager<User> userManager,
-        IIdentityServerInteractionService interactionService, IEmailService emailSender, ILogger<AuthCSController> logger)
+        IIdentityServerInteractionService interactionService, IEmailService emailSender,
+        ILogger<AuthCSController> logger, IUnitOfWorkRepository uof)
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _interactionService = interactionService;
         _emailSender = emailSender;
         _logger = logger;
+        _uof = uof;
         _mapper = MapperFactory.CreateMapper<DtoMapper>();
     }
 
@@ -100,21 +107,33 @@ public class AuthCSController : Controller
                 return View("RegisterPage", model);
             }
 
-            await _userManager.CreateAsync(
+            var result = await _userManager.CreateAsync(
                 _mapper.Map<User>(new IdentityUser<int>(model.Username)
                 {
                     Email = model.Email
                 }),
                 model.Password);
 
-            //await _emailSender.SendMessage<Email>(
-            //            new Email()
-            //            {
-            //                senderName = "code?reply",
-            //                receiverEmail = model.Email,
-            //                htmlContent = $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
-            //                subject = "Confirming registration"
-            //            });
+            var user = await _uof.GenericRepository<User>()
+                .FindAsync(x => x.UserName == model.Username && x.Email == model.Email);
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            var callbackUrl = Url.Page(
+                "/Account/ConfirmEmail",
+                pageHandler: null,
+                values: new { area = "Identity", userId = user.Id, code = code, returnUrl = model.ReturnUrl },
+                protocol: Request.Scheme);
+
+            await _emailSender.SendMessage<Email>(
+                new Email()
+                {
+                    senderName = "code?reply",
+                    receiverEmail = model.Email,
+                    htmlContent =
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
+                    subject = "Confirming registration"
+                });
+
             if (model.ReturnUrl != null)
             {
                 return Redirect($"Login?ReturnUrl={model.ReturnUrl}");

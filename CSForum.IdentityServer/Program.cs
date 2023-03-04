@@ -1,9 +1,12 @@
 using CSForum.Core;
+using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Core.Service;
+using CSForum.Data;
 using CSForum.Data.Context;
 using CSForum.IdentityServer;
 using CSForum.IdentityServer.Areas.Identity.Validator;
+using CSForum.Infrastructure.Repository;
 using CSForum.Services.EmailService;
 using CSForum.Services.Http;
 using CSForum.Services.TokenService;
@@ -43,6 +46,8 @@ builder.Services.AddDbContext<ForumDbContext>(options =>
     options.UseSqlServer(defaultConnString,
         b => b.MigrationsAssembly(assembly)));
 
+builder.Services.AddForumDbContext();
+
 builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
     {
         options.User.AllowedUserNameCharacters = string.Empty;
@@ -76,6 +81,7 @@ builder.Services.AddIdentityServer()
     //         b.UseSqlServer(defaultConnString, opt => opt.MigrationsAssembly(assembly));
     // })
     .AddDeveloperSigningCredential();
+builder.Services.AddScoped<IRepositoryFactory, RepositoryFactory>();
 
 builder.Services.AddAuthentication()
     .AddGoogle( options =>

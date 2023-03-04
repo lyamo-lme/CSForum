@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Runtime.Intrinsics.X86;
 using System.Web;
@@ -76,16 +77,16 @@ namespace CSForum.WebApi.Controllers
             {
                 var postResult = await _uofRepository.GenericRepository<Post>().FindAsync(post => post.Id == postId);
 
-                postResult.PostTags = await _uofRepository.GenericRepository<PostTag>().GetAsync(
+                postResult.PostTags = (await _uofRepository.GenericRepository<PostTag>().GetAsync(
                     postTag => postTag.PostId == postResult.Id,
-                    null, null, null, "Tag");
+                    null, null, null, "Tag")).ToList();
 
                 postResult.PostCreator = await _uofRepository.GenericRepository<User>()
                     .FindAsync(user => user.Id == postResult.UserId);
 
-                postResult.Answers = await _uofRepository.GenericRepository<Answer>().GetAsync(
+                postResult.Answers = (await _uofRepository.GenericRepository<Answer>().GetAsync(
                     answer => answer.PostId == postResult.Id,
-                    null, null, null, "AnswerCreator");
+                    includeProperties: "AnswerCreator")).ToList();
 
                 return Ok(postResult);
             }
@@ -97,11 +98,14 @@ namespace CSForum.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Post>> GetPosts()
+        public async Task<ActionResult<Post>> GetPosts(int? skip = null, int? take = null)
         {
             try
             {
-                return Ok(await _uofRepository.GenericRepository<Post>().GetAsync());
+                return Ok(await _uofRepository.GenericRepository<Post>().GetAsync(
+                    skip: skip,
+                    take: take
+                ));
             }
             catch (Exception e)
             {

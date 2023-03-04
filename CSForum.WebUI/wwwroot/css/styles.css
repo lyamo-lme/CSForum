@@ -104,7 +104,6 @@
 }
 
 .chat {
-  width: 490px;
   flex-grow: 2;
   background-color: #c9c6c6;
   border-top-right-radius: 5px;

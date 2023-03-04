@@ -88,7 +88,7 @@ public class ChatService : IChatService
                 UserId = secondId
             });
 
-            _uofRepository.SaveAsync();
+            await _uofRepository.SaveAsync();
             return chat;
         }
         catch (Exception e)
@@ -118,8 +118,8 @@ public class ChatService : IChatService
                 newChat.Chat = await _uofRepository.GenericRepository<Chat>().FindAsync(x => x.ChatId == userChat.ChatId);
                 
                 newChat.Chat.Messages =
-                    await _uofRepository.GenericRepository<Message>().GetAsync(x => x.ChatId == userChat.ChatId,
-                        includeProperties: "User");
+                  (await _uofRepository.GenericRepository<Message>().GetAsync(x => x.ChatId == userChat.ChatId,
+                        includeProperties: "User")).ToList();
 
                 usersChats.Add(newChat);
             }

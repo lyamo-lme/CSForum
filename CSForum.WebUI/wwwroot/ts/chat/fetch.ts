@@ -1,5 +1,3 @@
-
-
 export const validation = (method: string, variables?: any) => {
     if ((method === "GET" || method == "DELETE")!=true) {
         return JSON.stringify({variables})

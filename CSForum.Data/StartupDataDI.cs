@@ -22,12 +22,12 @@ public static class StartupDataDi
     }
     public static IServiceCollection AddForumDbContext(this IServiceCollection serviceCollection)
     {
-        //serviceCollection.AddScoped<IRepository<Tag>, GenericRepository<Tag>>();
-        //serviceCollection.AddScoped<IRepository<PostTag>, GenericRepository<PostTag>>();
-        //serviceCollection.AddScoped<IRepository<User>, GenericRepository<User>>();
-        //serviceCollection.AddScoped<IRepository<Post>, GenericRepository<Post>>();
-        //serviceCollection.AddScoped<IRepository<Chat>, GenericRepository<Chat>>();
-        //serviceCollection.AddScoped<IRepository<Message>, GenericRepository<Message>>();
+        serviceCollection.AddScoped<IRepository<Tag>, GenericRepository<Tag>>();
+        serviceCollection.AddScoped<IRepository<PostTag>, GenericRepository<PostTag>>();
+        serviceCollection.AddScoped<IRepository<User>, GenericRepository<User>>();
+        serviceCollection.AddScoped<IRepository<Post>, GenericRepository<Post>>();
+        serviceCollection.AddScoped<IRepository<Chat>, GenericRepository<Chat>>();
+        serviceCollection.AddScoped<IRepository<Message>, GenericRepository<Message>>();
         serviceCollection.AddScoped<IUnitOfWorkRepository, UowRepository>();
         return serviceCollection;
     }

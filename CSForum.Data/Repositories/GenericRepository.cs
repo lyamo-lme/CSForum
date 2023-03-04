@@ -19,7 +19,7 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
     }
     
 
-    public async Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null,
+    public async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, int? take = null, int? skip = null,
         string includeProperties = "")
     {
@@ -53,7 +53,7 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
                 query = query.Take((int)take);
             }
 
-            return await query.ToListAsync();
+            return  query;
         }
         catch (Exception e)
         {

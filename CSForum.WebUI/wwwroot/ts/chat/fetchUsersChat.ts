@@ -53,20 +53,24 @@ export const Messages = (userChat: UsersChats) => {
 
 
 export const addNewMessage = (message: Message) => {
-    console.log("add message if");
-    console.log(selectedUserId);
-    console.log(selectedChatId);
     if (selectedChatId == message.chatId) {
-        console.log("inside if");
-        let elementMessage = createElement(
-            "li",
-            "lol",
-            message.userId == selectedUserId ? "he" + ` ${message.content}` : "you" + ` ${message.content}`);
+        // let elementMessage = createElement(
+        //     "li",
+        //     "lol",
+        //     message.userId == selectedUserId ? "he" + ` ${message.content}` : "you" + ` ${message.content}`);
 
+        let elementMessage = createElement(
+            "li",  message.userId == selectedUserId ? "not-own" : "own", "");
+        let messageOwner = createElement("p", "user", 
+            message.userId == selectedUserId ? userChats.find(x=>x.chatId==message.chatId).user.userName : "you")
+        let contentMessage = createElement("div", "content", message.content);
+        elementMessage.appendChild(messageOwner);
+        elementMessage.appendChild(contentMessage);
+        chatHistory.appendChild(elementMessage);
+        
         // userChats.find(x => x.userId == message.userId).chat.messages.push(message);
 
-        console.log(chatHistory);
-        chatHistory.appendChild(elementMessage);
+        // chatHistory.appendChild(elementMessage);
         return;
     } else {
         userChats.find(x => x.userId == message.userId).chat.messages.push(message);

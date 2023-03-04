@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Net;
+using AutoMapper;
 using CSForum.Core;
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
@@ -40,8 +41,10 @@ namespace CSForum.WebUI.SignalR
                 var userId = _userManager.GetUserId(Context.User);
 
                 var messageEntity = await _chatService.AddMessageAsync(
-                    new Message(int.Parse(userId), message), receiverId);
-               
+                    new Message(int.Parse(userId),
+                        WebUtility.HtmlEncode(message)
+                    ), receiverId);
+
                 await Clients.User(receiverId.ToString()).SendAsync("ReceiveMessage", messageEntity);
                 await Clients.Caller.SendAsync("ReceiveMessage", messageEntity);
             }

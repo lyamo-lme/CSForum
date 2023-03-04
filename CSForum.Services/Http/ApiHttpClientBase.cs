@@ -3,7 +3,6 @@ using System.Net.Http.Json;
 using CSForum.Core;
 using CSForum.WebUI.Services;
 using CSForum.Shared.Models;
-using CSForum.WebUI.Services.HttpClients;
 using CSForum.WebUI.Services.Interfaces;
 using IdentityModel.Client;
 using Microsoft.Extensions.Logging;
@@ -25,9 +24,9 @@ public class ApiHttpClientBase : ApiClientBase
     private readonly IHttpAuthorization _httpAuthorization;
     private readonly ILogger<ApiHttpClientBase> _logger;
 
-    public ApiHttpClientBase(ITokenService tokenService, HttpClient client, IOptions<ApiSettingConfig> apiSettings,
+    public ApiHttpClientBase(ITokenService tokenService, HttpClient hc, IOptions<ApiSettingConfig> apiSettings,
         IHttpAuthorization httpAuthorization, ILogger<ApiHttpClientBase> logger)
-        : base(client, apiSettings.Value)
+        : base(hc, apiSettings.Value)
     {
         _httpAuthorization = httpAuthorization;
         _logger = logger;
@@ -41,7 +40,7 @@ public class ApiHttpClientBase : ApiClientBase
         {
             if (exception.StatusCode == HttpStatusCode.Unauthorized)
             {
-                var refreshToken = _httpAuthorization.GetToken("refresh_token").Result;
+                string refreshToken = _httpAuthorization.GetToken("refresh_token").Result;
                 var tokenResponse = _tokenService.RefreshAccessToken(refreshToken).Result;
                 _httpAuthorization.UpdateTokens(new Dictionary<string, string>()
                 {
@@ -68,7 +67,7 @@ public class ApiHttpClientBase : ApiClientBase
             throw;
         }
     }
-    public async Task<TOut> PutAsync<TDto, TOut>(TDto model, string? path = null) where TOut : class
+    public async Task<TOut> PutAsync<TDto, TOut>(TDto model, string path) where TOut : class
     {
         try
         {
@@ -83,7 +82,7 @@ public class ApiHttpClientBase : ApiClientBase
         }
     }
 
-    public async Task<TOut> PostAsync<TDto, TOut>(TDto model, string? path = null) where TOut : class
+    public async Task<TOut> PostAsync<TDto, TOut>(TDto model, string path) where TOut : class
     {
         try
         {
@@ -102,8 +101,8 @@ public class ApiHttpClientBase : ApiClientBase
     {
         try
         {
-            var accToken = await _httpAuthorization.GetToken("access_token");
-            client.SetBearerToken(accToken);
+            string accToken = await _httpAuthorization.GetToken("access_token");
+            hc.SetBearerToken(accToken);
         }
         catch (Exception e)
         {
@@ -148,8 +147,8 @@ public class ApiHttpClientBase : ApiClientBase
     {
         try
         {
-            var uri = new Uri(client.BaseAddress + path);
-            var result = await client.SendAuthAsync(new HttpRequestMessage(method, uri));
+            var uri = new Uri(hc.BaseAddress + path);
+            var result = await hc.SendAuthAsync(new HttpRequestMessage(method, uri));
             
             return await GetDeserializeObject<TOut>(result);
         }
@@ -168,8 +167,8 @@ public class ApiHttpClientBase : ApiClientBase
     {
         try
         {
-            var uri = new Uri(client.BaseAddress + path);
-            var result = await client.SendAuthAsync(
+            var uri = new Uri(hc.BaseAddress + path);
+            var result = await hc.SendAuthAsync(
                 new HttpRequestMessage(method, uri)
                 {
                     Content = model

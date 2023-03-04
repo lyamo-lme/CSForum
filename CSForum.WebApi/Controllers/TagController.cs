@@ -67,11 +67,15 @@ namespace CSForum.WebApi.Controllers
         }
 
         [HttpGet, Route("{name}")]
-        public async Task<ActionResult<Tag>> FindByName(string name)
+        public async Task<ActionResult<Tag>> FindByName(string name, int? skip = null, int? take = null)
         {
             try
             {
-                return Ok(await _uofRepository.GenericRepository<Tag>().GetAsync(x=>x.Name.Contains(name)));
+                return Ok(await _uofRepository.GenericRepository<Tag>().GetAsync(
+                    x => x.Name.Contains(name),
+                    skip: skip,
+                    take: take
+                ));
             }
             catch (Exception e)
             {
@@ -98,11 +102,14 @@ namespace CSForum.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Tag>> Get()
+        public async Task<ActionResult<Tag>> Get(int? skip = null, int? take = null)
         {
             try
             {
-                return Ok(await _uofRepository.GenericRepository<Tag>().GetAsync());
+                return Ok(await _uofRepository.GenericRepository<Tag>().GetAsync(
+                    skip: skip,
+                    take: take
+                ));
             }
             catch (Exception e)
             {

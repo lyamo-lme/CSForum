@@ -5,27 +5,27 @@ namespace CSForum.Services.Http;
 
 public abstract class  ApiClientBase
 {
-    protected readonly HttpClient client;
+    protected readonly HttpClient hc;
     private readonly ApiSettingConfig? _apiSettings;
 
-    protected ApiClientBase(HttpClient client, ApiSettingConfig apiSettings)
+    protected ApiClientBase(HttpClient hc, ApiSettingConfig apiSettings)
     {
-        this.client = client;
+        this.hc = hc;
         this._apiSettings = apiSettings;
-        this.client.BaseAddress = new Uri(this._apiSettings.WebApiUrl);
+        this.hc.BaseAddress = new Uri(this._apiSettings.WebApiUrl);
     }
 
     protected ApiClientBase(ApiSettingConfig apiSettings)
     {
-        client = new HttpClient();
+        hc = new HttpClient();
         _apiSettings = apiSettings;
-        client.BaseAddress = new Uri(this._apiSettings.WebApiUrl);
+        hc.BaseAddress = new Uri(this._apiSettings.WebApiUrl);
     }
     
 
     protected ApiClientBase()
     {
-        client = new HttpClient();
+        hc = new HttpClient();
         _apiSettings = null;
         
     }

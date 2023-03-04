@@ -24,7 +24,7 @@ public class UserController : Controller
     {
         try
         {
-            return await _uofRepository.GenericRepository<User>().GetAsync();
+            return( await _uofRepository.GenericRepository<User>().GetAsync()).ToList();
         }
         catch (Exception e )
         {
