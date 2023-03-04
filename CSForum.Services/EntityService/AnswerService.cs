@@ -25,12 +25,8 @@ public class AnswerService : IAnswerService
         var answer = await _uofRepository.GenericRepository<Answer>().CreateAsync(model);
 
         var user = await _uofRepository.GenericRepository<User>().FindAsync(x => x.Id == model.UserId);
-
-        await _userService.UpdateUser(new User()
-        {
-            Id = model.UserId,
-            RatingScores = user.RatingScores + 5
-        });
+        user.RatingScores += 5;
+        await _userService.UpdateUser(user);
 
         await _uofRepository.SaveAsync();
         return answer;

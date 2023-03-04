@@ -27,12 +27,8 @@ public class PostService:IPostService
         var post = await _uofRepository.GenericRepository<Post>().CreateAsync(mappedPost);
         
         var user = await _uofRepository.GenericRepository<User>().FindAsync(x=>x.Id==model.UserId);
-        
-        await _uofRepository.GenericRepository<User>().UpdateAsync(new User()
-        {
-            Id = user.Id,
-            RatingScores = user.RatingScores + 1
-        });
+        user.RatingScores += 1;
+        await _uofRepository.GenericRepository<User>().UpdateAsync(user);
         
         await _uofRepository.SaveAsync();
         return post;
