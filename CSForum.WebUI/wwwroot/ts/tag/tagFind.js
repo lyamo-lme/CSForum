@@ -16,10 +16,10 @@ tagInput.addEventListener("change", () => {
     // @ts-ignore
     tags(tagInput.value);
 });
-2;
 function tags(name) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            tagList.innerHTML = "";
             const response = yield fetch(urlOrigin + `/api/tags/${name}`, {
                 method: "GET"
             });
@@ -27,10 +27,18 @@ function tags(name) {
             data.map(tag => {
                 let tagElement = createElement("p", "tag", "");
                 let hrefTag = createElement("a", "href", tag.name);
-                // @ts-ignore
-                hrefTag.href = `/tag/${tag.id}`;
-                tagElement.appendChild(hrefTag);
-                tagList.appendChild(tagElement);
+                const response = fetch(urlOrigin + `/api/tags/count/${tag.id}`, {
+                    method: "GET"
+                });
+                response.then((data) => __awaiter(this, void 0, void 0, function* () {
+                    console.log();
+                    // @ts-ignore
+                    hrefTag.href = `/tag/${tag.id}`;
+                    let countElement = createElement("p", "count", (yield data.json()) + " posts");
+                    tagElement.appendChild(hrefTag);
+                    tagElement.appendChild(countElement);
+                    tagList.appendChild(tagElement);
+                }));
             });
         }
         catch (_a) {

@@ -20,6 +20,31 @@ $black: #212529;
   fill: #41AD49;
 }
 
+.posts-tag {
+  .wrap-st0 {
+    width: 20px;
+    height: 20px;
+  }
+  .post-tag-item {
+    padding: 2px;
+    display: flex;
+    border-radius: 5px;
+    border: 1px solid #a8a5a5;
+    color: black;
+    justify-content: space-between;
+    font-weight: bold;
+    p{
+      padding: 0;
+      margin: 0;
+    }
+    a {
+      color: black;;
+      text-decoration: none;
+    }
+    text-decoration: none;
+  }
+}
+
 .wrap-st0 {
   width: 30px;
   height: 30px;
@@ -130,9 +155,32 @@ $black: #212529;
   }
 
 }
-.tagFind{
-  .tag{
-    
+
+.tagFind {
+  .tag {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    height: min-content;
+
+    > * {
+      margin: 5px 0;
+      height: min-content;
+    }
+
+    .href {
+      background-color: #afaeae;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      padding: 0 10px;
+    }
+
+    .count {
+      padding: 0;
+      margin: 0;
+    }
   }
 }
 
@@ -512,6 +560,7 @@ ul.recent-posts {
 
 .nav-user {
   display: flex;
+
   > * {
     border-radius: 10px;
     padding: 5px;

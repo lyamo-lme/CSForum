@@ -129,6 +129,29 @@ namespace CSForum.WebApi.Controllers
                 throw;
             }
         }
+        [HttpGet]
+        [Route("tag/{tagId}")]
+        public async Task<ActionResult<Post>> GetPostByTagId(int tagId)
+        {
+            try
+            {
+                var postTags = await _uofRepository.GenericRepository<PostTag>().GetAsync(
+                    x => x.TagId == tagId,
+                    includeProperties: "Post");
+                var posts =  new List<Post?>();
+                foreach (var postTag in postTags)
+                {
+                    posts.Add(postTag.Post);
+                }
+                
+                return Ok(posts);
+            }
+            catch (Exception e)
+            {
+                _logger.Log(LogLevel.Error, e, e.Message);
+                throw;
+            }
+        }
 
         [HttpGet, Route("recent/{count}")]
         public async Task<ActionResult<Post>> GetRecentPosts(int count = 10)

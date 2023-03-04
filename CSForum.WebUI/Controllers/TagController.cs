@@ -1,5 +1,8 @@
-﻿using CSForum.Core.Models;
+﻿using AutoMapper;
+using CSForum.Core.Models;
+using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.Http;
+using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models.dtoModels;
 using CSForum.Shared.Models.dtoModels.Tags;
 using CSForum.WebUI.Models;
@@ -12,9 +15,11 @@ namespace CSForum.WebUI.Controllers
     public class TagController : Controller
     {
         private readonly ApiHttpClientBase _forumClient;
+        private readonly IMapper _mapper;
         public TagController(ApiHttpClientBase tagClient)
         {
             _forumClient = tagClient;
+            _mapper = MapperFactory.CreateMapper<DtoMapper>();
         }
         [HttpGet]
         [Route("{tagId}")]
@@ -24,8 +29,8 @@ namespace CSForum.WebUI.Controllers
             try
             {
                 var tag = await _forumClient.GetAsync<Tag>($"api/tags/tagId/{tagId}");
-                tag.Posts = await _forumClient.GetAsync<List<Post>>($"api/posts");
-                return View("TagView",tag);
+                tag.Posts = await _forumClient.GetAsync<List<Post>>($"api/posts/tag/{tagId}");
+                return View("TagView",_mapper.Map<TagViewModel>(tag));
             }
             catch (Exception e)
             {
@@ -52,7 +57,7 @@ namespace CSForum.WebUI.Controllers
             try
             {
                 var tag = await _forumClient.PostAsync<CreateTagDto, Tag>(model, "api/tags/create");
-                return View("TagView", tag);
+                return View("TagView", new TagViewModel());
             }
             catch (Exception e)
             {

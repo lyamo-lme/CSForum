@@ -1,7 +1,6 @@
-using CSForum.Core.Models;
-using CSForum.Shared.Models.ViewModels;
+using CSForum.WebUI.Models;
 
-namespace CSForum.WebUI.Models;
+namespace CSForum.Shared.Models.ViewModels;
 
 public class PostViewModel
 {

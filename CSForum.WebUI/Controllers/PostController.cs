@@ -11,6 +11,7 @@ using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models;
 using CSForum.Shared.Models.dtoModels;
 using CSForum.Shared.Models.dtoModels.Posts;
+using CSForum.Shared.Models.ViewModels;
 using CSForum.WebUI.Models;
 using CSForum.WebUI.Services.HttpClients;
 using Microsoft.AspNetCore.Authorization;

@@ -1,3 +1,5 @@
+using CSForum.Shared.Models.ViewModels;
+
 namespace CSForum.WebUI.Models;
 
 public class UserViewModel

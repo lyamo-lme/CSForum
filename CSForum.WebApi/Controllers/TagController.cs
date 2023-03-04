@@ -100,7 +100,22 @@ namespace CSForum.WebApi.Controllers
                 return BadRequest();
             }
         }
-
+        [HttpGet]
+        [Route("count/{tagId}")]
+        public async Task<ActionResult<Tag>> PostsCount(int tagId)
+        {
+            try
+            {
+                return Ok((await _uofRepository
+                    .GenericRepository<PostTag>()
+                    .GetAsync(x=>x.TagId==tagId))
+                    .Count());
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message, e);
+            }
+        }
         [HttpGet]
         public async Task<ActionResult<Tag>> Get(int? skip = null, int? take = null)
         {
