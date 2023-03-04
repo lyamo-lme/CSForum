@@ -51,7 +51,7 @@ builder.Services.AddForumDbContext();
 builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
     {
         options.User.AllowedUserNameCharacters = string.Empty;
-        options.SignIn.RequireConfirmedEmail = false;
+        options.SignIn.RequireConfirmedEmail = true;
     })
     .AddEntityFrameworkStores<ForumDbContext>()
     .AddDefaultTokenProviders()
