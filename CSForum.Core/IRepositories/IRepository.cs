@@ -16,6 +16,6 @@ namespace CSForum.Core.IRepositories
         public Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> func);
         public Task<TEntity> CreateAsync(TEntity model);
         public Task<bool> DeleteAsync(TEntity entity);
-        public Task<TEntity> UpdateAsync(TEntity model);
+        public ValueTask<TEntity> UpdateAsync(TEntity model);
     }
 }

@@ -5,7 +5,6 @@ namespace CSForum.Shared.Models.dtoModels.Posts;
 
 public class CreatePostDto
 {
-    public int UserId { get; set; }
     public string Title { get; set; }
     public string Content { get; set; }
     public List<TagIdInPostDto>? PostTags { get; set; }

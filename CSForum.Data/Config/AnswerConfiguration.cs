@@ -9,6 +9,7 @@ public class AnswerConfiguration:IEntityTypeConfiguration<Answer>
     public void Configure(EntityTypeBuilder<Answer> builder)
     {
         builder.HasKey(prop => prop.Id);
+        builder.HasIndex(prop => prop.Id);
 
         builder.Property(prop=>prop.PostId).IsRequired();
         builder.Property(prop=>prop.UserId).IsRequired();

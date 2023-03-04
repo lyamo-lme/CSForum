@@ -46,7 +46,7 @@ builder.Services.AddDbContext<ForumDbContext>(options =>
     options.UseSqlServer(defaultConnString,
         b => b.MigrationsAssembly(assembly)));
 
-builder.Services.AddForumDbContext();
+builder.Services.AddRepository();
 
 builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
     {

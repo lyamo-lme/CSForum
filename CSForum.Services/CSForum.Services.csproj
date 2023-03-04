@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CSForum.Core\CSForum.Core.csproj" />
+      <ProjectReference Include="..\CSForum.Infrastructure\CSForum.Infrastructure.csproj" />
       <ProjectReference Include="..\CSForum.Shared\CSForum.Shared.csproj" />
     </ItemGroup>
 

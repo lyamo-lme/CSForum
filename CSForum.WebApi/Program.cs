@@ -5,6 +5,7 @@ using CSForum.Core.Service;
 using CSForum.Data;
 using CSForum.Infrastructure.Repository;
 using CSForum.Services.ChatServ;
+using CSForum.Services.EntityService;
 using CSForum.WebUI;
 using Microsoft.IdentityModel.Tokens;
 
@@ -46,9 +47,12 @@ builder.Services.AddDbForumContext(
 
 builder.Services.AddCoreIdentity<User>(_ => { });
 
-builder.Services.AddScoped<IRepositoryFactory, RepositoryFactory>();
+builder.Services.AddTransient<IRepositoryFactory, RepositoryFactory>();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IPostService, PostService>();
+builder.Services.AddTransient<IAnswerService, AnswerService>();
 
-builder.Services.AddForumDbContext();
+builder.Services.AddRepository();
 builder.Services.AddTransient<IChatService, ChatService>();
 
 builder.Services.AddCors(options =>

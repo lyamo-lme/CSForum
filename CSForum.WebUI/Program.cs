@@ -33,7 +33,7 @@ builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
 
 //add dbcontext for forum db
 builder.Services.AddDbForumContext(connectionString, assembly);
-builder.Services.AddForumDbContext();
+builder.Services.AddRepository();
 
 builder.Services.AddAppIdentity<User>(_ => { });
 

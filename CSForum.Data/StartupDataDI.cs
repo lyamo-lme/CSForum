@@ -15,19 +15,19 @@ public static class StartupDataDi
         {
             option.UseSqlServer(connectionString, b=>
                 b.MigrationsAssembly(assembly));
-             option.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+             // option.UseQueryTrackingBehavior(QueryTrackingBehavior.);
         });
         
         return serviceCollection;
     }
-    public static IServiceCollection AddForumDbContext(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddRepository(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddScoped<IRepository<Tag>, GenericRepository<Tag>>();
-        serviceCollection.AddScoped<IRepository<PostTag>, GenericRepository<PostTag>>();
-        serviceCollection.AddScoped<IRepository<User>, GenericRepository<User>>();
-        serviceCollection.AddScoped<IRepository<Post>, GenericRepository<Post>>();
-        serviceCollection.AddScoped<IRepository<Chat>, GenericRepository<Chat>>();
-        serviceCollection.AddScoped<IRepository<Message>, GenericRepository<Message>>();
+        // serviceCollection.AddScoped<IRepository<Tag>, GenericRepository<Tag>>();
+        // serviceCollection.AddScoped<IRepository<PostTag>, GenericRepository<PostTag>>();
+        // serviceCollection.AddScoped<IRepository<User>, GenericRepository<User>>();
+        // serviceCollection.AddScoped<IRepository<Post>, GenericRepository<Post>>();
+        // serviceCollection.AddScoped<IRepository<Chat>, GenericRepository<Chat>>();
+        // serviceCollection.AddScoped<IRepository<Message>, GenericRepository<Message>>();
         serviceCollection.AddScoped<IUnitOfWorkRepository, UowRepository>();
         return serviceCollection;
     }

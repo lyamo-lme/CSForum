@@ -2,6 +2,7 @@ using System.Web;
 using AutoMapper;
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
+using CSForum.Core.Service;
 using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.Extensions;
 using CSForum.Services.MapperConfigurations;
@@ -21,13 +22,15 @@ public class AnswerController : Controller
     private readonly IMapper _dtoMapper;
     private readonly ILogger<AnswerController> _logger;
     private readonly UserManager<User> _userManager;
+    private readonly IAnswerService _answerService;
 
     public AnswerController(IUnitOfWorkRepository uofRepository, UserManager<User> userManager,
-        ILogger<AnswerController> logger)
+        ILogger<AnswerController> logger, IAnswerService answerService)
     {
         _uofRepository = uofRepository;
         _userManager = userManager;
         _logger = logger;
+        _answerService = answerService;
         _dtoMapper = MapperFactory.CreateMapper<DtoMapper>();
     }
 
@@ -36,10 +39,10 @@ public class AnswerController : Controller
     {
         try
         {
-            var mappedPost = _dtoMapper.Map<Answer>(model);
-            var post = await _uofRepository.GenericRepository<Answer>().CreateAsync(mappedPost);
-            await _uofRepository.SaveAsync();
-            return Ok(post);
+            var mappedEntity = _dtoMapper.Map<Answer>(model);
+            mappedEntity.UserId = _userManager.GetId(User);
+            var answer = await _answerService.CreateAnswer(mappedEntity);
+            return Ok(answer);
         }
         catch (Exception e)
         {
@@ -59,11 +62,10 @@ public class AnswerController : Controller
             {
                 return BadRequest();
             }
-
             var mappedAnswer = _dtoMapper.Map<Answer>(answerDto);
-            var updAnswer = await _uofRepository.GenericRepository<Answer>().UpdateAsync(mappedAnswer);
-            await _uofRepository.SaveAsync();
-            return Ok(updAnswer);
+            mappedAnswer.UserId = answer.UserId;
+            var ans = await _answerService.UpdateStateAnswer(mappedAnswer);
+            return Ok(ans);
         }
         catch (Exception e)
         {
@@ -86,6 +88,7 @@ public class AnswerController : Controller
             return BadRequest();
         }
     }
+
     [HttpGet, Route("user/{userId}")]
     public async Task<ActionResult<List<Answer>>> GetUsersAnswer(int userId)
     {

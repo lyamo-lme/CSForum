@@ -106,13 +106,13 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
     }
 
 
-    public Task<TEntity> UpdateAsync(TEntity model)
+    public ValueTask<TEntity> UpdateAsync(TEntity model)
     {
         try
         {
             var entity = _entity.Update(model);
             _context.Entry(model).State = EntityState.Modified;
-            return Task.FromResult(entity.Entity);
+            return new ValueTask<TEntity>(Task.FromResult(entity.Entity));
         }
         catch (Exception e)
         {

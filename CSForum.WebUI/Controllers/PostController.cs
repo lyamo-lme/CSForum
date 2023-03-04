@@ -50,9 +50,7 @@ public class PostController : Controller
     {
         try
         {
-            var user = await _userManager.GetUserAsync(User);
             var postDto = _mapper.Map<CreatePostDto>(model);
-            postDto.UserId = user.Id;
             var post = await _forumClient.PostAsync<CreatePostDto, Post>(postDto, "api/posts/create");
             return RedirectToAction($"{post.Id}");
         }
