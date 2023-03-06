@@ -15,7 +15,7 @@ public static class StartupDataDi
         {
             option.UseSqlServer(connectionString, b=>
                 b.MigrationsAssembly(assembly));
-             // option.UseQueryTrackingBehavior(QueryTrackingBehavior.);
+             option.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         });
         
         return serviceCollection;
