@@ -9,20 +9,6 @@
 
 <div class="user-block">
     <div class="user-bio">
-
-    </div>
-    <div class="user-content">
-        <div class="user-posts">
-            @if (@Model.Posts != null)
-            {
-                @foreach (var post in @Model.Posts)
-                {
-                    <div class="post">
-                        @post.Title
-                    </div>
-                }
-            }
-        </div>
     </div>
 </div>
 <section style="background-color: #eee;">
@@ -64,32 +50,34 @@
             <div class="card mb-4">
                 <div class="nav-user">
                     <div>
+                        <a asp-controller="User" asp-action="GetUserById" asp-route-id="@Model.Id">Info</a>
+                    </div>
+                    <div>
                         <a asp-controller="User" asp-action="GetUserPost" asp-route-id="@Model.Id">Post</a>
                     </div>
                     <div>
                         <a asp-controller="User" asp-action="GetUserAnswers" asp-route-id="@Model.Id">Answers</a>
                     </div>
-                    <div>
-                        <a asp-controller="User" asp-action="GetUserById" asp-route-id="@Model.Id">Post</a>
-                    </div>
+
                 </div>
                 @switch (menuOption)
                 {
                     case 0:
-                    {
-                        @Html.PartialAsync("_InfoPartialView", @Model);
-                        break;
-                    }
+                    default:
+                        {
+                            @Html.PartialAsync("_InfoPartialView", @Model)
+                            break;
+                        }
                     case 1:
-                    {
-                        @Html.PartialAsync("_PostsPartialView", @Model.Posts)
-                        break;
-                    }
+                        {
+                            @Html.PartialAsync("_PostsPartialView", @Model.Posts)
+                            break;
+                        }
                     case 2:
-                    {
-                        @Html.PartialAsync("_AnswersPartialView", @Model.Answers)
-                        break;
-                    }
+                        {
+                            @Html.PartialAsync("_AnswersPartialView", @Model.Answers)
+                            break;
+                        }
                 }
             </div>
         </div>

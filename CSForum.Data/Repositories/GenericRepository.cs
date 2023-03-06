@@ -111,7 +111,7 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
         {
             var entity = _entity.Update(model);
             _context.Entry(model).State = EntityState.Modified;
-            return new ValueTask<TEntity>(Task.FromResult(entity.Entity));
+            return new ValueTask<TEntity>(entity.Entity);
         }
         catch (Exception e)
         {
