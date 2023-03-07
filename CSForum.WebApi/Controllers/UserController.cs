@@ -1,5 +1,6 @@
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
+using CSForum.Services.EntityService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,41 +11,49 @@ namespace CSForum.WebApi.Controllers;
 public class UserController : Controller
 {
     private readonly IUnitOfWorkRepository _uofRepository;
+
     public UserController(IUnitOfWorkRepository uofRepository)
     {
         _uofRepository = uofRepository;
     }
-    [HttpGet,Route("secret"),Authorize]
-    public  IActionResult Secret()
-    {
-        return Ok("success");
-    }
+
     [HttpGet]
     public async Task<List<User>> GetUsers()
     {
         try
         {
-            return( await _uofRepository.GenericRepository<User>().GetAsync()).ToList();
+            return (await _uofRepository.GenericRepository<User>().GetAsync()).ToList();
         }
-        catch (Exception e )
+        catch (Exception e)
         {
             throw new Exception(e.Message, e);
         }
     }
-    [HttpGet, Route("{id}")]
-    public async Task<User?> GetUser(int id)
+
+    [HttpGet]
+    [Route("{id}/{additionalInfo}")]
+    public async Task<ActionResult<User>> GetUser(int id, string additionalInfo)
     {
         try
         {
-            return await _uofRepository.GenericRepository<User>().FindAsync(x => x.Id == id);
+            if (!AllowedData.AllowedUserData.Contains(additionalInfo))
+            {
+                return BadRequest("Dont have access to this data");
+            }
+
+            var user = await _uofRepository.GenericRepository<User>().FindAsync(
+                user => user.Id == id, additionalInfo.Equals("null") ? null : additionalInfo);
+            
+            return user;
         }
-        catch (Exception e )
+        catch (Exception e)
         {
             throw new Exception(e.Message, e);
         }
     }
+
     [HttpPost, Route("create")]
-    public async Task<User> CreateUser([FromBody]User model)
+    public async Task<ActionResult<User>> CreateUser([FromBody] User model)
     {
         try
         {
@@ -52,27 +61,29 @@ public class UserController : Controller
             await _uofRepository.SaveAsync();
             return user;
         }
-        catch (Exception e )
+        catch (Exception e)
         {
             throw new Exception(e.Message, e);
         }
     }
+
     [HttpPost, Route("edit")]
-    public async Task<User> EditUser([FromBody]User model)
+    public async Task<ActionResult<User>> EditUser([FromBody] User model)
     {
         try
         {
-            var user = await  _uofRepository.GenericRepository<User>().UpdateAsync(model);
+            var user = await _uofRepository.GenericRepository<User>().UpdateAsync(model);
             await _uofRepository.SaveAsync();
             return user;
         }
-        catch (Exception e )
+        catch (Exception e)
         {
             throw new Exception(e.Message, e);
         }
     }
+
     [HttpDelete, Route("delete")]
-    public async Task<bool> DeleteUser(int userId)
+    public async Task<ActionResult<bool>> DeleteUser(int userId)
     {
         try
         {
@@ -83,7 +94,7 @@ public class UserController : Controller
             await _uofRepository.SaveAsync();
             return result;
         }
-        catch (Exception e )
+        catch (Exception e)
         {
             throw new Exception(e.Message, e);
         }

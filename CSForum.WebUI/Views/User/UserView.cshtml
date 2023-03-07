@@ -1,10 +1,17 @@
-@using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Manage.Internal
-@model UserViewModel
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model CSForum.Shared.Models.ViewModels.UserViewModel
 
 @{
     ViewBag.Title = "title";
+    string? menuOption = null;
+    try
+    {
+        menuOption = ViewContext.RouteData.Values["additionalInfo"].ToString();
+    }
+    catch
+    {
+    }
     Layout = "_Layout";
-    var menuOption = Model.MenuOption;
 }
 
 <div class="user-block">
@@ -50,34 +57,33 @@
             <div class="card mb-4">
                 <div class="nav-user">
                     <div>
-                        <a asp-controller="User" asp-action="GetUserById" asp-route-id="@Model.Id">Info</a>
+                        <a asp-controller="User" asp-action="GetUserById" asp-route-id="@Model.Id" asp-route-additionalInfo="">Info</a>
                     </div>
                     <div>
-                        <a asp-controller="User" asp-action="GetUserPost" asp-route-id="@Model.Id">Post</a>
+                        <a asp-controller="User" asp-action="GetUserById" asp-route-id="@Model.Id" asp-route-additionalInfo="@nameof(CSForum.Core.Models.User.Posts)">Post</a>
                     </div>
                     <div>
-                        <a asp-controller="User" asp-action="GetUserAnswers" asp-route-id="@Model.Id">Answers</a>
+                        <a asp-controller="User" asp-action="GetUserById" asp-route-id="@Model.Id" asp-route-additionalInfo="@nameof(CSForum.Core.Models.User.Answers)">Answers</a>
                     </div>
 
                 </div>
                 @switch (menuOption)
                 {
-                    case 0:
-                    default:
-                        {
-                            @Html.PartialAsync("_InfoPartialView", @Model)
-                            break;
-                        }
-                    case 1:
-                        {
-                            @Html.PartialAsync("_PostsPartialView", @Model.Posts)
-                            break;
-                        }
-                    case 2:
-                        {
-                            @Html.PartialAsync("_AnswersPartialView", @Model.Answers)
-                            break;
-                        }
+                    case null:
+                    {
+                        @Html.Partial("_InfoPartialView", @Model)
+                        break;
+                    }
+                    case nameof(CSForum.Core.Models.User.Posts):
+                    {
+                        @Html.Partial("_PostsPartialView", @Model.Posts)
+                        break;
+                    }
+                    case nameof(CSForum.Core.Models.User.Answers):
+                    {
+                        @Html.Partial("_AnswersPartialView", @Model.Answers)
+                        break;
+                    }
                 }
             </div>
         </div>

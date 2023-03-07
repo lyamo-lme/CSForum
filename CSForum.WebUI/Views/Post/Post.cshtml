@@ -96,7 +96,7 @@
                 <div class="content">
                     <div class="container-info">
                         <p class="user">
-                            <a asp-controller="User" asp-action="GetUserById" asp-route-id="@answer.AnswerCreator.Id">@answer.AnswerCreator.UserName</a>
+                            <a asp-controller="User" asp-action="GetUserById" asp-route-id="@answer.AnswerCreator.Id" asp-route-additionalInfo="">@answer.AnswerCreator.UserName</a>
                         </p>
                         @if (ownPost)
                         {

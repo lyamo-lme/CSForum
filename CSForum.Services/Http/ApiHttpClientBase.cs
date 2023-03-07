@@ -44,7 +44,7 @@ public class ApiHttpClientBase : ApiClientBase
                 {
                     string refreshToken = await _httpAuthorization.GetToken("refresh_token");
                     var tokenResponse = await _tokenService.RefreshAccessToken(refreshToken);
-                   await  _httpAuthorization.UpdateTokens(new Dictionary<string, string>()
+                    await _httpAuthorization.UpdateTokens(new Dictionary<string, string>()
                     {
                         { "access_token", tokenResponse.AccessToken },
                         { "refresh_token", tokenResponse.RefreshToken }
@@ -152,7 +152,7 @@ public class ApiHttpClientBase : ApiClientBase
         {
             var uri = new Uri(hc.BaseAddress + path);
             var result = await hc.SendAuthAsync(new HttpRequestMessage(method, uri));
-            
+
             return await GetDeserializeObject<TOut>(result);
         }
         catch (HttpRequestException e)

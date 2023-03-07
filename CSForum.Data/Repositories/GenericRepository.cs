@@ -16,7 +16,7 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
         this._context = context;
         _entity = context.Set<TEntity>();
     }
-    
+
 
     public async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, int? take = null, int? skip = null,
@@ -52,7 +52,7 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
                 query = query.Take((int)take);
             }
 
-            return  query;
+            return query;
         }
         catch (Exception e)
         {
@@ -60,12 +60,15 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
         }
     }
 
-    public async Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> func)
+    public async Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> func, string? relatedData = null)
     {
         try
         {
-            var result = await _entity.FirstOrDefaultAsync(func);
-            return result;
+            if (relatedData != null)
+            {
+                return await _entity.Include(relatedData).FirstOrDefaultAsync(func);
+            }
+            return await _entity.FirstOrDefaultAsync(func);
         }
         catch (Exception e)
         {

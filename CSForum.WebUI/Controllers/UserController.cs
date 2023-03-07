@@ -31,55 +31,15 @@ public class UserController : Controller
     }
 
     [HttpGet]
-    [Route("info/{id}")]
-    public async Task<IActionResult> GetUserById(int id)
+    [Route("{id}")]
+    [Route("{id}/{additionalInfo}")]
+    public async Task<IActionResult> GetUserById(int id, string? additionalInfo = null)
     {
         try
         {
+            var addPath = $"/{(additionalInfo == null ? "null":additionalInfo)}";
             var user = _mapper.Map<UserViewModel>(
-                await _forumClient.GetAsync<User>($"api/users/{id}"));
-            user.MenuOption = 0;
-            return View("UserView", user);
-        }
-        catch (Exception e)
-        {
-            _logger.Log(LogLevel.Error, e, e.Message);
-            throw;
-        }
-    }
-
-    [HttpGet]
-    [Route("post/{id}")]
-    public async Task<IActionResult> GetUserPost(int id)
-    {
-        try
-        {
-            var user = _mapper.Map<UserViewModel>(
-                await _forumClient.GetAsync<User>($"api/users/{id}"));
-            user.Posts = _mapper.Map<List<PostViewModel>>(
-                 await _forumClient.GetAsync<List<Post>>($"api/posts/user/{id}")
-            );
-            user.MenuOption = 1;
-            return View("UserView", user);
-        }
-        catch (Exception e)
-        {
-            _logger.Log(LogLevel.Error, e, e.Message);
-            throw;
-        }
-    }
-    [HttpGet]
-    [Route("answers/{id}")]
-    public async Task<IActionResult> GetUserAnswers(int id)
-    {
-        try
-        {
-            var user = _mapper.Map<UserViewModel>(
-                await _forumClient.GetAsync<User>($"api/users/{id}"));
-            user.Answers = _mapper.Map<List<AnswerViewModel>>(
-                await _forumClient.GetAsync<List<Answer>>($"api/answers/user/{id}")
-            );
-            user.MenuOption = 2;
+                await _forumClient.GetAsync<User>($"api/users/{id}{addPath}"));
             return View("UserView", user);
         }
         catch (Exception e)
