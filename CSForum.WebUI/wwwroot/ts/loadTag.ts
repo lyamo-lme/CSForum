@@ -75,6 +75,7 @@ const containValue = (array: number[], value: number): boolean => {
 
 interface Tags {
     id: number,
-    name: string
+    name: string,
+    description: string|null
 }
 

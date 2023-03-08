@@ -9,10 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { createElement } from "../htmlLib/htmlLib.js";
 const tagInput = document.querySelector("#tagInput");
+const tagButton = document.querySelector("#tagButton");
 const tagList = document.querySelector("#tagsList");
 console.log("here tag Find");
-tagInput.addEventListener("change", () => {
-    console.log("here");
+tagButton.addEventListener("click", () => {
     // @ts-ignore
     tags(tagInput.value);
 });
@@ -25,8 +25,8 @@ function tags(name) {
             });
             let data = yield response.json();
             data.map(tag => {
-                let tagElement = createElement("p", "tag", "");
-                let hrefTag = createElement("a", "href", tag.name);
+                let hrefTag = createElement("a", "tag", "");
+                let tagElement = createElement("div", "href", tag.name);
                 const response = fetch(urlOrigin + `/api/tags/count/${tag.id}`, {
                     method: "GET"
                 });
@@ -35,9 +35,9 @@ function tags(name) {
                     // @ts-ignore
                     hrefTag.href = `/tag/${tag.id}`;
                     let countElement = createElement("p", "count", (yield data.json()) + " posts");
-                    tagElement.appendChild(hrefTag);
+                    hrefTag.appendChild(tagElement);
                     tagElement.appendChild(countElement);
-                    tagList.appendChild(tagElement);
+                    tagList.appendChild(hrefTag);
                 }));
             });
         }

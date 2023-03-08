@@ -1,4 +1,9 @@
-<input id="tagInput" pattern="Tags find input"/>
-<div id="tagsList" class="tagFind">
-</div> 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer ViewLocalize
+<div class="tag-find">
+    <input  id="tagInput" placeholder="Tags find input"/>
+    <button id="tagButton">@ViewLocalize["Find"]</button>
+</div>
+<div id="tagsList" class="tagFindList">
+</div>
 <script type="module" src="~/ts/tag/tagFind.js"></script>

@@ -29,10 +29,10 @@
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
                          class="rounded-circle img-fluid" style="width: 150px;">
                     <h5 class="my-3">@Model.UserName</h5>
-                    <p class="text-muted mb-1">Full Stack Developer</p>
+                    @* <p class="text-muted mb-1">Full Stack Developer</p> *@
                     <div class="d-flex justify-content-center mb-2">
-                        <button type="button" class="btn btn-primary">Follow</button>
-                        <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+                        @* <button type="button"  class="btn btn-primary" >Follow</button> *@
+                        <button type="button" id="buttonMessage" class="btn btn-outline-primary ms-1">Message</button>
                     </div>
                 </div>
             </div>
@@ -90,4 +90,18 @@
         </div>
     </div>
 </section>
-@await Html.PartialAsync("~/Views/Chat/CreateChat.cshtml", @Model);
+<div id="messageChat" class="form-chat" style="display: none">
+    @await Html.PartialAsync("~/Views/Chat/CreateChat.cshtml", @Model);
+</div>
+
+<script>
+let button = document.querySelector("#buttonMessage");
+let buttonClose = document.querySelector("#closeButton");
+let block = document.querySelector("#messageChat");
+button.addEventListener("click", ()=>{
+    block.style.display =  block.style.display==="none"?"block":"none";
+});
+ buttonClose.addEventListener("click", ()=>{
+    block.style.display =  block.style.display==="none"?"block":"none";
+ });
+</script>

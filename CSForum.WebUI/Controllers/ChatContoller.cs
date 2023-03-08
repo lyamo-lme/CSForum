@@ -68,13 +68,20 @@ public class ChatController : Controller
     {
         try
         {
+            if (!ModelState.IsValid)
+            {
+                string returnUrl = Url.Action(nameof(UserController.GetUserById), "User", new { id = dto.UserId });
+                return Redirect(returnUrl);
+            }
+
             var signedUser = _userManager.GetId(User);
-            var redirect = Url.Action(nameof(Chat), "Chat");
             await _chatService.CreateChatAsync(dto.UserId, new Message()
             {
                 UserId = signedUser,
                 Content = dto.Content
             });
+            string redirect = Url.Action(nameof(Chat), "Chat");
+
             return Redirect(redirect);
         }
         catch (Exception e)

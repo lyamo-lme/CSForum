@@ -76,7 +76,7 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                var postResult = await _postService.FindPost(x=>x.Id==postId);
+                var postResult = await _postService.FindPost(x => x.Id == postId);
                 return Ok(postResult);
             }
             catch (Exception e)
@@ -127,7 +127,7 @@ namespace CSForum.WebApi.Controllers
             {
                 var postTags = await _uofRepository.GenericRepository<PostTag>().GetAsync(
                     x => x.TagId == tagId,
-                    includeProperties: "Post");
+                    includeProperties: "Post,Post.PostCreator");
                 var posts = new List<Post?>();
                 foreach (var postTag in postTags)
                 {

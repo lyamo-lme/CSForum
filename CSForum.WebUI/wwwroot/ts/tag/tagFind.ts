@@ -1,11 +1,11 @@
 import {createElement} from "../htmlLib/htmlLib.js";
 
 const tagInput = document.querySelector("#tagInput");
+const tagButton = document.querySelector("#tagButton");
 const tagList = document.querySelector("#tagsList");
 console.log("here tag Find")
 
-tagInput.addEventListener("change", () => {
-    console.log("here");
+tagButton.addEventListener("click", () => {
     // @ts-ignore
     tags(tagInput.value);
 });
@@ -18,8 +18,8 @@ async function tags(name: string) {
         });
         let data = await response.json() as Tags[];
         data.map(tag=>{
-            let tagElement = createElement("p","tag","");
-            let hrefTag  = createElement("a", "href", tag.name);
+            let hrefTag  = createElement("a", "tag", "");
+            let tagElement = createElement("div","href",tag.name);
             const response = fetch(urlOrigin + `/api/tags/count/${tag.id}`, {
                 method: "GET"
             });
@@ -28,9 +28,9 @@ async function tags(name: string) {
                 // @ts-ignore
                 hrefTag.href = `/tag/${tag.id}`;
                 let countElement = createElement("p", "count", await data.json()+" posts")
-                tagElement.appendChild(hrefTag);
+                hrefTag.appendChild(tagElement);
                 tagElement.appendChild(countElement);
-                tagList.appendChild(tagElement);
+                tagList.appendChild(hrefTag);
             });
         });
     } catch {
