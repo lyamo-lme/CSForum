@@ -2,7 +2,6 @@
 using CSForum.Core.Models;
 using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.Http;
-using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models.dtoModels;
 using CSForum.Shared.Models.dtoModels.Tags;
 using CSForum.WebUI.Models;

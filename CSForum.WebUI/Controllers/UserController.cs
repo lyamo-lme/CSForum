@@ -3,7 +3,6 @@ using CSForum.Core.Models;
 using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.Extensions;
 using CSForum.Services.Http;
-using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models.ViewModels;
 using CSForum.WebUI.Models;
 using CSForum.WebUI.Services.HttpClients;

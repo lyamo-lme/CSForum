@@ -1,14 +1,12 @@
 @model List<CSForum.Shared.Models.ViewModels.PostViewModel>?
-<div>
+<div class="user-info-list">
     @if (@Model != null)
     {
         foreach (var post in @Model)
         {
-            <div>
-                <a asp-controller="Post" asp-action="Post" asp-route-postId="@post.Id">
-                    @post.Title
-                </a>
-            </div>
+            <a asp-controller="Post" asp-action="Post" asp-route-postId="@post.Id">
+              <div> @post.Title</div>
+            </a>
         }
     }
 </div>

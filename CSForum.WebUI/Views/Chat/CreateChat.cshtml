@@ -1,0 +1,11 @@
+@using CSForum.Shared.Models.dtoModels.Users
+@using CSForum.Shared.Models.dtoModels.Chat
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model CSForum.Shared.Models.ViewModels.UserViewModel 
+<div>
+    <form asp-controller="Chat" asp-action="CreateChat" method="post">
+        <input hidden="hidden" name="@nameof(CreateChatDto.UserId)" value="@Model.Id" >
+        <textarea name="@nameof(CreateChatDto.Content)"></textarea>
+        <button type="submit">Submit</button>
+    </form>
+</div>

@@ -3,7 +3,6 @@ using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Data.Repositories;
 using CSForum.Infrastructure.MapperConfigurations;
-using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models.dtoModels.Tags;
 using Microsoft.AspNetCore.Mvc;
 

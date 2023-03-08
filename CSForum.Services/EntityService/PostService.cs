@@ -5,7 +5,6 @@ using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Core.Service;
 using CSForum.Infrastructure.MapperConfigurations;
-using CSForum.Services.MapperConfigurations;
 
 namespace CSForum.Services.EntityService;
 

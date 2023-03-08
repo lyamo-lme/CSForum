@@ -6,7 +6,6 @@ using CSForum.Core.Models;
 using CSForum.Core.Service;
 using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.Extensions;
-using CSForum.Services.MapperConfigurations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
@@ -41,7 +40,7 @@ namespace CSForum.WebUI.SignalR
                 var userId = _userManager.GetUserId(Context.User);
 
                 var messageEntity = await _chatService.AddMessageAsync(
-                    new Message(int.Parse(userId),
+                        new Message(int.Parse(userId),
                         WebUtility.HtmlEncode(message)
                     ), receiverId);
 

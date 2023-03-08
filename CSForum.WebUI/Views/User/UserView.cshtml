@@ -1,4 +1,6 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using CSForum.Core.Models
+@using CSForum.Shared.Models.ViewModels
 @model CSForum.Shared.Models.ViewModels.UserViewModel
 
 @{
@@ -34,24 +36,24 @@
                     </div>
                 </div>
             </div>
-            <div class="card mb-4 mb-lg-0">
-                <div class="card-body p-0">
-
-                    <ul class="list-group list-group-flush rounded-3">
-                        <li class="list-group-item text-center d-flex justify-content-between align-items-center p-3">
-                            <b class="text-center">Contacts</b>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                            <i class="fas fa-globe fa-lg text-warning"></i>
-                            <p class="mb-0">Facebook example</p>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                            <i class="fab fa-github fa-lg" style="color: #333333;"></i>
-                            <p class="mb-0">Google example</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            @* <div class="card mb-4 mb-lg-0"> *@
+            @*     <div class="card-body p-0"> *@
+            @* *@
+            @*         <ul class="list-group list-group-flush rounded-3"> *@
+            @*             <li class="list-group-item text-center d-flex justify-content-between align-items-center p-3"> *@
+            @*                 <b class="text-center">Contacts</b> *@
+            @*             </li> *@
+            @*             <li class="list-group-item d-flex justify-content-between align-items-center p-3"> *@
+            @*                 <i class="fas fa-globe fa-lg text-warning"></i> *@
+            @*                 <p class="mb-0">Facebook example</p> *@
+            @*             </li> *@
+            @*             <li class="list-group-item d-flex justify-content-between align-items-center p-3"> *@
+            @*                 <i class="fab fa-github fa-lg" style="color: #333333;"></i> *@
+            @*                 <p class="mb-0">Google example</p> *@
+            @*             </li> *@
+            @*         </ul> *@
+            @*     </div> *@
+            @* </div> *@
         </div>
         <div class="col-lg-8">
             <div class="card mb-4">
@@ -65,23 +67,22 @@
                     <div>
                         <a asp-controller="User" asp-action="GetUserById" asp-route-id="@Model.Id" asp-route-additionalInfo="@nameof(CSForum.Core.Models.User.Answers)">Answers</a>
                     </div>
-
                 </div>
                 @switch (menuOption)
                 {
                     case null:
                     {
-                        @Html.Partial("_InfoPartialView", @Model)
+                        @await Html.PartialAsync("_InfoPartialView", @Model)
                         break;
                     }
                     case nameof(CSForum.Core.Models.User.Posts):
                     {
-                        @Html.Partial("_PostsPartialView", @Model.Posts)
+                        @await Html.PartialAsync("_PostsPartialView", @Model.Posts)
                         break;
                     }
                     case nameof(CSForum.Core.Models.User.Answers):
                     {
-                        @Html.Partial("_AnswersPartialView", @Model.Answers)
+                        @await Html.PartialAsync("_AnswersPartialView", @Model.Answers)
                         break;
                     }
                 }
@@ -89,3 +90,4 @@
         </div>
     </div>
 </section>
+@await Html.PartialAsync("~/Views/Chat/CreateChat.cshtml", @Model);

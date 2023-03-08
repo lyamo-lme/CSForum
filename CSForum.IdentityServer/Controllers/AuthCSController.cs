@@ -8,7 +8,6 @@ using CSForum.Core.Service;
 using CSForum.IdentityServer.Models;
 using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.Extensions;
-using CSForum.Services.MapperConfigurations;
 using IdentityModel;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authorization;

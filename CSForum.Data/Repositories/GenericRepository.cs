@@ -64,11 +64,13 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
     {
         try
         {
+            IQueryable<TEntity> query = _entity;
             if (relatedData != null)
             {
-                return await _entity.Include(relatedData).FirstOrDefaultAsync(func);
+                query = query.Include(relatedData);
             }
-            return await _entity.FirstOrDefaultAsync(func);
+
+            return await query.FirstOrDefaultAsync(func);
         }
         catch (Exception e)
         {
@@ -76,12 +78,12 @@ public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : c
         }
     }
 
-    public Task<TEntity> CreateAsync(TEntity model)
+    public ValueTask<TEntity> CreateAsync(TEntity model)
     {
         try
         {
             var md = _entity.Add(model);
-            return Task.FromResult(model);
+            return new ValueTask<TEntity>(md.Entity);
         }
         catch (Exception e)
         {

@@ -3,9 +3,11 @@ using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Core.Service;
 using CSForum.Infrastructure.MapperConfigurations;
+using CSForum.Services.Extensions;
 using CSForum.Services.Http;
-using CSForum.Services.MapperConfigurations;
+using CSForum.Shared.Models.dtoModels.Chat;
 using CSForum.Shared.Models.ViewModels;
+using CSForum.WebUI.Views.Chat;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +34,7 @@ public class ChatController : Controller
     }
 
     [Authorize, HttpGet, Route("")]
-    public  Task<ViewResult> Chat()
+    public Task<ViewResult> Chat()
     {
         try
         {
@@ -54,7 +56,7 @@ public class ChatController : Controller
             return Ok(usersChat);
         }
         catch (Exception e)
-        
+
         {
             throw;
         }
@@ -62,13 +64,18 @@ public class ChatController : Controller
 
     [Authorize]
     [HttpPost]
-    [Route("{userId}")]
-    public async Task<Chat> CreateChat(int userId)
+    public async Task<ActionResult> CreateChat(CreateChatDto dto)
     {
         try
         {
-            var signedUser = _userManager.GetUserId(User);
-            return await _chatService.CreateChatAsync(int.Parse(signedUser), userId);
+            var signedUser = _userManager.GetId(User);
+            var redirect = Url.Action(nameof(Chat), "Chat");
+            await _chatService.CreateChatAsync(dto.UserId, new Message()
+            {
+                UserId = signedUser,
+                Content = dto.Content
+            });
+            return Redirect(redirect);
         }
         catch (Exception e)
         {

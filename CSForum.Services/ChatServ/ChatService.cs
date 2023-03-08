@@ -65,29 +65,32 @@ public class ChatService : IChatService
         }
     }
 
-    public async Task<Chat> CreateChatAsync(int firstId, int secondId)
+    public async Task<Chat> CreateChatAsync(int receiverId, Message message)
     {
         try
         {
-            var userChat = await GetUserChat(firstId, secondId);
+            var userChat = await GetUserChat(receiverId, message.UserId);
 
             if (userChat != null)
                 throw new Exception("chat created");
 
             var chat = await _uofRepository.GenericRepository<Chat>().CreateAsync(new Chat());
-
+            await _uofRepository.SaveAsync();
             await _uofRepository.GenericRepository<UsersChats>().CreateAsync(new UsersChats()
             {
                 ChatId = chat.ChatId,
-                UserId = firstId
+                UserId = receiverId
             });
 
             await _uofRepository.GenericRepository<UsersChats>().CreateAsync(new UsersChats()
             {
                 ChatId = chat.ChatId,
-                UserId = secondId
+                UserId = message.UserId
             });
 
+            message.ChatId = chat.ChatId;
+
+            await _uofRepository.GenericRepository<Message>().CreateAsync(message);
             await _uofRepository.SaveAsync();
             return chat;
         }
@@ -105,20 +108,22 @@ public class ChatService : IChatService
         {
             var userChats =
                 (await _uofRepository.GenericRepository<UsersChats>().GetAsync(x => x.UserId == userId)).ToList();
-            
+
             var usersChats = new List<UsersChats>();
-            
+
             foreach (var userChat in userChats)
             {
                 var newChat =
-                    await _uofRepository.GenericRepository<UsersChats>().FindAsync(x => x.UserId != userId && x.ChatId == userChat.ChatId);
+                    await _uofRepository.GenericRepository<UsersChats>()
+                        .FindAsync(x => x.UserId != userId && x.ChatId == userChat.ChatId);
 
-                newChat.User = await _uofRepository.GenericRepository<User>().FindAsync(x=>x.Id==newChat.UserId);
-                
-                newChat.Chat = await _uofRepository.GenericRepository<Chat>().FindAsync(x => x.ChatId == userChat.ChatId);
-                
+                newChat.User = await _uofRepository.GenericRepository<User>().FindAsync(x => x.Id == newChat.UserId);
+
+                newChat.Chat = await _uofRepository.GenericRepository<Chat>()
+                    .FindAsync(x => x.ChatId == userChat.ChatId);
+
                 newChat.Chat.Messages =
-                  (await _uofRepository.GenericRepository<Message>().GetAsync(x => x.ChatId == userChat.ChatId,
+                    (await _uofRepository.GenericRepository<Message>().GetAsync(x => x.ChatId == userChat.ChatId,
                         includeProperties: "User")).ToList();
 
                 usersChats.Add(newChat);

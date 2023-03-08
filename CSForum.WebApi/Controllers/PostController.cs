@@ -8,7 +8,6 @@ using CSForum.Core.Models;
 using CSForum.Core.Service;
 using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.Extensions;
-using CSForum.Services.MapperConfigurations;
 using CSForum.Shared.Models.dtoModels;
 using CSForum.Shared.Models.dtoModels.Posts;
 using Microsoft.AspNetCore.Authorization;

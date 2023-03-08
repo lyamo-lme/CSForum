@@ -25,6 +25,7 @@ $black: #212529;
     width: 20px;
     height: 20px;
   }
+
   .post-tag-item {
     padding: 2px;
     display: flex;
@@ -33,14 +34,17 @@ $black: #212529;
     color: black;
     justify-content: space-between;
     font-weight: bold;
-    p{
+
+    p {
       padding: 0;
       margin: 0;
     }
+
     a {
       color: black;;
       text-decoration: none;
     }
+
     text-decoration: none;
   }
 }
@@ -562,8 +566,34 @@ ul.recent-posts {
   display: flex;
 
   > * {
-    border-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
     padding: 5px;
-    border: 2px solid #969494;
+    margin-left: 3px;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+    font-weight: bolder;
+  }
+}
+
+.user-info-list {
+  div {
+    padding: 10px;
+    margin: 10px;
+    color: black;
+    font-weight: bold;
+    border-bottom: 1px solid #bdbdbd;
+  }
+
+  > a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
   }
 }

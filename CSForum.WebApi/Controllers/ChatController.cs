@@ -4,7 +4,6 @@ using CSForum.Core.Models;
 using CSForum.Core.Service;
 using CSForum.Infrastructure.MapperConfigurations;
 using CSForum.Services.Extensions;
-using CSForum.Services.MapperConfigurations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

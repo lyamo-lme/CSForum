@@ -1,6 +1,6 @@
 using AutoMapper;
 
-namespace CSForum.Services.MapperConfigurations;
+namespace CSForum.Infrastructure.MapperConfigurations;
 
 public static class MapperFactory
 {
