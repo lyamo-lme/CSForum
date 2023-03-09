@@ -33,14 +33,16 @@
                 @if (solved)
                 {
                     <p class="solved">
-                        Solved
+                        @ViewLocalize["Solved"]
                     </p>
                 }
 
-                @if (ownPost)
+                @if (ownPost )
                 {
-                    <button>
-                        <a asp-controller="Post" asp-action="UpdatePostState" asp-route-postId="@Model.Id">
+                    <button class="mark-solve">
+                        <a asp-controller="Post"
+                           asp-action="UpdatePostState"
+                           asp-route-postId="@Model.Id">
                             @ViewLocalize[@Model.Solved ? "MarkSolveFalse" : "MarkSolveTrue"]
                         </a>
                     </button>
@@ -50,10 +52,12 @@
         </div>
         <div class="info-container">
             <p>
-                <b>Created: </b>@Model.DateCreate
+                <b>@ViewLocalize["Posted"]: </b>@Model.DateCreate
             </p>
             <p>
-                <a asp-controller="User" asp-action="GetUserById" asp-route-id="@Model.PostCreator.Id">
+                <a asp-controller="User"
+                   asp-action="GetUserById"
+                   asp-route-id="@Model.PostCreator.Id">
                     by @Model.PostCreator.UserName
                 </a>
             </p>
@@ -62,7 +66,8 @@
     <div class="post-content">
         @Html.Raw(@Model.Content)
     </div>
-    <div id="selectedTag" class="selected-tag">
+    <div id="selectedTag"
+         class="selected-tag">
         @if (Model.PostTags != null)
         {
             @foreach (var postTag in @Model.PostTags)
@@ -72,6 +77,7 @@
         }
     </div>
 </div>
+@*Answers*@
 <div class="line-yellow"></div>
 <div>
     <h3>
@@ -85,10 +91,14 @@
                 <div class="accept">
                     @if (@answer.Accepted)
                     {
-                        <svg class="wrap-st0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" xml:space="preserve">
-
+                        <svg class="wrap-st0"
+                             xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink"
+                             id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" xml:space="preserve">
                             <g>
-                                <polygon class="st0" points="434.8,49 174.2,309.7 76.8,212.3 0,289.2 174.1,463.3 196.6,440.9 196.6,440.9 511.7,125.8 434.8,49     "/>
+                                <polygon
+                                    class="st0"
+                                    points="434.8,49 174.2,309.7 76.8,212.3 0,289.2 174.1,463.3 196.6,440.9 196.6,440.9 511.7,125.8 434.8,49"/>
                             </g>
                         </svg>
                     }
@@ -96,18 +106,28 @@
                 <div class="content">
                     <div class="container-info">
                         <p class="user">
-                            <a asp-controller="User" asp-action="GetUserById" asp-route-id="@answer.AnswerCreator.Id" asp-route-additionalInfo="">@answer.AnswerCreator.UserName</a>
+                            <a asp-controller="User"
+                               asp-action="GetUserById"
+                               asp-route-id="@answer.AnswerCreator.Id"
+                               asp-route-additionalInfo="">
+                                @answer.AnswerCreator.UserName
+                            </a>
                         </p>
-                        @if (ownPost)
+                        @if (ownPost && @Model.UserId != UserManager.GetId(User))
                         {
-                            <form class="state" asp-controller="Answer" asp-action="UpdateState" method="post">
-                                <button name="answerId" value="@answer.Id">
+                            <form class="state"
+                                  asp-controller="Answer"
+                                  asp-action="UpdateState"
+                                  method="post">
+                                <button class="mark-solve" name="answerId" value="@answer.Id">
                                     @ViewLocalize[@answer.Accepted ? "Reject" : "Accept"]
                                 </button>
                             </form>
                         }
                     </div>
-                    <div class="content-fill">@Html.Raw(@answer.ContentBody)</div>
+                    <div class="content-fill">
+                        @Html.Raw(@answer.ContentBody)
+                    </div>
                 </div>
             </div>
         }

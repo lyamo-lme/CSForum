@@ -97,16 +97,11 @@ public class PostController : Controller
         {
             var post = await _forumClient.GetAsync<Post>($"api/posts/id/{postId}");
             if (post.UserId != _userManager.GetId(User))
-            {
                 return Redirect($"/post/{post.Id}");
-            }
-
             post.Solved = !post.Solved;
-
             var postDto = _mapper.Map<EditPostDto>(post);
             await _forumClient.SetBearerTokenAsync();
             await _forumClient.PutAsync<EditPostDto, Post>(postDto, $"api/posts");
-
             return Redirect($"/post/{post.Id}");
         }
         catch (Exception e)

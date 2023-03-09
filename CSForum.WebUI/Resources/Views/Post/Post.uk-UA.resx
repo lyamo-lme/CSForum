@@ -33,4 +33,10 @@
     <data name="CountAnswers" xml:space="preserve">
         <value>Відповіді</value>
     </data>
+    <data name="Posted" xml:space="preserve">
+        <value>Створенно</value>
+    </data>
+    <data name="Solved" xml:space="preserve">
+        <value>Вирішенно</value>
+    </data>
 </root>

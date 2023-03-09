@@ -4,6 +4,7 @@
 
 .chat-container {
   display: flex;
+  height: 600px;
   position: relative;
   background-color: #212529;
   border-radius: 10px;
@@ -88,10 +89,21 @@
   padding: 0;
   margin: 0;
 }
+.mark-solve {
+  background-color: black;
+  border-radius: 5px;
+  color: #efc134;
+}
+.mark-solve a {
+  text-decoration: none;
+  color: #efc134;
+}
+
 .solved {
   border: 2px solid #86BB71;
   color: #86BB71;
   display: flex;
+  border-radius: 5px;
   justify-content: flex-end;
   align-items: flex-start;
 }
@@ -210,7 +222,7 @@
 .chat .chat-history {
   border-bottom: 2px solid white;
   overflow-y: scroll;
-  height: 575px;
+  height: 70%;
 }
 .chat .chat-history ul li {
   background-color: #212529;
@@ -472,6 +484,7 @@ ul.recent-posts {
 }
 .post-info .info-container {
   display: flex;
+  justify-content: flex-end;
 }
 .post-info .info-container > * {
   padding-left: 3px;

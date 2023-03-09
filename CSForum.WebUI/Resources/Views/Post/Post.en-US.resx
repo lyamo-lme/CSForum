@@ -33,4 +33,10 @@
     <data name="CountAnswers" xml:space="preserve">
         <value>Answers</value>
     </data>
+    <data name="Posted" xml:space="preserve">
+        <value>Posted</value>
+    </data>
+    <data name="Solved" xml:space="preserve">
+        <value>Solved</value>
+    </data>
 </root>
