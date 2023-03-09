@@ -27,13 +27,14 @@
     </div>
     <button type="submit">@ViewLocalizer["CreatePost"]</button>
     <script>
+    let editor = null;
         document.addEventListener("DOMContentLoaded", () => {
             let config = {
                 extraPlugins: "codesnippet",
                 codeSnippet_theme: 'monokai_sublime',
                 height: 365
             };
-            let editor = CKEDITOR.replace("content", config);
+            editor = CKEDITOR.replace("content", config);
             console.log(editor)
         });
         
@@ -49,10 +50,7 @@
                 tagId: selectedTagIds[i]  
                 });
             }
-            
-            let iframe = document.querySelector("iframe.cke_wysiwyg_frame.cke_reset");
-            let contentBody  = iframe.contentWindow.document.querySelector(".cke_editable > p") ;
-            data.Content = contentBody.innerHTML;
+            data.Content = editor.getData();
             let body=  JSON.stringify(data); 
             let response = await fetch(form.baseURI,
             {

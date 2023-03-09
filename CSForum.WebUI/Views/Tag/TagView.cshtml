@@ -1,5 +1,6 @@
 @model TagViewModel
-
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer ViewLocalize
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
@@ -7,6 +8,7 @@
 
 <h1>@Model.Name</h1>
 <p>@Model.Description</p>
+<p class="count-post">@Model.Posts.Count @ViewLocalize["Posts"]</p>
 @if (@Model.Posts != null)
 {
     <div class="posts-tag">
@@ -24,15 +26,16 @@
                     }
                 </p>
                 <a asp-controller="Post" asp-action="Post" asp-route-postId="@post.Id" class="post-item">
-                    <p class="title">
-                        @post.Title
-                    </p>
+                    <div class="title">
+                        <p>@post.Title</p>
+
+                    </div>
                     <p class="date">
-                        @post.DateCreate.ToString()
+                        @post.DateCreate
                     </p>
                 </a>
                 <a class="user" asp-controller="User" asp-action="GetUserById" asp-route-id="@post.UserId">
-                  by @post.PostCreator.UserName
+                    @ViewLocalize["By"] @post.PostCreator.UserName
                 </a>
             </div>
         }

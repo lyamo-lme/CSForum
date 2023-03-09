@@ -50,7 +50,8 @@ public class PostController : Controller
         try
         {
             var postDto = _mapper.Map<CreatePostDto>(model);
-            var post = await _forumClient.PostAsync<CreatePostDto, Post>(postDto, "api/posts/create");
+            await _forumClient.SetBearerTokenAsync();
+            var post = await _forumClient.PostAsync<CreatePostDto, Post>(postDto, "api/posts");
             return RedirectToAction($"{post.Id}");
         }
         catch (Exception e)

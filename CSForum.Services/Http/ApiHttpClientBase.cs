@@ -35,7 +35,7 @@ public class ApiHttpClientBase : ApiClientBase
 
     private AsyncRetryPolicy SetPolly()
     {
-        return Policy.Handle<HttpRequestException>(exception =>
+        return Policy.Handle<HttpRequestException>(  exception =>
         {
             if (exception.StatusCode == HttpStatusCode.Unauthorized)
             {
@@ -47,9 +47,8 @@ public class ApiHttpClientBase : ApiClientBase
                     { "access_token", tokenResponse.AccessToken },
                     { "refresh_token", tokenResponse.RefreshToken }
                 });
-                SetBearerTokenAsync().Wait();
+                SetBearerTokenAsync().GetAwaiter().GetResult();
             }
-
             return true;
         }).RetryAsync(3);
     }

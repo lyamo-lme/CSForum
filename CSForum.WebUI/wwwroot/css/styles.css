@@ -21,10 +21,9 @@
   height: 20px;
 }
 .posts-tag .post-tag-item {
+  border-bottom: 1px solid #9a9494;
   display: flex;
-  padding: 2px;
-  border-radius: 5px;
-  border: 1px solid #a8a5a5;
+  padding: 10px 5px;
   color: black;
   font-weight: bold;
   text-decoration: none;

@@ -27,6 +27,5 @@ public abstract class  ApiClientBase
     {
         hc = new HttpClient();
         _apiSettings = null;
-        
     }
 }
