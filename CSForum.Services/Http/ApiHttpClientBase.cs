@@ -1,9 +1,8 @@
 using System.Net;
 using System.Net.Http.Json;
 using CSForum.Core;
-using CSForum.WebUI.Services;
+using CSForum.Core.Http;
 using CSForum.Shared.Models;
-using CSForum.WebUI.Services.Interfaces;
 using IdentityModel.Client;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -40,19 +39,17 @@ public class ApiHttpClientBase : ApiClientBase
         {
             if (exception.StatusCode == HttpStatusCode.Unauthorized)
             {
-                Task task = new Task(async () =>
+                string refreshToken = _httpAuthorization.GetToken("refresh_token").GetAwaiter().GetResult();
+                var tokenResponse = _tokenService.RefreshAccessToken(refreshToken).GetAwaiter().GetResult();
+                ;
+                _httpAuthorization.UpdateTokens(new Dictionary<string, string>()
                 {
-                    string refreshToken = await _httpAuthorization.GetToken("refresh_token");
-                    var tokenResponse = await _tokenService.RefreshAccessToken(refreshToken);
-                    await _httpAuthorization.UpdateTokens(new Dictionary<string, string>()
-                    {
-                        { "access_token", tokenResponse.AccessToken },
-                        { "refresh_token", tokenResponse.RefreshToken }
-                    });
-                    await SetBearerTokenAsync();
+                    { "access_token", tokenResponse.AccessToken },
+                    { "refresh_token", tokenResponse.RefreshToken }
                 });
-                task.RunSynchronously();
+                SetBearerTokenAsync().Wait();
             }
+
             return true;
         }).RetryAsync(3);
     }
@@ -70,6 +67,7 @@ public class ApiHttpClientBase : ApiClientBase
             throw;
         }
     }
+
     public async Task<TOut> PutAsync<TDto, TOut>(TDto model, string path) where TOut : class
     {
         try

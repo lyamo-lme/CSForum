@@ -8,6 +8,7 @@ export let userId = request(webUrl + "/user/id", "GET").then(data => {
     console.log(data);
 });
 export let listOfUserChatsHtml = document.querySelector("#userChats");
+export let loadingElement = document.querySelector("#loading");
 export let chatHistory = document.querySelector("#chatHistory");
 
 //int chat
@@ -34,6 +35,8 @@ request(webUrl + "/web/chat/user", "GET").then(async (data) => {
         });
         Messages(userChats[0]);
     }
+    //@ts-ignore
+    loadingElement.style.display = "none";
 });
 
 export const Messages = (userChat: UsersChats) => {

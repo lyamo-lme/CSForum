@@ -1,4 +1,4 @@
-namespace CSForum.WebUI.Services.Interfaces;
+namespace CSForum.Core.Http;
 
 public interface IHttpAuthorization
 {

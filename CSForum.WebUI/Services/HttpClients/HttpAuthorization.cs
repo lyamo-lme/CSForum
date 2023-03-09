@@ -1,4 +1,4 @@
-using CSForum.WebUI.Services.Interfaces;
+using CSForum.Core.Http;
 using Microsoft.AspNetCore.Authentication;
 
 namespace CSForum.WebUI.Services.HttpClients;

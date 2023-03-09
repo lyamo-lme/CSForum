@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using CSForum.Core;
+using CSForum.Core.Http;
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Core.Service;
@@ -15,7 +16,6 @@ using CSForum.Shared.Models;
 using CSForum.WebUI;
 using CSForum.WebUI.Resources;
 using CSForum.WebUI.Services.HttpClients;
-using CSForum.WebUI.Services.Interfaces;
 using CSForum.WebUI.SignalR;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Options;

@@ -1,4 +1,5 @@
 using CSForum.Core;
+using CSForum.Core.Http;
 using CSForum.Core.IRepositories;
 using CSForum.Core.Models;
 using CSForum.Core.Service;
@@ -14,7 +15,6 @@ using CSForum.Shared;
 using CSForum.Shared.Models;
 using CSForum.WebUI;
 using CSForum.WebUI.Services.HttpClients;
-using CSForum.WebUI.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
