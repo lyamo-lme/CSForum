@@ -6,7 +6,7 @@ namespace CSForum.Data.Repositories
 {
     public class UowRepository : IUnitOfWorkRepository, IDisposable
     {
-        private readonly ILogger<UowRepository> _logger;
+        private readonly ILogger<UowRepository>? _logger;
         private readonly ForumDbContext _forumDbContext;
         private readonly IRepositoryFactory _repositoryFactory;
         private Dictionary<string, object>? _repositories;
@@ -15,6 +15,12 @@ namespace CSForum.Data.Repositories
             ForumDbContext forumDbContext)
         {
             _logger = logger;
+            _repositoryFactory = repositoryFactory;
+            _forumDbContext = forumDbContext;
+        }
+        public UowRepository(IRepositoryFactory repositoryFactory,
+            ForumDbContext forumDbContext)
+        {
             _repositoryFactory = repositoryFactory;
             _forumDbContext = forumDbContext;
         }
