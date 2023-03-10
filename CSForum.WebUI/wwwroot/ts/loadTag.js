@@ -45,6 +45,13 @@ function getTagsByName(name) {
                         if (!containValue(selectedTagIds, id)) {
                             selectedTagIds.push(id);
                             let div = document.createElement("div");
+                            div.id = `tag${id}`;
+                            div.addEventListener("click", () => {
+                                selectedTags.removeChild(div);
+                                // document.removeChild(document.querySelector(`#${div.id}}`));
+                                let idf = selectedTagIds.findIndex(x => x == id);
+                                selectedTagIds.splice(idf, 1);
+                            });
                             div.textContent = getNameOption(id);
                             selectedTags.appendChild(div);
                         }

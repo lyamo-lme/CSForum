@@ -407,6 +407,13 @@ body header > nav.navbar.bg-blue ul.identity li.nav-item {
   border-radius: 25px;
   padding: 50px;
 }
+.form-post .button-submit {
+  margin-top: 10px;
+  background-color: black;
+  width: 50%;
+  color: #efc134;
+  border-radius: 8px;
+}
 .form-post .input-box {
   border-radius: 10px;
   padding: 2px 10px;
@@ -534,8 +541,8 @@ ul.recent-posts {
   width: fit-content;
   height: fit-content;
   padding: 20px;
-  top: 50%;
-  left: 50%;
+  top: 45%;
+  left: 40%;
   background-color: white;
   border-radius: 10px;
   border: 2px solid #efc134;
@@ -544,7 +551,9 @@ ul.recent-posts {
   display: flex;
 }
 .form-chat .form-chat-inputs .form-chat-fields textarea {
-  width: 250px;
+  width: 300px;
+  height: 100px;
+  resize: none;
 }
 .form-chat .form-chat-inputs .form-chat-fields .message {
   display: flex;
@@ -567,7 +576,6 @@ ul.recent-posts {
 }
 
 .tag-find {
-  width: 90%;
   display: flex;
   justify-content: center;
 }
@@ -596,6 +604,7 @@ ul.recent-posts {
 .loading .anim {
   position: absolute;
   left: 48%;
+  top: 48%;
   height: 48%;
   color: #efc134;
 }

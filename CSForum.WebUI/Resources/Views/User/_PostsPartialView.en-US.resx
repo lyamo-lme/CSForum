@@ -18,10 +18,7 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="Email" xml:space="preserve">
-        <value>Email</value>
-    </data>
-    <data name="RatingScores" xml:space="preserve">
-        <value>Earned points</value>
+    <data name="NotPosts" xml:space="preserve">
+        <value>You dont have any post</value>
     </data>
 </root>

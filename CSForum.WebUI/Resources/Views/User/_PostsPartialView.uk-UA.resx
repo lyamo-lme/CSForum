@@ -18,10 +18,7 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="Email" xml:space="preserve">
-        <value>Пошта</value>
-    </data>
-    <data name="RatingScores" xml:space="preserve">
-        <value>Зароблені очки</value>
+    <data name="NotPosts" xml:space="preserve">
+        <value>Ви не маєте жодного поста</value>
     </data>
 </root>

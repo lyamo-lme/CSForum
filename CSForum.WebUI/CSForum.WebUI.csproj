@@ -182,6 +182,22 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>_InfoPartialView.en-US.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\User\_AnswersPartialView.en-US.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>_AnswersPartialView.en-US.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\User\_AnswersPartialView.uk-UA.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>_AnswersPartialView.en-US.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\User\_PostsPartialView.uk-UA.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>_InfoPartialView.en-US.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\User\_PostsPartialView.en-US.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>_InfoPartialView.en-US.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>

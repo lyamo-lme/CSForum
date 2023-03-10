@@ -1,17 +1,19 @@
 @using CSForum.Shared.Models.dtoModels.Chat
+@using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model CSForum.Shared.Models.ViewModels.UserViewModel 
+@model CSForum.Shared.Models.ViewModels.UserViewModel
+@inject IViewLocalizer ViewLocalizer
 
 <div class="form-chat-inputs">
     <form class="form-chat-fields" asp-controller="Chat" asp-action="CreateChat" method="post">
         <div class="message">
             <input hidden="hidden" name="@nameof(CreateChatDto.UserId)" value="@Model.Id">
-            <label>Message</label>
+            <label>@ViewLocalizer["Message"]</label>
             <textarea name="@nameof(CreateChatDto.Content)"></textarea>
         </div>
         <div class="message-buttons">
-            <button type="reset" id="closeButton">x</button>
-            <button  class="submit-button" type="submit">Sumbmit</button>
+            <button  type="reset" id="closeButton">x</button>
+            <button  class="submit-button" type="submit">@ViewLocalizer["Send"]</button>
         </div>
     </form>
 </div>
