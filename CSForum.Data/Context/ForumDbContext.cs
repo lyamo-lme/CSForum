@@ -11,8 +11,6 @@ public class ForumDbContext : IdentityDbContext<User, IdentityRole<int>, int>
 {
     public ForumDbContext(DbContextOptions<ForumDbContext> options) : base(options)
     {
-        // Database.EnsureDeleted();
-        // Database.EnsureCreated();  
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
