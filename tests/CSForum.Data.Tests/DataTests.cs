@@ -21,7 +21,7 @@ public class DataTests
     {
         DbContextOptionsBuilder<ForumDbContext> options = new DbContextOptionsBuilder<ForumDbContext>()
             .UseInMemoryDatabase(databaseName: "f");
-       new ForumDbContext(options.Options);
+      d =  new ForumDbContext(options.Options);
         _unitOfWorkRepository = new UowRepository(new RepositoryFactory(), d);
     }
 
