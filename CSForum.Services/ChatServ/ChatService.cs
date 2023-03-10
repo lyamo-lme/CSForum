@@ -42,8 +42,8 @@ public class ChatService : IChatService
     {
         try
         {
-            var usersChat = await _uofRepository.GenericRepository<UsersChats>().GetAsync(
-                userChat => userChat.UserId == firstId);
+            var usersChat = (await _uofRepository.GenericRepository<UsersChats>().GetAsync(
+                userChat => userChat.UserId == firstId)).ToList();
 
             foreach (var userChat in usersChat)
             {

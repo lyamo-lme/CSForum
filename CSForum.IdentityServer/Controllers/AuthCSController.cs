@@ -112,26 +112,7 @@ public class AuthCSController : Controller
                     Email = model.Email
                 }),
                 model.Password);
-
-            var user = await _uof.GenericRepository<User>()
-                .FindAsync(x => x.UserName == model.Username && x.Email == model.Email);
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var callbackUrl = Url.Page(
-                "/Account/ConfirmEmail",
-                pageHandler: null,
-                values: new { area = "Identity", userId = user.Id, code = code, returnUrl = model.ReturnUrl },
-                protocol: Request.Scheme);
-
-            await _emailSender.SendMessage<Email>(
-                new Email()
-                {
-                    senderName = "code?reply",
-                    receiverEmail = model.Email,
-                    htmlContent =
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
-                    subject = "Confirming registration"
-                });
+            await SendConfirmMessage(model);
 
             if (model.ReturnUrl != null)
             {
@@ -145,6 +126,31 @@ public class AuthCSController : Controller
             _logger.Log(LogLevel.Error, e, e.Message);
             throw;
         }
+    }
+
+    private async Task SendConfirmMessage(RegisterViewModel model)
+    {
+        var user = await _uof.GenericRepository<User>()
+            .FindAsync(x => x.UserName == model.Username && x.Email == model.Email);
+        
+        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+        
+        var callbackUrl = Url.Page(
+            "/Account/ConfirmEmail",
+            pageHandler: null,
+            values: new { area = "Identity", userId = user.Id, code = code, returnUrl = model.ReturnUrl },
+            protocol: Request.Scheme);
+
+        await _emailSender.SendMessage(
+            new Email()
+            {
+                senderName = "code?reply",
+                receiverEmail = model.Email,
+                htmlContent =
+                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
+                subject = "Confirming registration"
+            });
     }
 
     [HttpPost]
@@ -222,7 +228,7 @@ public class AuthCSController : Controller
         }
     }
 
-    private async Task<bool> ExternalRegister(ExternalLoginInfo info)
+    private async Task<bool> ExternalRegister(ExternalLoginInfo info,string returnUrl="")
     {
         try
         {
@@ -245,7 +251,12 @@ public class AuthCSController : Controller
             {
                 return false;
             }
-
+            await SendConfirmMessage(new RegisterViewModel()
+            {
+                Email = email,
+                Username = userName,
+                ReturnUrl = returnUrl
+            });
             return true;
         }
         catch (Exception e)
@@ -286,7 +297,9 @@ public class AuthCSController : Controller
                 return Redirect(returnUrl);
             }
 
-            await ExternalRegister(info);
+            await ExternalRegister(info, returnUrl);
+            
+           
             return Redirect(returnUrl);
         }
         catch (Exception e)
