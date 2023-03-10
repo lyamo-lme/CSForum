@@ -1,5 +1,6 @@
 using System.Dynamic;
 using System.Net;
+using CSForum.Services.Extensions;
 
 namespace CSForum.Services.Http;
 
@@ -11,7 +12,7 @@ public static class HttpExtensions
         var response = await client.SendAsync(requestMessage);
         if (response.StatusCode == HttpStatusCode.Unauthorized)
         {
-            throw new HttpRequestException("non auth",
+            throw new AuthHttpException("non auth",
                 new Exception(response.RequestMessage?.ToString()),
                 response.StatusCode);
         }

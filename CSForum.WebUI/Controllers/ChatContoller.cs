@@ -7,7 +7,6 @@ using CSForum.Services.Extensions;
 using CSForum.Services.Http;
 using CSForum.Shared.Models.dtoModels.Chat;
 using CSForum.Shared.Models.ViewModels;
-using CSForum.WebUI.Views.Chat;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

@@ -1,9 +1,11 @@
+@using Microsoft.AspNetCore.Mvc.Localization
 @model CSForum.Shared.Models.ViewModels.UserViewModel
+@inject IViewLocalizer ViewLocal
 <div class="card-body">
     <hr>
     <div class="row">
         <div class="col-sm-3">
-            <p class="mb-0">Email</p>
+            <p class="mb-0">@ViewLocal["Email"]</p>
         </div>
         <div class="col-sm-9">
             <p class="text-muted mb-0">@Model.Email</p>
@@ -12,10 +14,10 @@
     <hr>
     <div class="row">
         <div class="col-sm-3">
-            <p class="mb-0">Address</p>
+            <p class="mb-0">@ViewLocal["RatingScores"]</p>
         </div>
         <div class="col-sm-9">
-            <p class="text-muted mb-0">Examle Place</p>
+            <p class="text-muted mb-0">@Model.RatingScores</p>
         </div>
     </div>
 </div>

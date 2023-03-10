@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http.Json;
 using CSForum.Core;
 using CSForum.Core.Http;
+using CSForum.Services.Extensions;
 using CSForum.Shared.Models;
 using IdentityModel.Client;
 using Microsoft.Extensions.Logging;
@@ -35,22 +36,17 @@ public class ApiHttpClientBase : ApiClientBase
 
     private AsyncRetryPolicy SetPolly()
     {
-        return Policy.Handle<HttpRequestException>(  exception =>
+        return Policy.Handle<AuthHttpException>().RetryAsync(3, async (e, count, context) =>
         {
-            if (exception.StatusCode == HttpStatusCode.Unauthorized)
+            string refreshToken = await _httpAuthorization.GetToken("refresh_token");
+            var tokenResponse = await _tokenService.RefreshAccessToken(refreshToken);
+            await  _httpAuthorization.UpdateTokens(new Dictionary<string, string>()
             {
-                string refreshToken = _httpAuthorization.GetToken("refresh_token").GetAwaiter().GetResult();
-                var tokenResponse = _tokenService.RefreshAccessToken(refreshToken).GetAwaiter().GetResult();
-                ;
-                _httpAuthorization.UpdateTokens(new Dictionary<string, string>()
-                {
-                    { "access_token", tokenResponse.AccessToken },
-                    { "refresh_token", tokenResponse.RefreshToken }
-                });
-                SetBearerTokenAsync().GetAwaiter().GetResult();
-            }
-            return true;
-        }).RetryAsync(3);
+                { "access_token", tokenResponse.AccessToken },
+                { "refresh_token", tokenResponse.RefreshToken }
+            });
+            await SetBearerTokenAsync();
+        });
     }
 
 
@@ -152,9 +148,9 @@ public class ApiHttpClientBase : ApiClientBase
 
             return await GetDeserializeObject<TOut>(result);
         }
-        catch (HttpRequestException e)
+        catch (AuthHttpException e)
         {
-            throw new HttpRequestException("non auth", new Exception(e.Message), e.StatusCode);
+            throw new AuthHttpException("non auth", new Exception(e.Message), e.StatusCode);
         }
         catch (Exception e)
         {
@@ -177,9 +173,9 @@ public class ApiHttpClientBase : ApiClientBase
 
             return await GetDeserializeObject<TOut>(result);
         }
-        catch (HttpRequestException e)
+        catch (AuthHttpException e)
         {
-            throw new HttpRequestException("non auth", new Exception(e.Message), e.StatusCode);
+            throw new AuthHttpException("non auth", new Exception(e.Message), e.StatusCode);
         }
         catch (Exception e)
         {

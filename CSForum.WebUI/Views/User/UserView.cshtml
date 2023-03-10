@@ -1,10 +1,8 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@using CSForum.Core.Models
-@using CSForum.Shared.Models.ViewModels
 @model CSForum.Shared.Models.ViewModels.UserViewModel
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = @Model.UserName;
     string? menuOption = null;
     try
     {

@@ -120,7 +120,9 @@ namespace CSForum.WebApi.Controllers
         {
             try
             {
-                return Ok(await _uofRepository.GenericRepository<Tag>().GetAsync(
+                return Ok(await _uofRepository
+                    .GenericRepository<Tag>()
+                    .GetAsync(
                     skip: skip,
                     take: take
                 ));

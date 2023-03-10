@@ -25,7 +25,7 @@
             <a class="nav-link text-white" asp-controller="Chat" asp-action="Chat" >Chat</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-white">@ViewLocalizer["Hello"], @User.Identity?.Name!</a>
+            <a class="nav-link text-white" asp-controller="User" asp-action="GetUserById" asp-route-id="@UserManager.GetUserId(User)">@ViewLocalizer["Hello"], @User.Identity?.Name!</a>
         </li>
         <li class="nav-item">
             <a asp-controller="Home" asp-action="Logout" class="nav-link text-white">@ViewLocalizer["Logout"]</a>
