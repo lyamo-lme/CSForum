@@ -55,6 +55,9 @@ $black: #212529;
 
       padding-right: 10px;
     }
+    .user{
+      color: #0a53be;
+    }
 
     .mark {
       width: 35px;
@@ -129,12 +132,11 @@ $black: #212529;
   background-color: black;
   border-radius: 5px;
   color: $yellow;
+  margin-left: 5px;
   a {
     text-decoration: none;
     color: $yellow;
   }
-
-
 }
 
 
@@ -348,14 +350,13 @@ $black: #212529;
       &:after {
         bottom: 100%;
         left: 7%;
-        border: solid transparent;
         content: " ";
         height: 0;
         width: 0;
         position: absolute;
         pointer-events: none;
+        border: 10px solid transparent;
         border-bottom-color: $green;
-        border-width: 10px;
         margin-left: -10px;
       }
     }
@@ -516,7 +517,8 @@ body {
   color: #efc134;
   border-radius: 25px;
   padding: 50px;
-  .button-submit{
+
+  .button-submit {
     margin-top: 10px;
     background-color: black;
     width: 50%;
@@ -585,7 +587,31 @@ button.post.btn-dark {
 
 .recent-posts {
   > .element {
+    .date {
+      text-align: right;
+      padding: 0;
+      margin: 0;
+    }
+
+    display: flex;
+    flex-direction: column;
     border-bottom: 2px solid #efc134;
+    padding-bottom: 5px;
+
+    .title {
+      a {
+        text-decoration: none;
+        color: $yellow;
+        text-shadow: 1px 0 0 black, -1px 0 0 black, 0 1px 0 black, 0 -1px 0 black;
+      }
+
+      .title-name {
+        font-size: 20px;
+      }
+
+      display: flex;
+      justify-content: space-between;
+    }
   }
 }
 
@@ -598,8 +624,21 @@ ul.recent-posts {
     font-size: 16px;
   }
 }
+.post-block{
+  padding-bottom: 5px;
+}
+
+.culture{
+  color: $yellow;
+  background-color: black;
+  border: 1px solid $yellow;
+  padding: 2px;
+  border-radius: 10px;
+  cursor: pointer;
+}
 
 .post-info {
+
   .title {
     display: flex;
 
@@ -616,8 +655,9 @@ ul.recent-posts {
   .info-container {
     display: flex;
     justify-content: flex-end;
-
     > * {
+      margin-bottom: 0;
+      padding-bottom: 0;
       padding-left: 3px;
     }
   }

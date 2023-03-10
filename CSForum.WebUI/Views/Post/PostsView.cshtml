@@ -10,8 +10,25 @@
         @foreach (var post in @Model)
         {
             <li class="element">
-                <a asp-controller="Post" asp-action="Post" asp-route-postId="@post.Id">@post.Title</a>
-                <p>Created: @post.DateCreate</p>
+                <div class="title">
+                    <a asp-controller="Post" asp-action="Post" asp-route-postId="@post.Id" class="title-name">
+                        @post.Title
+                    </a>
+                    <a asp-controller="User" asp-action="GetUserById" asp-route-id="@post.UserId">
+                        @post.PostCreator.UserName
+                    </a>
+                </div>
+                <p class="date">Created: @post.DateCreate</p>
+                <div id="selectedTag"
+                     class="selected-tag">
+                    @if (post.PostTags != null)
+                    {
+                        @foreach (var postTag in @post.PostTags)
+                        {
+                            <div>@postTag.Tag.Name</div>
+                        }
+                    }
+                </div>
             </li>
         }
     </ul>

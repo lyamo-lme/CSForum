@@ -37,6 +37,9 @@
 .posts-tag .post-tag-item .post-item .title {
   flex-grow: 3;
 }
+.posts-tag .post-tag-item .user {
+  color: #0a53be;
+}
 .posts-tag .post-tag-item .mark {
   width: 35px;
   padding-right: 10px;
@@ -93,6 +96,7 @@
   background-color: black;
   border-radius: 5px;
   color: #efc134;
+  margin-left: 5px;
 }
 .mark-solve a {
   text-decoration: none;
@@ -275,14 +279,13 @@
 .chat .chat-history .message:after {
   bottom: 100%;
   left: 7%;
-  border: solid transparent;
   content: " ";
   height: 0;
   width: 0;
   position: absolute;
   pointer-events: none;
+  border: 10px solid transparent;
   border-bottom-color: #86BB71;
-  border-width: 10px;
   margin-left: -10px;
 }
 .chat .chat-history .my-message {
@@ -467,7 +470,27 @@ button.post.btn-dark {
 }
 
 .recent-posts > .element {
+  display: flex;
+  flex-direction: column;
   border-bottom: 2px solid #efc134;
+  padding-bottom: 5px;
+}
+.recent-posts > .element .date {
+  text-align: right;
+  padding: 0;
+  margin: 0;
+}
+.recent-posts > .element .title {
+  display: flex;
+  justify-content: space-between;
+}
+.recent-posts > .element .title a {
+  text-decoration: none;
+  color: #efc134;
+  text-shadow: 1px 0 0 black, -1px 0 0 black, 0 1px 0 black, 0 -1px 0 black;
+}
+.recent-posts > .element .title .title-name {
+  font-size: 20px;
 }
 
 ul.recent-posts {
@@ -479,6 +502,19 @@ ul.recent-posts {
     font-size: 16px;
   }
 }
+.post-block {
+  padding-bottom: 5px;
+}
+
+.culture {
+  color: #efc134;
+  background-color: black;
+  border: 1px solid #efc134;
+  padding: 2px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 .post-info .title {
   display: flex;
 }
@@ -494,6 +530,8 @@ ul.recent-posts {
   justify-content: flex-end;
 }
 .post-info .info-container > * {
+  margin-bottom: 0;
+  padding-bottom: 0;
   padding-left: 3px;
 }
 

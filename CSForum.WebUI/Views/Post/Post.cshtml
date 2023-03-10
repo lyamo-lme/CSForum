@@ -4,6 +4,7 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using CSForum.Core.Models
 @using CSForum.Services.Extensions
+@using System.Net
 @inject IViewLocalizer ViewLocalize
 @inject UserManager<User> UserManager
 
@@ -113,7 +114,7 @@
                                 @answer.AnswerCreator.UserName
                             </a>
                         </p>
-                        @if (ownPost && @Model.UserId != UserManager.GetId(User))
+                        @if (ownPost && @answer.UserId != UserManager.GetId(User))
                         {
                             <form class="state"
                                   asp-controller="Answer"
@@ -126,7 +127,7 @@
                         }
                     </div>
                     <div class="content-fill">
-                        @Html.Raw(@answer.ContentBody)
+                        @Html.Raw(WebUtility.HtmlDecode(@answer.ContentBody))  
                     </div>
                 </div>
             </div>

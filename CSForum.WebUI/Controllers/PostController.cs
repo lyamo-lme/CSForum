@@ -49,6 +49,10 @@ public class PostController : Controller
     {
         try
         {
+            if (!ModelState.IsValid)
+            {
+                return View("FormPost", model);
+            }
             var postDto = _mapper.Map<CreatePostDto>(model);
             await _forumClient.SetBearerTokenAsync();
             var post = await _forumClient.PostAsync<CreatePostDto, Post>(postDto, "api/posts");

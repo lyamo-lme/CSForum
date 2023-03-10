@@ -1,3 +1,4 @@
+using System.Net;
 using System.Web;
 using AutoMapper;
 using CSForum.Core.IRepositories;
@@ -40,6 +41,7 @@ public class AnswerController : Controller
         {
             var mappedEntity = _dtoMapper.Map<Answer>(model);
             mappedEntity.UserId = _userManager.GetId(User);
+            mappedEntity.ContentBody = WebUtility.HtmlEncode(mappedEntity.ContentBody);
             var answer = await _answerService.CreateAnswer(mappedEntity);
             return Ok(answer);
         }

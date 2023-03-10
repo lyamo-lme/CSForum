@@ -150,7 +150,8 @@ namespace CSForum.WebApi.Controllers
             {
                 return Ok(await _uofRepository.GenericRepository<Post>().GetAsync(
                     null,
-                    orderBy: post => post.OrderByDescending(obj => obj.DateCreate)
+                    orderBy: post => post.OrderByDescending(obj => obj.DateCreate),
+                    includeProperties: $"PostTags.Tag,{nameof(Post.PostCreator)}"
                 ));
             }
             catch (Exception e)

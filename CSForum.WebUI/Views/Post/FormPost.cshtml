@@ -65,8 +65,10 @@
                 method: "POST",
                 body: body
             });
-            window.location.replace(response.url);
-            });
+            if (response.status){
+                window.location.replace(response.url);
+            }
+        });
     </script>
     <script src="~/ts/loadTag.js"></script>
 </form>

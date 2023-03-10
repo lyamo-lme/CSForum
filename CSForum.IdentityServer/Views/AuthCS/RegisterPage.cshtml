@@ -1,42 +1,50 @@
 @model CSForum.IdentityServer.Models.RegisterViewModel
 
 
-<div>
-    <div>
-
-        <form class="login" asp-controller="AuthCS" asp-action="Register">
-            <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl"/>
-
-            <h3>Register new account</h3>
-
-            <label>Username</label>
-            <input name="Username" id="Username" type="text" placeholder="Username">
-
-            <label>Email</label>
-            <input name="Email" id="Email" type="text" placeholder="Email or Phone">
-
-            <label>Password</label>
-            <input name="Password" id="Password" type="password" placeholder="Password">
-
-            <label>Confirm Password</label>
-            <input name="ConfirmPassword" id="ConfirmPassword" type="password" placeholder="Password">
-
-            <div class="buttons" style="display: flex">
-                <button type="submit">Register</button>
-                <div>
-                    <a asp-action="Login" asp-route-ReturnUrl="@Model.ReturnUrl">Log in</a>
+<div class="container">
+    <div class="screen">
+        <div class="screen__content">
+            <form id="login" asp-controller="AuthCS" asp-action="Register"  class="login">
+                <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl"/>
+                <div class="login__field">
+                    <i class="login__icon fas fa-user"></i>
+                    <input type="text" class="login__input" placeholder="User name"
+                           name="Username" id="Username" required>
                 </div>
-            </div>
-
-            <div>
-                <div class="social">
-                    <p>Sign in With</p>
+                <div class="login__field">
+                    <i class="login__icon fas fa-lock"></i>
+                    <input
+                        name="Password" id="Password"
+                        type="password" class="login__input" placeholder="Password">
+                </div>
+                <div class="login__field">
+                    <i class="login__icon fas fa-lock"></i>
+                    <input
+                        name="ConfirmPassword" id="ConfirmPassword"
+                        type="password" class="login__input" placeholder="Confirm Password">
                 </div>
                 <div class="social">
-                    <div class="go">Google</div>
-                </div>
-            </div>
-        </form>
+                    <button type="submit" class="button login__submit">
+                        <span class="button__text">Register</span>
+                        <i class="button__icon fas fa-chevron-right"></i>
+                    </button>
+                </div> 
+                <a asp-action="Login" asp-route-ReturnUrl="@Model.ReturnUrl"  class="social">
+                    <div style="margin: 3px; width: fit-content;"  class="button login__submit">
+                        <span class="button__text">Log In Now</span>
+                        <i class="button__icon fas fa-chevron-right"></i>
+                    </div>
+                </a>
+
+            </form>
+
+        </div>
+        <div class="screen__background">
+            <span class="screen__background__shape screen__background__shape4"></span>
+            <span class="screen__background__shape screen__background__shape3"></span>
+            <span class="screen__background__shape screen__background__shape2"></span>
+            <span class="screen__background__shape screen__background__shape1"></span>
+        </div>
 
     </div>
 </div>
