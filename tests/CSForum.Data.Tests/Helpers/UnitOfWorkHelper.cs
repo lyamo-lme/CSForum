@@ -12,16 +12,26 @@ namespace CSForum.Data.Tests.Helpers;
 
 public static class UnitOfWorkHelper
 {
+    private static Mock<IUnitOfWorkRepository> uow = new Mock<IUnitOfWorkRepository>();
+
+    private static ForumDbContext Context;
+
     public static Mock<IUnitOfWorkRepository> GetMock()
     {
-        var context = DbContextHelper.Context;
-        SeedData(context);
-        var uow = new Mock<IUnitOfWorkRepository>();
-        uow.Setup(x => x.GenericRepository<Post>()).Returns(new GenericRepository<Post>(context));
-        uow.Setup(x => x.GenericRepository<Message>()).Returns(new GenericRepository<Message>(context));
-        uow.Setup(x => x.GenericRepository<User>()).Returns(new GenericRepository<User>(context));
+
+        uow = new Mock<IUnitOfWorkRepository>();
+        uow.Setup(x => x.GenericRepository<Post>()).Returns(new GenericRepository<Post>(Context));
+        uow.Setup(x => x.GenericRepository<Message>()).Returns(new GenericRepository<Message>(Context));
+        uow.Setup(x => x.GenericRepository<User>()).Returns(new GenericRepository<User>(Context));
         return uow;
     }
+
+    static UnitOfWorkHelper()
+    {
+        Context = DbContextHelper.Context;
+        SeedData(Context);
+    }
+
 
     public static void SeedData(ForumDbContext context)
     {
